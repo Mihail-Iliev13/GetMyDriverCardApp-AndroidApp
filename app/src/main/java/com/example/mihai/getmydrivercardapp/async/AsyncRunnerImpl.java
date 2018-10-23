@@ -26,4 +26,4 @@ import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 
         }
     }
-}
+
