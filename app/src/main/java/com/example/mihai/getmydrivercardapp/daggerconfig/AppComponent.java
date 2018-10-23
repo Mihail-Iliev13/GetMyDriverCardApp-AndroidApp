@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
+import dagger.android.ServiceKey;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 
@@ -18,7 +19,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidSupportInjectionModule.class,
         HttpRequesteModule.class,
         ParsersModule.class,
-        RepositoriesModule.class})
+        RepositoriesModule.class,
+        ServiceModule.class})
 public interface AppComponent extends AndroidInjector<GetMyDriverCardApp> {
 
     @Component.Builder
