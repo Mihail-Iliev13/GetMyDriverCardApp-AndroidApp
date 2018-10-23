@@ -12,6 +12,7 @@ public class GsonJsonParser<T> implements JsonParser<T> {
     private final Class<T[]> mArrayKlass;
     private final Gson mGson;
 
+
     public GsonJsonParser(Class<T> klass, Class<T[]> arrayKlass) {
         mKlass = klass;
         mArrayKlass = arrayKlass;

@@ -1,12 +1,13 @@
 package com.example.mihai.getmydrivercardapp.parsers.base;
 
 import java.util.List;
+    public interface JsonParser<T> {
 
-public interface JsonParser<T> {
-    List<T> fromJsonArray(String jsonString);
+        List<T> fromJsonArray(String jsonString);
 
-    T fromJson(String jsonString);
+        T fromJson(String jsonString);
 
-    String toJson(T object);
-}
+        String toJson(T object);
+    }
+
 
