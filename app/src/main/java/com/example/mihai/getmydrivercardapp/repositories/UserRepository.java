@@ -19,7 +19,7 @@ public class UserRepository implements Repository {
 
     @Inject
     public UserRepository (String url, HttpRequester requester,
-                           JsonParser jsonParser) {
+                           JsonParser<User> jsonParser) {
 
         this.mServerUrl = url;
         this.mRequester = requester;

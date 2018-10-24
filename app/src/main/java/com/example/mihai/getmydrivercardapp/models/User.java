@@ -1,9 +1,9 @@
 package com.example.mihai.getmydrivercardapp.models;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable{
     public User() {
         //required empty constructor
     }
@@ -40,7 +40,7 @@ public class User {
     }
 
     public List<CardApplication> getCardApplications() {
-        return new ArrayList<>(cardApplications);
+        return cardApplications;
     }
 
     public void setEmail(String email) {

@@ -1,9 +1,10 @@
 package com.example.mihai.getmydrivercardapp.models;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
-public class PersonalDetails {
+class PersonalDetails implements Serializable{
 
     private int id;
 
