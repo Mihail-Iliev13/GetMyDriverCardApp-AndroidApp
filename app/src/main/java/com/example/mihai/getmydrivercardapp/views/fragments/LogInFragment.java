@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.SelfieCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
@@ -24,6 +26,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pl.aprilapps.easyphotopicker.EasyImage;
+import pl.aprilapps.easyphotopicker.EasyImageConfig;
 
 public class LogInFragment extends Fragment implements LogInView {
 
@@ -38,7 +42,6 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @BindView(R.id.btn_sign_up)
     Button mSignupButton;
-
 
     private LogInPresenter mLogInPresenter;
 
@@ -100,6 +103,8 @@ public class LogInFragment extends Fragment implements LogInView {
                     Toast.LENGTH_LONG)
                     .show();
         });
+
+       EasyImage.openCamera(this, EasyImageConfig.REQ_TAKE_PICTURE);
     }
 
     @Override
@@ -113,11 +118,13 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showFillCardApplicationForm(User user) {
-        getActivity().runOnUiThread( () -> {
-            Toast.makeText(getContext(), "Fill the form",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
+        Intent intent = new Intent(getContext(), SelfieCaptureActivity.class);
+        startActivity(intent);
+//        getActivity().runOnUiThread( () -> {
+//            Toast.makeText(getContext(), "Fill the form",
+//                    Toast.LENGTH_LONG)
+//                    .show();
+//        });
     }
 
     @Override

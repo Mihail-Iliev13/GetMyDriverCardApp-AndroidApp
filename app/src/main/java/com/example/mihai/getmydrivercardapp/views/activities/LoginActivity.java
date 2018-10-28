@@ -21,13 +21,13 @@ public class LoginActivity extends DaggerAppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_with_one_fragment);
 
         mLoginFragment.setPresenter(mLogInPresenter);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.login_fragment, mLoginFragment)
+                .replace(R.id.fragment, mLoginFragment)
                 .commit();
     }
 

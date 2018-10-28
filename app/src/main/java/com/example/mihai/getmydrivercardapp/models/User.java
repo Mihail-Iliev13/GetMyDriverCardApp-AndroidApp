@@ -1,5 +1,7 @@
 package com.example.mihai.getmydrivercardapp.models;
 
+import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
+
 import java.io.Serializable;
 import java.util.List;
 

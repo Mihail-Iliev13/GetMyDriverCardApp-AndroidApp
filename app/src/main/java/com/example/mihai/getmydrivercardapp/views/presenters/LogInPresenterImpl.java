@@ -3,7 +3,7 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.models.UserRole;
+import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
 import com.example.mihai.getmydrivercardapp.services.Base.Service;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;

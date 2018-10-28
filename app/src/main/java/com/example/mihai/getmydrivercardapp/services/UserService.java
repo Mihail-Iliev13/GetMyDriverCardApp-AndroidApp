@@ -1,6 +1,6 @@
 package com.example.mihai.getmydrivercardapp.services;
 
-import com.example.mihai.getmydrivercardapp.models.CardAppStatus;
+import com.example.mihai.getmydrivercardapp.models.enums.CardAppStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
