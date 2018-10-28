@@ -2,6 +2,7 @@ package com.example.mihai.getmydrivercardapp.daggerconfig;
 
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.LogInFragment;
+import com.example.mihai.getmydrivercardapp.views.fragments.SignaturePadFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -15,4 +16,8 @@ public abstract class FragmentBindingModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract LogInFragment logInFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract SignaturePadFragment signaturePadFragment();
 }

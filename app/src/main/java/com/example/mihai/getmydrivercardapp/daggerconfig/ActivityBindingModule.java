@@ -6,6 +6,7 @@ import com.example.mihai.getmydrivercardapp.views.activities.IDCardCaptureActivi
 import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.OldCardCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.SelfieCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -33,6 +34,9 @@ public abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     abstract OldCardCaptureActivity oldCardCaptureActivity();
 
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract SignaturePadActivity signaturePadActivity();
 
 //    @ActivityScoped
 //    @ContributesAndroidInjector(modules = TaskDetailPresenterModule.class)

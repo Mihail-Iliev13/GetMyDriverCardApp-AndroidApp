@@ -5,6 +5,7 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.parsers.base.JsonParser;
 import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,11 +43,21 @@ public class UserRepository implements Repository {
 
     @Override
     public User updateUserCardApplication(String email, CardApplication cardApplication) throws IOException {
+
+        if (email == null) {
+            email = "misho";
+        }
+
+        String url = mServerUrl + "/" + email;
+        Gson gson = new Gson();
+        String json = gson.toJson(cardApplication);
+        String response = mRequester.put(url, json);
         return null;
     }
 
 
     @Override
+
     public User addUser(User user) throws IOException {
         String requestBody = mJsonParser.toJson(user);
         String responseBody = mRequester.post(mServerUrl, requestBody);

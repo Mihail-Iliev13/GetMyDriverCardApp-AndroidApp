@@ -1,7 +1,6 @@
 package com.example.mihai.getmydrivercardapp.views.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
@@ -15,7 +14,9 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class OldCardCaptureActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class OldCardCaptureActivity extends DaggerAppCompatActivity {
 
     @Inject
     ImageCaptureFragment mImageCaptureFragment;

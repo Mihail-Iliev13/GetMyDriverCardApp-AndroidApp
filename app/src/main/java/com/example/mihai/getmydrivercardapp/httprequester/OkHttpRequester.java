@@ -41,6 +41,7 @@ public class OkHttpRequester implements HttpRequester {
                 .post(body)
                 .url(url)
                 .build();
+
         OkHttpClient client = new OkHttpClient();
 
         Response response = client.newCall(request)

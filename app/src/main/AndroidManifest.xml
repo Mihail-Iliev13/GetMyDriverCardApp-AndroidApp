@@ -29,7 +29,8 @@
         <activity android:name=".views.activities.SelfieCaptureActivity" />
         <activity android:name=".views.activities.IDCardCaptureActivity" />
         <activity android:name=".views.activities.DrivingLicenseCaptureActivity" />
-        <activity android:name=".views.activities.OldCardCaptureActivity"></activity>
+        <activity android:name=".views.activities.OldCardCaptureActivity" />
+        <activity android:name=".views.activities.SignaturePadActivity"></activity>
     </application>
 
 </manifest>

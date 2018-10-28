@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.activities.SelfieCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
@@ -118,7 +118,7 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showFillCardApplicationForm(User user) {
-        Intent intent = new Intent(getContext(), SelfieCaptureActivity.class);
+        Intent intent = new Intent(getContext(), SignaturePadActivity.class);
         startActivity(intent);
 //        getActivity().runOnUiThread( () -> {
 //            Toast.makeText(getContext(), "Fill the form",
