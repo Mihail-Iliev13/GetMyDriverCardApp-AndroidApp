@@ -43,19 +43,19 @@ public class UserService implements Service {
     }
 
     @Override
-    public boolean hasPendingApplication(User user) {
+    public CardApplication getPendingApplication(User user) {
         List<CardApplication> cardApplicationList = user.getCardApplications();
 
         if (cardApplicationList == null || cardApplicationList.isEmpty()) {
-            return false;
+            return null;
         } else {
             for (CardApplication cardApplication: cardApplicationList) {
                 if (!cardApplication.getStatus()
                         .equals(CardAppStatus.COMPLETED)) {
-                    return true;
+                    return cardApplication;
                 }
             }
-            return false;
+            return null;
         }
     }
 }

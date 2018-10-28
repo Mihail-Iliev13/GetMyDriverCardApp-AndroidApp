@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
@@ -84,7 +86,8 @@ public class LogInFragment extends Fragment implements LogInView {
     @Override
     public void showNoSuchUserToast(String email) {
         getActivity().runOnUiThread( () -> {
-            Toast.makeText(getContext(), "There is no existing user with email: " + email + "Try to Sign Up first",
+            Toast.makeText(getContext(),
+                    "There is no existing user with email: " + email + "Try to Sign Up first",
                     Toast.LENGTH_LONG)
                     .show();
         });
@@ -100,7 +103,7 @@ public class LogInFragment extends Fragment implements LogInView {
     }
 
     @Override
-    public void showCardApplicationStatus() {
+    public void showCardApplicationStatus(CardApplication cardApplication) {
         getActivity().runOnUiThread( () -> {
             Toast.makeText(getContext(), "To card Application Status",
                     Toast.LENGTH_LONG)
@@ -109,7 +112,7 @@ public class LogInFragment extends Fragment implements LogInView {
     }
 
     @Override
-    public void showFillCardApplicationForm() {
+    public void showFillCardApplicationForm(User user) {
         getActivity().runOnUiThread( () -> {
             Toast.makeText(getContext(), "Fill the form",
                     Toast.LENGTH_LONG)

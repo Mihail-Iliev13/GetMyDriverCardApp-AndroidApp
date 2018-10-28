@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
+import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.models.UserRole;
 import com.example.mihai.getmydrivercardapp.services.Base.Service;
@@ -45,12 +46,13 @@ public class LogInPresenterImpl implements LogInPresenter {
                     mLoginView.showNoSuchUserToast(email);
                 } else if (!user.getPassword().equals(password)) {
                     mLoginView.showNoMatchingPasswordToast();
-                } else if (mService.hasPendingApplication(user)){
-                    mLoginView.showCardApplicationStatus();
+                } else if (mService.getPendingApplication(user) != null){
+                    CardApplication cardApplication = mService.getPendingApplication(user);
+                    mLoginView.showCardApplicationStatus(cardApplication);
                 } else if (user.getUserRole().equals(UserRole.ADMIN)){
                     mLoginView.showAllPendingApplications();
                 } else {
-                    mLoginView.showFillCardApplicationForm();
+                    mLoginView.showFillCardApplicationForm(user);
                 }
             } catch (IOException e){
                 mLoginView.showError(e);
@@ -67,7 +69,7 @@ public class LogInPresenterImpl implements LogInPresenter {
                 if (user == null) {
                     User newUser = new User(email, password, UserRole.CLIENT);
                     mService.addUser(newUser);
-                    mLoginView.showFillCardApplicationForm();
+                    mLoginView.showFillCardApplicationForm(user);
                 } else {
                     mLoginView.showUserAlreadyExists();
                 }

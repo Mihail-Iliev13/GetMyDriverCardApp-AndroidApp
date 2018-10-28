@@ -11,5 +11,6 @@ public interface Service {
     List<User> getAllUsers() throws IOException;
     User updateUserCardApplication(String email, CardApplication cardApplication) throws IOException;
     User addUser(User user) throws IOException;
-    boolean hasPendingApplication(User user);
+    CardApplication getPendingApplication(User user);
+
 }
