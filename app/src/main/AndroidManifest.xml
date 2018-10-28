@@ -30,7 +30,8 @@
         <activity android:name=".views.activities.IDCardCaptureActivity" />
         <activity android:name=".views.activities.DrivingLicenseCaptureActivity" />
         <activity android:name=".views.activities.OldCardCaptureActivity" />
-        <activity android:name=".views.activities.SignaturePadActivity"></activity>
+        <activity android:name=".views.activities.SignaturePadActivity" />
+        <activity android:name=".views.activities.CardApplicationListActivity"></activity>
     </application>
 
 </manifest>

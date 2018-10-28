@@ -24,6 +24,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ServiceModule.class,
         AsyncRunnerModule.class,
         PresenterBindingModule.class})
+
 public interface AppComponent extends AndroidInjector<GetMyDriverCardApp> {
 
     @Component.Builder

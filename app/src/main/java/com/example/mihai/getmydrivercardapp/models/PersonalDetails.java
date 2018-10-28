@@ -29,6 +29,18 @@ public class PersonalDetails implements Serializable{
 
     }
 
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public String getFirstNameLatin() {
+        return firstNameLatin;
+    }
+
+    public String getSurNameLatin() {
+        return surNameLatin;
+    }
+
     public void setSelfie(byte[] selfie) {
         this.selfie = selfie;
     }

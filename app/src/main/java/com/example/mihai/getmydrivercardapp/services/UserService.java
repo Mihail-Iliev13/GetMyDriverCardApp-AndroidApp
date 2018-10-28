@@ -7,6 +7,7 @@ import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
 import com.example.mihai.getmydrivercardapp.services.Base.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,4 +59,15 @@ public class UserService implements Service {
             return null;
         }
     }
+
+    @Override
+    public List<CardApplication> getAllCardApplications() throws IOException {
+        List<CardApplication> cardApplications = new ArrayList<>();
+        List<User> users = getAllUsers();
+        for (User user : users) {
+            cardApplications.addAll(user.getCardApplications());
+        }
+        return cardApplications;
+    }
+
 }

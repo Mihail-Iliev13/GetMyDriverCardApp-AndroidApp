@@ -36,7 +36,7 @@ public class UserRepository implements Repository {
 
     @Override
     public List<User> getAllUsers() throws IOException {
-        String jsonArray = null;
+        String jsonArray;
         jsonArray = mRequester.get(mServerUrl);
         return mJsonParser.fromJsonArray(jsonArray);
     }
@@ -63,4 +63,5 @@ public class UserRepository implements Repository {
         String responseBody = mRequester.post(mServerUrl, requestBody);
         return mJsonParser.fromJson(responseBody);
     }
+
 }
