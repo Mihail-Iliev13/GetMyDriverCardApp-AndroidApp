@@ -10,6 +10,8 @@ import com.example.mihai.getmydrivercardapp.views.fragments.SearchToolBarFragmen
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -50,7 +52,8 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
     protected void onStart() {
         super.onStart();
         setSupportActionBar(mSearchToolbarFragment.getToolbar());
-        getSupportActionBar().setTitle("Search by: ");
+        Objects.requireNonNull(getSupportActionBar())
+                .setTitle("Search by: ");
     }
 
     @Override

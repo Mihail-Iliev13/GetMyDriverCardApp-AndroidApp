@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
@@ -22,6 +21,8 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
+
+import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -84,21 +85,12 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
     @OnClick(R.id.btn_proceed)
     public void proceed () {
-        Bitmap bitmap = ((BitmapDrawable)mImageView.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable)mImageView
+                .getDrawable())
+                .getBitmap();
+
         byte[] byteImage = mPresenter.convertBitmapToByteArray(bitmap);
         mPresenter.setValueToImageAttribute(mCardApplication, mImageAttribute, byteImage);
-
-        Toast.makeText(getContext(),
-                "To next activity!",
-                Toast.LENGTH_LONG)
-                .show();
-    }
-
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof ImageCapturePresenter) {
-            this.mPresenter = (ImageCapturePresenter) presenter;
-        }
     }
 
     @Override
@@ -106,6 +98,15 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
         mImageView.setImageBitmap(bitmap);
         mTxtPreview.setVisibility(View.GONE);
         mImageView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        if (presenter instanceof ImageCapturePresenter) {
+            this.mPresenter = (ImageCapturePresenter) presenter;
+        } else {
+            throw new InvalidParameterException();
+        }
     }
 
     @Override

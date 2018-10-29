@@ -6,7 +6,7 @@ import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.Base
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SearchToolBarView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
 
-import java.text.ParseException;
+import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -15,7 +15,6 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
     private Service mService;
     private AsyncRunner mAsyncRunner;
     private SearchToolBarView mSearchToolBarView;
-
 
     @Inject
     public SearchToolBarPresenterImpl(Service service, AsyncRunner asyncRunner) {
@@ -27,30 +26,41 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
     public void subscribe(BaseView view) {
         if (view instanceof SearchToolBarView) {
             this.mSearchToolBarView = (SearchToolBarView) view;
+        } else {
+            throw new InvalidParameterException();
         }
     }
 
     @Override
-    public void getFilteredCardApplications(String pattern, String criteria) throws ParseException {
-            switch (criteria){
-                case "Date":
-                     mService.filterApplicationsByDate(pattern);
-                case "Name":
-                    mService.filterApplicationsByName(pattern);
-                case "ID":
-                    mService.filterApplicationsByID(pattern);
-                case "Status":
-                    mService.filterApplicationsByStatus(pattern);
+    public void getFilteredCardApplications(String pattern, String filterCriteria){
+
+        mAsyncRunner.runInBackground(() -> {
+
+            try {
+                switch (filterCriteria){
+                    case "Date":
+                        mService.filterApplicationsByDate(pattern);
+                    case "Name":
+                        mService.filterApplicationsByName(pattern);
+                    case "ID":
+                        mService.filterApplicationsByID(pattern);
+                    case "Status":
+                        mService.filterApplicationsByStatus(pattern);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
+        });
     }
 
     @Override
-    public void setFilterCriteria() {
+    public void setFilterValues() {
         mSearchToolBarView.setSpinnerDropdownList();
     }
 
     @Override
     public void handleSpinnerOnItemSelected(String item) {
+
         if (item.equals("Date")) {
             mSearchToolBarView.showDatePicker();
         } else if (item.equals("Status")) {

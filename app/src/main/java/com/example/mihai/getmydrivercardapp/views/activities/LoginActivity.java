@@ -34,12 +34,7 @@ public class LoginActivity extends DaggerAppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-
-        try {
-            mLogInPresenter.subscribe(mLoginFragment);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        mLogInPresenter.subscribe(mLoginFragment);
     }
 }
 

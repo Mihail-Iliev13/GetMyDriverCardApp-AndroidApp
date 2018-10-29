@@ -10,6 +10,7 @@ import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogI
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -31,17 +32,12 @@ public class LogInPresenterImpl implements LogInPresenter {
         if (view instanceof LogInView) {
             this.mLoginView = (LogInView) view;
         } else {
-            throw new IllegalArgumentException();
+            throw new InvalidParameterException();
         }
     }
 
     @Override
     public void logIn(String email, String password) {
-
-        mLoginView.showNoSuchUserToast(email);
-        if (!email.equals("fdsfdas")) {
-            return;
-        }
 
         mAsyncRunner.runInBackground(() -> {
 
@@ -74,7 +70,7 @@ public class LogInPresenterImpl implements LogInPresenter {
                 if (user == null) {
                     User newUser = new User(email, password, UserRole.CLIENT);
                     mService.addUser(newUser);
-                    mLoginView.showFillCardApplicationForm(user);
+                    mLoginView.showFillCardApplicationForm(newUser);
                 } else {
                     mLoginView.showUserAlreadyExists();
                 }

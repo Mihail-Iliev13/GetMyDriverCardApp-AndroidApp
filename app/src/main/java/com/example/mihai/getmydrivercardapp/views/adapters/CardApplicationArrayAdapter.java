@@ -12,14 +12,16 @@ import android.widget.TextView;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CustomArrayAdapter extends ArrayAdapter<CardApplication> {
+public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
 
     private int mLayout;
 
-    public CustomArrayAdapter(@NonNull Context context, int resource) {
+    public CardApplicationArrayAdapter(@NonNull Context context, int resource) {
         super(context, resource);
         mLayout = resource;
     }
@@ -37,7 +39,7 @@ public class CustomArrayAdapter extends ArrayAdapter<CardApplication> {
             convertView = inflater.inflate(mLayout, parent, false);
             ViewHolder viewHolder = new ViewHolder(convertView);
 
-            viewHolder.showCardApplicationSubmissionDate(cardApplication);
+            viewHolder.showCardApplicationSubmissionDate(Objects.requireNonNull(cardApplication));
             viewHolder.showDriverName(cardApplication);
             viewHolder.showDriverID(cardApplication);
             viewHolder.showCardApplicationStatus(cardApplication);
@@ -47,7 +49,7 @@ public class CustomArrayAdapter extends ArrayAdapter<CardApplication> {
         } else {
 
             mainViewHolder = (ViewHolder) convertView.getTag();
-            mainViewHolder.showCardApplicationSubmissionDate(cardApplication);
+            mainViewHolder.showCardApplicationSubmissionDate(Objects.requireNonNull(cardApplication));
             mainViewHolder.showDriverName(cardApplication);
             mainViewHolder.showDriverID(cardApplication);
             mainViewHolder.showCardApplicationStatus(cardApplication);

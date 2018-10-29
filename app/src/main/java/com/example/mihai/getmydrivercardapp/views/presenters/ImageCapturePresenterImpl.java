@@ -15,6 +15,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -82,6 +83,8 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
     public void subscribe(BaseView view) {
         if (view instanceof ImageCaptureView) {
             this.mImageCaptureView = (ImageCaptureView) view;
+        } else {
+            throw new InvalidParameterException();
         }
     }
 }

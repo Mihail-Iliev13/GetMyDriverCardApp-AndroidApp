@@ -1,10 +1,8 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +20,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Objects;
@@ -70,9 +69,10 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
             @Override
             public boolean onQueryTextSubmit(String pattern) {
-                String criteria = (String) mSpinner.getSelectedItem();
+                String filterCriteria = (String) mSpinner.getSelectedItem();
                 try {
-                    mSearchToolBarPresenter.getFilteredCardApplications(pattern, criteria);
+                    mSearchToolBarPresenter
+                            .getFilteredCardApplications(pattern, filterCriteria);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -90,7 +90,16 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
     @Override
     public void onResume() {
         super.onResume();
-        mSearchToolBarPresenter.setFilterCriteria();
+        mSearchToolBarPresenter.setFilterValues();
+    }
+
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        if (presenter instanceof SearchToolBarPresenter) {
+            this.mSearchToolBarPresenter = (SearchToolBarPresenter) presenter;
+        } else {
+            throw new InvalidParameterException();
+        }
     }
 
     @Override
@@ -105,11 +114,28 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
     @Override
     public void setSpinnerDropdownList() {
-        ArrayAdapter<String> filterCriteriaAdapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> filterValuesAdapter =
+                new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),
                 R.layout.custom_spinner_item,
                 getResources().getStringArray(R.array.filter_citeria));
-        filterCriteriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(filterCriteriaAdapter);
+
+        filterValuesAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(filterValuesAdapter);
+    }
+
+    @Override
+    public void setSpinnerSelectedItemToDefaultValue() {
+        mSpinner.setSelection(0);
+    }
+
+    @Override
+    public DatePickerDialog initializeDatePickerDialog(int year, int month, int day) {
+        return new DatePickerDialog(
+                Objects.requireNonNull(getContext()),
+                android.R.style.Theme_DeviceDefault_Light_Dialog,
+                this,
+                year, month, day);
     }
 
     @Override
@@ -118,33 +144,22 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog datePickerDialog = initializeDatePickerDialog(year, month, day);
-
+        datePickerDialog.setOnCancelListener(dialog -> setSpinnerSelectedItemToDefaultValue());
         datePickerDialog.show();
-
-        datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                setSpinnerSelectedItemToDefaultValue();
-            }
-        });
     }
 
     @Override
-    public DatePickerDialog initializeDatePickerDialog(int year, int month, int day) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                Objects.requireNonNull(getContext()),
-                android.R.style.Theme_DeviceDefault_Light_Dialog,
-                this,
-                year, month, day);
-        return datePickerDialog;
-    }
-
-    @Override
-    public void showStatusDialog() {
-        AlertDialog.Builder builder = buildStatusDialog();
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        try {
+            String filterCriteria = (String) mSpinner.getSelectedItem();
+            String dateString = year + "/" +  month + "/" + dayOfMonth;
+            mSearchToolBarPresenter.getFilteredCardApplications(dateString, filterCriteria);
+            setSpinnerSelectedItemToDefaultValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -157,9 +172,9 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
         builder.setSingleChoiceItems(statusValues, -1, (dialog, index) -> {
             try {
-                String criteria = (String) mSpinner.getSelectedItem();
+                String filterCriteria = (String) mSpinner.getSelectedItem();
                 String status = statusValues[index];
-                mSearchToolBarPresenter.getFilteredCardApplications(status, criteria);
+                mSearchToolBarPresenter.getFilteredCardApplications(status, filterCriteria);
                 setSpinnerSelectedItemToDefaultValue();
                 dialog.dismiss();
             } catch (ParseException e) {
@@ -174,27 +189,9 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
     }
 
     @Override
-    public void setSpinnerSelectedItemToDefaultValue() {
-        mSpinner.setSelection(0);
-    }
-
-    @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof SearchToolBarPresenter) {
-            this.mSearchToolBarPresenter = (SearchToolBarPresenter) presenter;
-        }
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        try {
-            String criteria = (String) mSpinner.getSelectedItem();
-            @SuppressLint("DefaultLocale")
-            String dateString = String.format("%d/%d/%d", year, month, dayOfMonth);
-            setSpinnerSelectedItemToDefaultValue();
-            mSearchToolBarPresenter.getFilteredCardApplications(dateString, criteria);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void showStatusDialog() {
+        AlertDialog.Builder builder = buildStatusDialog();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

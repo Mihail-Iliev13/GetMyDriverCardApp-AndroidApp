@@ -1,9 +1,9 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
-import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,8 @@ import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.Sign
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
 import com.github.gcacace.signaturepad.views.SignaturePad;
+
+import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -48,6 +50,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signature_pad, container, false);
         ButterKnife.bind(this, view);
+
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
@@ -74,6 +77,8 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     public void setPresenter(BasePresenter presenter) {
         if (presenter instanceof SignaturePadPresenter) {
             this.mSignaturePadPresenter = (SignaturePadPresenter) presenter;
+        } else {
+            throw new InvalidParameterException();
         }
     }
 
@@ -88,12 +93,14 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
         byte[] byteImage = mSignaturePadPresenter.convertBitmapToByteArray(bitmapImage);
         mSignaturePadPresenter.setValueToSignature(mCardApplication, byteImage);
         mSignaturePadPresenter.saveUser(mUser.getEmail(), mCardApplication);
-        Toast.makeText(getContext(), "sdfa", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showError(Exception e) {
-
+        Toast.makeText(getContext(),
+                "Error: " + e.getMessage(),
+                Toast.LENGTH_SHORT)
+                .show();
     }
 
     @Override

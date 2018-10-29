@@ -15,34 +15,30 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pl.aprilapps.easyphotopicker.EasyImage;
-import pl.aprilapps.easyphotopicker.EasyImageConfig;
 
 public class LogInFragment extends Fragment implements LogInView {
 
     @BindView(R.id.et_email)
     EditText mEmail;
-
     @BindView(R.id.et_password)
     EditText mPassword;
-
     @BindView(R.id.btn_log_in)
     Button mLoginButton;
-
     @BindView(R.id.btn_sign_up)
-    Button mSignupButton;
+    Button mSignUpButton;
 
     private LogInPresenter mLogInPresenter;
 
@@ -66,18 +62,22 @@ public class LogInFragment extends Fragment implements LogInView {
 
        if (presenter instanceof LogInPresenter) {
            this.mLogInPresenter = (LogInPresenter) presenter;
+       } else {
+           throw new InvalidParameterException();
        }
     }
 
     @OnClick(R.id.btn_log_in)
-    public void logInOnClick(){
+    public void logInOnClick() {
         String email = String.valueOf(mEmail.getText());
         String password = String.valueOf(mPassword.getText());
+
         try {
             mLogInPresenter.logIn(email, password);
         } catch (IOException e) {
-            e.printStackTrace();
+            showError(e);
         }
+
     }
 
     @OnClick(R.id.btn_sign_up)
@@ -90,30 +90,26 @@ public class LogInFragment extends Fragment implements LogInView {
     @Override
     public void showNoSuchUserToast(String email) {
 
-        Intent intent = new Intent(getContext(), CardApplicationListActivity.class);
-        startActivity(intent);
-//        getActivity().runOnUiThread( () -> {
-//            Toast.makeText(getContext(),
-//                    "There is no existing user with email: " + email + "Try to Sign Up first",
-//                    Toast.LENGTH_LONG)
-//                    .show();
-//        });
+        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
+            Toast.makeText(getContext(),
+                    "There is no existing user with email: " + email + "Try to Sign Up first",
+                    Toast.LENGTH_LONG)
+                    .show();
+        });
     }
 
     @Override
     public void showNoMatchingPasswordToast() {
-        getActivity().runOnUiThread( () -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
             Toast.makeText(getContext(), "Password is invalid!",
                     Toast.LENGTH_LONG)
                     .show();
         });
-
-       EasyImage.openCamera(this, EasyImageConfig.REQ_TAKE_PICTURE);
     }
 
     @Override
     public void showCardApplicationStatus(CardApplication cardApplication) {
-        getActivity().runOnUiThread( () -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
             Toast.makeText(getContext(), "To card Application Status",
                     Toast.LENGTH_LONG)
                     .show();
@@ -122,18 +118,16 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showFillCardApplicationForm(User user) {
-        Intent intent = new Intent(getContext(), SignaturePadActivity.class);
-        startActivity(intent);
-//        getActivity().runOnUiThread( () -> {
-//            Toast.makeText(getContext(), "Fill the form",
-//                    Toast.LENGTH_LONG)
-//                    .show();
-//        });
+        getActivity().runOnUiThread( () -> {
+            Toast.makeText(getContext(), "Fill the form",
+                    Toast.LENGTH_LONG)
+                    .show();
+        });
     }
 
     @Override
     public void showUserAlreadyExists() {
-        getActivity().runOnUiThread( () -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
             Toast.makeText(getContext(), "User with this email already exists",
                     Toast.LENGTH_LONG)
                     .show();
@@ -142,12 +136,13 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showAllPendingApplications() {
-
+        Intent intent = new Intent(getContext(), CardApplicationListActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void showError(Exception e) {
-        getActivity().runOnUiThread( () -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
             Toast.makeText(getContext(), "Error: " + e.getMessage(),
                     Toast.LENGTH_LONG)
                     .show();

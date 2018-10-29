@@ -8,17 +8,16 @@ import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.Card
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class CardApplicationListPresenterImpl implements CardApplicationListPresenter {
 
-
     private Service mService;
     private AsyncRunner mAsyncRunner;
     private CardApplicationListView mCardApplicationListView;
-
 
     @Inject
     public CardApplicationListPresenterImpl (Service service, AsyncRunner asyncRunner) {
@@ -31,7 +30,11 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
         mAsyncRunner.runInBackground(() -> {
             try {
                 List<CardApplication> cardApplications = mService.getAllCardApplications();
-                mCardApplicationListView.showApplications(cardApplications);
+                if (cardApplications.isEmpty()) {
+                    mCardApplicationListView.showEmptyListMessage();
+                } else {
+                    mCardApplicationListView.showApplications(cardApplications);
+                }
             } catch (IOException e) {
                 mCardApplicationListView.showError(e);
             }
@@ -42,6 +45,8 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     public void subscribe(BaseView view) {
         if (view instanceof CardApplicationListView) {
             this.mCardApplicationListView = (CardApplicationListView) view;
+        } else {
+            throw new InvalidParameterException();
         }
     }
 }

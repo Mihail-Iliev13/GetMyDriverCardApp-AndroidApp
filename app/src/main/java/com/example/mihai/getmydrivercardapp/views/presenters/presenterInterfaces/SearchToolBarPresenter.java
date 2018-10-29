@@ -4,6 +4,6 @@ import java.text.ParseException;
 
 public interface SearchToolBarPresenter extends BasePresenter {
     void getFilteredCardApplications(String pattern, String criteria) throws ParseException;
-    void setFilterCriteria();
+    void setFilterValues();
     void handleSpinnerOnItemSelected(String item);
 }

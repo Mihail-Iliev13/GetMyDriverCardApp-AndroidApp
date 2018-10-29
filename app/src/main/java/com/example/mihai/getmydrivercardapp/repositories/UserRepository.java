@@ -43,21 +43,15 @@ public class UserRepository implements Repository {
 
     @Override
     public User updateUserCardApplication(String email, CardApplication cardApplication) throws IOException {
-
-        if (email == null) {
-            email = "misho";
-        }
-
         String url = mServerUrl + "/" + email;
         Gson gson = new Gson();
         String json = gson.toJson(cardApplication);
         String response = mRequester.put(url, json);
-        return null;
+        return gson.fromJson(response, User.class);
     }
 
 
     @Override
-
     public User addUser(User user) throws IOException {
         String requestBody = mJsonParser.toJson(user);
         String responseBody = mRequester.post(mServerUrl, requestBody);

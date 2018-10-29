@@ -4,12 +4,9 @@ import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.PersonalDetails;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.SignaturePadFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -32,12 +29,6 @@ public class SignaturePadActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.activity_with_one_fragment);
 
         mSignaturePadFragment.setPresenter(mSignaturePadPresenter);
-        mUser = new User();
-        mCardApplication = new CardApplication();
-        mCardApplication.setDetails(new PersonalDetails());
-        mUser.setCardApplications(new ArrayList<>());
-        mUser.addCardApplication(mCardApplication);
-
         mSignaturePadFragment.setCurrentUser(mUser);
         mSignaturePadFragment.setCurrentCardApplication(mCardApplication);
 
@@ -50,6 +41,7 @@ public class SignaturePadActivity extends DaggerAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mSignaturePadPresenter.subscribe(mSignaturePadFragment);
+        mSignaturePadPresenter
+                .subscribe(mSignaturePadFragment);
     }
 }

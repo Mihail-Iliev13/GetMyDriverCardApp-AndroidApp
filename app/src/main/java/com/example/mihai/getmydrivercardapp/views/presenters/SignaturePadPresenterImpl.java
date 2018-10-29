@@ -11,6 +11,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -30,6 +31,8 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
     public void subscribe(BaseView view) {
         if (view instanceof SignaturePadView) {
             mSignaturePadView = (SignaturePadView) view;
+        } else {
+            throw new InvalidParameterException();
         }
     }
 
@@ -41,7 +44,9 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
 
     @Override
     public void setValueToSignature(CardApplication mCardApplication, byte[] byteImage) {
-        mCardApplication.getDetails().setSignature(byteImage);
+        mCardApplication
+                .getDetails()
+                .setSignature(byteImage);
     }
 
     @Override
