@@ -46,7 +46,7 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, mImageCaptureFragment)
+                .replace(R.id.content, mImageCaptureFragment)
                 .commit();
     }
 

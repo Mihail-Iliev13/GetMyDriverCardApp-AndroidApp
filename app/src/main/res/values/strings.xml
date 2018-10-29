@@ -2,6 +2,20 @@
     <string name="app_name">GetMyDriverCardApp</string>
     <string name="title_activity_login">Sign in</string>
 
+    <string-array name="filter_citeria">
+        <item>Name</item>
+        <item>ID</item>
+        <item>Date</item>
+        <item>Status</item>
+    </string-array>
+
+    <string-array name="status">
+        <item>New</item>
+        <item>In Progress</item>
+        <item>Rejected</item>
+        <item>Completed</item>
+    </string-array>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

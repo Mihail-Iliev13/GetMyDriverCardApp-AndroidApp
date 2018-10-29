@@ -14,19 +14,17 @@ import javax.inject.Inject;
 
 public class CardApplicationListPresenterImpl implements CardApplicationListPresenter {
 
-    @Inject
-    Service mService;
+
+    private Service mService;
+    private AsyncRunner mAsyncRunner;
+    private CardApplicationListView mCardApplicationListView;
+
 
     @Inject
-     AsyncRunner mAsyncRunner;
-
     public CardApplicationListPresenterImpl (Service service, AsyncRunner asyncRunner) {
         this.mService = service;
         this.mAsyncRunner = asyncRunner;
     }
-
-    private CardApplicationListView mCardApplicationListView;
-
 
     @Override
     public void loadCardApplications() {

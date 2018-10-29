@@ -27,7 +27,7 @@ public class LoginActivity extends DaggerAppCompatActivity{
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, mLoginFragment)
+                .replace(R.id.content, mLoginFragment)
                 .commit();
     }
 

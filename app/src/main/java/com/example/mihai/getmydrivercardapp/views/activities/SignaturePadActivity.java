@@ -43,7 +43,7 @@ public class SignaturePadActivity extends DaggerAppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, mSignaturePadFragment)
+                .replace(R.id.content, mSignaturePadFragment)
                 .commit();
     }
 

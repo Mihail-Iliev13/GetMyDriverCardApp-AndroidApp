@@ -5,10 +5,12 @@ import com.example.mihai.getmydrivercardapp.services.Base.Service;
 import com.example.mihai.getmydrivercardapp.views.presenters.CardApplicationListPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.ImageCapturePresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.LogInPresenterImpl;
+import com.example.mihai.getmydrivercardapp.views.presenters.SearchToolBarPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.SignaturePadPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
 
 import dagger.Module;
@@ -34,5 +36,10 @@ public class PresenterBindingModule {
     @Provides
     public CardApplicationListPresenter cardApplicationListPresenter(Service service, AsyncRunner asyncRunner) {
         return new CardApplicationListPresenterImpl(service, asyncRunner);
+    }
+
+    @Provides
+    public SearchToolBarPresenter searchToolBarPresenter(Service service, AsyncRunner asyncRunner) {
+        return new SearchToolBarPresenterImpl(service, asyncRunner);
     }
 }

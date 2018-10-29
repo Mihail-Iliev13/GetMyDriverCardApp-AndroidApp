@@ -4,6 +4,7 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface Service {
@@ -13,4 +14,8 @@ public interface Service {
     User addUser(User user) throws IOException;
     CardApplication getPendingApplication(User user);
     List<CardApplication> getAllCardApplications() throws IOException;
+    void filterApplicationsByName(String pattern);
+    void filterApplicationsByID(String id);
+    void filterApplicationsByDate(String pattern) throws ParseException;
+    void filterApplicationsByStatus(String pattern);
 }

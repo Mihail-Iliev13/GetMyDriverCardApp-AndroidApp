@@ -54,4 +54,7 @@ dependencies {
 
     //Signature Pad
     implementation 'com.github.gcacace:signature-pad:1.2.1'
+
+    //Material SearchView
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 }

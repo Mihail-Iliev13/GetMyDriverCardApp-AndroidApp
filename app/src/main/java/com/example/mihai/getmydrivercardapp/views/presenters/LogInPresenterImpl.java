@@ -38,6 +38,11 @@ public class LogInPresenterImpl implements LogInPresenter {
     @Override
     public void logIn(String email, String password) {
 
+        mLoginView.showNoSuchUserToast(email);
+        if (!email.equals("fdsfdas")) {
+            return;
+        }
+
         mAsyncRunner.runInBackground(() -> {
 
             try {

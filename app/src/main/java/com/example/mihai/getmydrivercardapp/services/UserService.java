@@ -1,5 +1,7 @@
 package com.example.mihai.getmydrivercardapp.services;
 
+import android.annotation.SuppressLint;
+
 import com.example.mihai.getmydrivercardapp.models.enums.CardAppStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
@@ -7,7 +9,10 @@ import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
 import com.example.mihai.getmydrivercardapp.services.Base.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,6 +73,27 @@ public class UserService implements Service {
             cardApplications.addAll(user.getCardApplications());
         }
         return cardApplications;
+    }
+
+    @Override
+    public void filterApplicationsByName(String pattern) {
+
+    }
+
+    @Override
+    public void filterApplicationsByID(String id) {
+
+    }
+
+    @Override
+    public void filterApplicationsByDate(String dateString) throws ParseException {
+        @SuppressLint("SimpleDateFormat")
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+    }
+
+    @Override
+    public void filterApplicationsByStatus(String pattern) {
+
     }
 
 }

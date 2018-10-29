@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
@@ -88,12 +89,15 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showNoSuchUserToast(String email) {
-        getActivity().runOnUiThread( () -> {
-            Toast.makeText(getContext(),
-                    "There is no existing user with email: " + email + "Try to Sign Up first",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
+
+        Intent intent = new Intent(getContext(), CardApplicationListActivity.class);
+        startActivity(intent);
+//        getActivity().runOnUiThread( () -> {
+//            Toast.makeText(getContext(),
+//                    "There is no existing user with email: " + email + "Try to Sign Up first",
+//                    Toast.LENGTH_LONG)
+//                    .show();
+//        });
     }
 
     @Override

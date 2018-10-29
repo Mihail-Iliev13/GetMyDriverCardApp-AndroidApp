@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.fragments.SearchToolBarFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <Spinner
+                android:id="@+id/spinner"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tb_toolbar"
+                android:layout_alignLeft="@id/tb_toolbar"
+                android:layout_alignStart="@id/tb_toolbar"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp">
+            </Spinner>
+
+        </android.support.v7.widget.Toolbar>
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:searchBackground="@color/colorPrimary"
+            app:searchSuggestionBackground="@color/colorPrimary"
+            android:textColorHint="#FFFF"
+            android:textColor="#FFFF">
+        </com.miguelcatalan.materialsearchview.MaterialSearchView>
+
+    </RelativeLayout>
+</FrameLayout>
