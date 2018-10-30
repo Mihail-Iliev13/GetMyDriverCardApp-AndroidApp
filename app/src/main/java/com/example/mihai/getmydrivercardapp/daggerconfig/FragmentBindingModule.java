@@ -1,5 +1,6 @@
 package com.example.mihai.getmydrivercardapp.daggerconfig;
 
+import com.example.mihai.getmydrivercardapp.views.fragments.ApplicationStatusFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.CardApplicationListFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.LogInFragment;
@@ -30,4 +31,8 @@ public abstract class FragmentBindingModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract SearchToolBarFragment searchToolBarFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ApplicationStatusFragment applicationStatusFragment();
 }

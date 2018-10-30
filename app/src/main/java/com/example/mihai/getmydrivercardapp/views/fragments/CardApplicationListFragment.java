@@ -45,6 +45,7 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
         View view = inflater.inflate(R.layout.fragment_card_application_list, container, false);
         ButterKnife.bind(this, view);
 
+
         mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()), R.layout.custom_list_item);
         mListView.setAdapter(mAdapter);
         return view;

@@ -9,5 +9,5 @@ public interface LogInView extends BaseView, ErrorView {
     void showCardApplicationStatus(CardApplication cardApplication);
     void showFillCardApplicationForm(User user);
     void showUserAlreadyExists();
-    void showAllPendingApplications();
+    void showAllCardApplications();
 }

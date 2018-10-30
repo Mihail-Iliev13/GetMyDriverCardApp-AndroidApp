@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
@@ -109,20 +111,22 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showCardApplicationStatus(CardApplication cardApplication) {
-        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
-            Toast.makeText(getContext(), "To card Application Status",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
+        Intent intent = new Intent(getContext(), ApplicationStatusActivity.class);
+        intent.putExtra(Constants.CARD_APPLICATION_KEY, cardApplication);
+        startActivity(intent);
     }
 
     @Override
     public void showFillCardApplicationForm(User user) {
-        getActivity().runOnUiThread( () -> {
-            Toast.makeText(getContext(), "Fill the form",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
+
+        Intent intent = new Intent(getContext(), ApplicationStatusActivity.class);
+        startActivity(intent);
+
+//        getActivity().runOnUiThread( () -> {
+//            Toast.makeText(getContext(), "Fill the form",
+//                    Toast.LENGTH_LONG)
+//                    .show();
+//        });
     }
 
     @Override
@@ -135,7 +139,7 @@ public class LogInFragment extends Fragment implements LogInView {
     }
 
     @Override
-    public void showAllPendingApplications() {
+    public void showAllCardApplications() {
         Intent intent = new Intent(getContext(), CardApplicationListActivity.class);
         startActivity(intent);
     }

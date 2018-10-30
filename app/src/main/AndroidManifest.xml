@@ -31,7 +31,8 @@
         <activity android:name=".views.activities.DrivingLicenseCaptureActivity" />
         <activity android:name=".views.activities.OldCardCaptureActivity" />
         <activity android:name=".views.activities.SignaturePadActivity" />
-        <activity android:name=".views.activities.CardApplicationListActivity"></activity>
+        <activity android:name=".views.activities.CardApplicationListActivity" />
+        <activity android:name=".views.activities.ApplicationStatusActivity"></activity>
     </application>
 
 </manifest>
