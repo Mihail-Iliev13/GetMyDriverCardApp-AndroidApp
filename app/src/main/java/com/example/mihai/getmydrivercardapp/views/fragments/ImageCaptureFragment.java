@@ -70,6 +70,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         mPresenter.handleActivityResult(requestCode, resultCode, data, getActivity());
 
         if (mImageView.getDrawable() != null) {

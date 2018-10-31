@@ -32,6 +32,7 @@ public class OldCardCaptureActivity extends DaggerAppCompatActivity {
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
         mImageCaptureFragment.setCurrentUser(mUser);
         mImageCaptureFragment.setCurrentCardApplication(mCardApplication);
+
         mImageCaptureFragment.setImageAttribute(ImageAttribute.OLD_CARD_IMAGE);
 
         getSupportFragmentManager()
