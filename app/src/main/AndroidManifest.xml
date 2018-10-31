@@ -33,7 +33,8 @@
         <activity android:name=".views.activities.SignaturePadActivity" />
         <activity android:name=".views.activities.CardApplicationListActivity" />
         <activity android:name=".views.activities.ApplicationStatusActivity" />
-        <activity android:name=".views.activities.CardApplicationDetailsActivity"></activity>
+        <activity android:name=".views.activities.CardApplicationDetailsActivity" />
+        <activity android:name=".views.activities.PersonalDetailsActivity"></activity>
     </application>
 
 </manifest>

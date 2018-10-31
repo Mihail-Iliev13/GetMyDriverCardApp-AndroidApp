@@ -37,7 +37,7 @@
     <string name="last_name">Last name</string>
     <string name="birth_date">Birth date</string>
     <string name="address">Address</string>
-    <string name="address">Address</string>
     <string name="phone_number">Phone number</string>
     <string name="email">Email</string>
+    <string name="Next_button">Next</string>
 </resources>
