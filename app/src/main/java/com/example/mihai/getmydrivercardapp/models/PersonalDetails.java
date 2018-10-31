@@ -41,6 +41,66 @@ public class PersonalDetails implements Serializable{
         return surNameLatin;
     }
 
+    public Date getDriverBirthDate() {
+        return driverBirthDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public byte[] getSelfie() {
+        return selfie;
+    }
+
+    public byte[] getIdCardImage() {
+        return idCardImage;
+    }
+
+    public byte[] getDrivingLicenseImage() {
+        return drivingLicenseImage;
+    }
+
+    public byte[] getSignature() {
+        return signature;
+    }
+
+    public byte[] getPreviousCardImage() {
+        return previousCardImage;
+    }
+
+    public String getCountryIssuedCard() {
+        return countryIssuedCard;
+    }
+
+    public String getAuthorityIssuedCard() {
+        return authorityIssuedCard;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public Date getDateOfExpiry() {
+        return dateOfExpiry;
+    }
+
+    public Date getDateOfLoss() {
+        return dateOfLoss;
+    }
+
+    public String getPlaceOfLoss() {
+        return placeOfLoss;
+    }
+
     public void setSelfie(byte[] selfie) {
         this.selfie = selfie;
     }

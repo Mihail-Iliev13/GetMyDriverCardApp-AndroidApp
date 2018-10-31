@@ -42,6 +42,11 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     }
 
     @Override
+    public void selectCardApplication(CardApplication selectedCardApplication) {
+        mCardApplicationListView.navigateToCardApplicationDetails(selectedCardApplication);
+    }
+
+    @Override
     public void subscribe(BaseView view) {
         if (view instanceof CardApplicationListView) {
             this.mCardApplicationListView = (CardApplicationListView) view;
