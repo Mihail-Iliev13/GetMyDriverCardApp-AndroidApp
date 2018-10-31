@@ -32,7 +32,8 @@
         <activity android:name=".views.activities.OldCardCaptureActivity" />
         <activity android:name=".views.activities.SignaturePadActivity" />
         <activity android:name=".views.activities.CardApplicationListActivity" />
-        <activity android:name=".views.activities.ApplicationFilling"></activity>
+        <activity android:name=".views.activities.ApplicationStatusActivity" />
+        <activity android:name=".views.activities.CardApplicationDetailsActivity"></activity>
     </application>
 
 </manifest>

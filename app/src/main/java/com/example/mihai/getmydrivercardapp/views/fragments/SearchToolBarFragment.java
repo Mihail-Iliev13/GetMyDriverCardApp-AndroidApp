@@ -53,6 +53,8 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
         View view = inflater.inflate(R.layout.fragment_search_tool_bar, container, false);
         ButterKnife.bind(this, view);
 
+        mToolbar.setTitle("Search by: ");
+
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

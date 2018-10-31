@@ -51,7 +51,7 @@ public class LogInPresenterImpl implements LogInPresenter {
                     CardApplication cardApplication = mService.getPendingApplication(user);
                     mLoginView.showCardApplicationStatus(cardApplication);
                 } else if (user.getUserRole().equals(UserRole.ADMIN)){
-                    mLoginView.showAllPendingApplications();
+                    mLoginView.showAllCardApplications();
                 } else {
                     mLoginView.showFillCardApplicationForm(user);
                 }

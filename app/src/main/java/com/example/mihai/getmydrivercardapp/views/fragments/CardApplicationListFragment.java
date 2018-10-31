@@ -1,16 +1,20 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.adapters.CardApplicationArrayAdapter;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
@@ -31,7 +35,7 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     ListView mListView;
 
     private CardApplicationArrayAdapter mAdapter;
-    private CardApplicationListPresenter cardApplicationListPresenter;
+    private CardApplicationListPresenter mCardApplicationListPresenter;
 
     @Inject
     public CardApplicationListFragment() {
@@ -45,22 +49,31 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
         View view = inflater.inflate(R.layout.fragment_card_application_list, container, false);
         ButterKnife.bind(this, view);
 
+
         mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()), R.layout.custom_list_item);
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CardApplication selectedCardApplication = mAdapter.getItem(position);
+                mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
+            }
+        });
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        cardApplicationListPresenter
+        mCardApplicationListPresenter
                 .loadCardApplications();
     }
 
     @Override
     public void setPresenter(BasePresenter presenter) {
         if ( presenter instanceof CardApplicationListPresenter) {
-            this.cardApplicationListPresenter = (CardApplicationListPresenter) presenter;
+            this.mCardApplicationListPresenter = (CardApplicationListPresenter) presenter;
         } else {
             throw new InvalidParameterException();
         }
@@ -83,6 +96,13 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
                     Toast.LENGTH_SHORT)
                     .show();
         });
+    }
+
+    @Override
+    public void navigateToCardApplicationDetails(CardApplication selectedCardApplication) {
+        Intent intent = new Intent(getContext(), CardApplicationDetailsActivity.class);
+        intent.putExtra(Constants.CARD_APPLICATION_KEY, selectedCardApplication);
+        startActivity(intent);
     }
 
     @Override

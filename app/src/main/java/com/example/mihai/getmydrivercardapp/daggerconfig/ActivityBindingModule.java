@@ -1,6 +1,8 @@
 package com.example.mihai.getmydrivercardapp.daggerconfig;
 
 
+import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.DrivingLicenseCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.IDCardCaptureActivity;
@@ -42,6 +44,14 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector
     abstract CardApplicationListActivity cardApplicationListActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract ApplicationStatusActivity applicationStatusActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract CardApplicationDetailsActivity cardApplicationDetailsActivity();
 
 //    @ActivityScoped
 //    @ContributesAndroidInjector(modules = TaskDetailPresenterModule.class)

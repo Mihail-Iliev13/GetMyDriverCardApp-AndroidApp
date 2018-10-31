@@ -36,4 +36,8 @@ public class CardApplication implements Serializable {
     public void setDetails(PersonalDetails details) {
         this.details = details;
     }
+
+    public void setStatus(CardAppStatus status) {
+        this.status = status;
+    }
 }
