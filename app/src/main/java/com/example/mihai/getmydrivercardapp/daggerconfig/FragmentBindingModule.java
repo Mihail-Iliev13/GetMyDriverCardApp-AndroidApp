@@ -3,8 +3,11 @@ package com.example.mihai.getmydrivercardapp.daggerconfig;
 import com.example.mihai.getmydrivercardapp.views.fragments.ApplicationStatusFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.CardApplicationDetailsFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.CardApplicationListFragment;
+import com.example.mihai.getmydrivercardapp.views.fragments.ContactDetailsFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.LogInFragment;
+import com.example.mihai.getmydrivercardapp.views.fragments.OptionsFragment;
+import com.example.mihai.getmydrivercardapp.views.fragments.PersonalDetailsFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.SearchToolBarFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.SignaturePadFragment;
 
@@ -40,4 +43,16 @@ public abstract class FragmentBindingModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract CardApplicationDetailsFragment applicationDetailsFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract PersonalDetailsFragment personalDetailsFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ContactDetailsFragment contactDetailsFragment();
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract OptionsFragment optionsFragment();
 }

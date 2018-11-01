@@ -35,7 +35,8 @@
         <activity android:name=".views.activities.ApplicationStatusActivity" />
         <activity android:name=".views.activities.CardApplicationDetailsActivity" />
         <activity android:name=".views.activities.PersonalDetailsActivity" />
-        <activity android:name=".views.activities.ContactDetailsActivity"></activity>
+        <activity android:name=".views.activities.ContactDetailsActivity" />
+        <activity android:name=".views.activities.OptionsActivity"></activity>
     </application>
 
 </manifest>

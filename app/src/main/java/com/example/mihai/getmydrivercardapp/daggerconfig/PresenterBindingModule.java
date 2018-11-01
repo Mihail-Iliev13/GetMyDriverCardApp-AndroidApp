@@ -5,6 +5,7 @@ import com.example.mihai.getmydrivercardapp.services.Base.Service;
 import com.example.mihai.getmydrivercardapp.views.presenters.ApplicationStatusPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.CardApplicationDetailsPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.CardApplicationListPresenterImpl;
+import com.example.mihai.getmydrivercardapp.views.presenters.ContactDetailsPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.ImageCapturePresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.LogInPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.SearchToolBarPresenterImpl;
@@ -12,6 +13,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.SignaturePadPresent
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationStatusPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationDetailsPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ContactDetailsPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
@@ -57,3 +59,4 @@ public class PresenterBindingModule {
         return new CardApplicationDetailsPresenterImpl();
     }
 }
+

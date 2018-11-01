@@ -4,10 +4,13 @@ package com.example.mihai.getmydrivercardapp.daggerconfig;
 import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.ContactDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.DrivingLicenseCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.IDCardCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.OldCardCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.OptionsActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.PersonalDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.SelfieCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
 
@@ -52,6 +55,18 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector
     abstract CardApplicationDetailsActivity cardApplicationDetailsActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract PersonalDetailsActivity personalDetailsActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract ContactDetailsActivity contactDetailsActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract OptionsActivity optionsActivity();
 
 //    @ActivityScoped
 //    @ContributesAndroidInjector(modules = TaskDetailPresenterModule.class)
