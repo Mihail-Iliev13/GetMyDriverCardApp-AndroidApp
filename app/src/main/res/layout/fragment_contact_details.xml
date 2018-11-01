@@ -3,42 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.ContactDetailsFragment">
+    tools:context=".views.fragments.PersonalDetailsFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Address"
+            android:id="@+id/tv_address"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/et_address"
+            android:layout_below="@+id/tv_address"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Email"
+            android:id="@+id/tv_email"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/et_email"
+            android:layout_below="@+id/tv_email"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/address"
-        android:id="@+id/tv_address"
+        <TextView
+            android:id="@+id/tv_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Phone Number" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/et_phone_number"
+            android:layout_below="@+id/tv_phone_number"/>
 
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/et_user_address"
-        android:layout_below="@+id/tv_address"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/phone_number"
-        android:id="@+id/tv_phone_number"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/et_et_phone_number"
-        android:layout_below="@+id/tv_phone_number"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/email"
-        android:id="@+id/tv_email"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/et_email"
-        android:layout_below="@+id/tv_email"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dp_date_of_birth"
+            android:text="@string/Next_button"
+            android:gravity="center"
+            android:id="@+id/button_next"/>
+    </RelativeLayout>
 
 </FrameLayout>
