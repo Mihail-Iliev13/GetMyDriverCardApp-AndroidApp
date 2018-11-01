@@ -18,6 +18,8 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 
 import java.security.InvalidParameterException;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,6 +44,7 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
     private CardApplication mCardApplication;
     private User mUser;
 
+    @Inject
     public ContactDetailsFragment() {
         // Required empty public constructor
     }

@@ -102,7 +102,8 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
     @Override
     public void navigateToNextView() {
-        Intent newIntent;
+        //Intent newIntent=Intent(this,ContactDetailsActivity.class);
+        //startActivity(newIntent);
 
     }
 
