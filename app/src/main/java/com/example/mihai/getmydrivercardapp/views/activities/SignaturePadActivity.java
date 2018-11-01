@@ -1,7 +1,9 @@
 package com.example.mihai.getmydrivercardapp.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
@@ -28,9 +30,14 @@ public class SignaturePadActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
+        Intent intent = getIntent();
+        User user = (User) intent.getSerializableExtra(Constants.USER_KEY);
+        CardApplication cardApplication = (CardApplication)
+                intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY);
+
         mSignaturePadFragment.setPresenter(mSignaturePadPresenter);
-        mSignaturePadFragment.setCurrentUser(mUser);
-        mSignaturePadFragment.setCurrentCardApplication(mCardApplication);
+        mSignaturePadFragment.setCurrentUser(user);
+        mSignaturePadFragment.setCurrentCardApplication(cardApplication);
 
         getSupportFragmentManager()
                 .beginTransaction()

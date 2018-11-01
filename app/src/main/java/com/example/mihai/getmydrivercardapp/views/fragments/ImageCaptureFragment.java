@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,10 +15,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
@@ -32,17 +35,10 @@ import butterknife.OnClick;
 
 public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
-    @BindView(R.id.btn_capture_image)
-    Button mCaptureImageButton;
-
-    @BindView(R.id.btn_proceed)
-    Button mProceedButton;
-
-    @BindView(R.id.img_picture)
-    ImageView mImageView;
-
-    @BindView(R.id.txt_desc)
-    TextView mTxtPreview;
+    @BindView(R.id.btn_capture_image) Button mCaptureImageButton;
+    @BindView(R.id.btn_proceed) Button mProceedButton;
+    @BindView(R.id.img_picture) ImageView mImageView;
+    @BindView(R.id.txt_desc) TextView mTxtPreview;
 
     private ImageCapturePresenter mPresenter;
     private User mUser;
@@ -73,15 +69,19 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
         mPresenter.handleActivityResult(requestCode, resultCode, data, getActivity());
 
-        if (mImageView.getDrawable() != null) {
-            mCaptureImageButton.setGravity(Gravity.LEFT);
-            mProceedButton.setVisibility(View.VISIBLE);
-        }
+        getActivity().runOnUiThread(() -> {
+            if (mImageView.getDrawable() != null) {
+                mCaptureImageButton.setGravity(Gravity.LEFT);
+                mProceedButton.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @OnClick(R.id.btn_capture_image)
     public void captureImage () {
-        mPresenter.openCamera(this);
+        getActivity().runOnUiThread(() -> {
+            mPresenter.openCamera(this);
+        });
     }
 
     @OnClick(R.id.btn_proceed)
@@ -90,8 +90,10 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
                 .getDrawable())
                 .getBitmap();
 
-        byte[] byteImage = mPresenter.convertBitmapToByteArray(bitmap);
-        mPresenter.setValueToImageAttribute(mCardApplication, mImageAttribute, byteImage);
+            byte[] byteImage = mPresenter.convertBitmapToByteArray(bitmap);
+            mPresenter.setValueToImageAttribute(mCardApplication, mImageAttribute, byteImage);
+            navigate(SignaturePadActivity.class);
+
     }
 
     @Override
@@ -123,5 +125,13 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     @Override
     public void setImageAttribute(ImageAttribute imageAttribute) {
         this.mImageAttribute = imageAttribute;
+    }
+
+    @Override
+    public void navigate(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getContext(), activity);
+        intent.putExtra(Constants.USER_KEY,mUser);
+        intent.putExtra(Constants.CARD_APPLICATION_KEY, mCardApplication);
+        startActivity(intent);
     }
 }

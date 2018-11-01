@@ -1,12 +1,6 @@
 package com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces;
 
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.User;
-
-public interface PersonalDetailsView extends BaseView {
-    void setUser(User user);
-    void CardApplication(CardApplication cardApplication);
+public interface PersonalDetailsView extends BaseView,
+        DatePickerView, NavigateView, CardApplicationTransferable {
     void assignValues();
-
-    void navigateToNextView();
 }

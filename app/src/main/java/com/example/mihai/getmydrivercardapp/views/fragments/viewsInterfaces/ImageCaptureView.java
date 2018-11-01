@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 
-public interface ImageCaptureView extends BaseView, UserTransferable{
+public interface ImageCaptureView extends BaseView, CardApplicationTransferable, NavigateView {
     void setImageBitmap(Bitmap bitmap);
     void setImageAttribute(ImageAttribute imageAttribute);
 

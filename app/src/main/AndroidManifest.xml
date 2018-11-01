@@ -34,7 +34,10 @@
         <activity android:name=".views.activities.CardApplicationListActivity" />
         <activity android:name=".views.activities.ApplicationStatusActivity" />
         <activity android:name=".views.activities.CardApplicationDetailsActivity" />
-        <activity android:name=".views.activities.PersonalDetailsActivity"></activity>
+        <activity android:name=".views.activities.PersonalDetailsActivity" />
+        <activity android:name=".views.activities.ApplicationReasonActivity" />
+        <activity android:name=".views.activities.LostCardActivity" />
+        <activity android:name=".views.activities.ContactDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -52,7 +52,7 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
     @Override
     public byte[] convertBitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 1, baos);
         return  baos.toByteArray();
     }
 
@@ -61,22 +61,25 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
                                          byte[] byteImage) {
 
         PersonalDetails personalDetails = cardApplication.getDetails();
-        switch (imageAttribute) {
-            case SELFIE_IMAGE:
-                personalDetails.setSelfie(byteImage);
-                return;
-            case ID_CARD_IMAGE:
-                personalDetails.setIdCardImage(byteImage);
-                return;
-            case OLD_CARD_IMAGE:
-                personalDetails.setPreviousCardImage(byteImage);
-                return;
-            case DRIVING_LICENSE_IMAGE:
-                personalDetails.setDrivingLicenseImage(byteImage);
-                return;
-                default:
-                    throw new IllegalArgumentException();
-        }
+        personalDetails.setSelfie(byteImage);
+        personalDetails.setIdCardImage(byteImage);
+        personalDetails.setDrivingLicenseImage(byteImage);
+//        switch (imageAttribute) {
+//            case SELFIE_IMAGE:
+//                personalDetails.setSelfie(byteImage);
+//                return;
+//            case ID_CARD_IMAGE:
+//                personalDetails.setIdCardImage(byteImage);
+//                return;
+//            case OLD_CARD_IMAGE:
+//                personalDetails.setPreviousCardImage(byteImage);
+//                return;
+//            case DRIVING_LICENSE_IMAGE:
+//                personalDetails.setDrivingLicenseImage(byteImage);
+//                return;
+//                default:
+//                    throw new IllegalArgumentException();
+//        }
     }
 
     @Override

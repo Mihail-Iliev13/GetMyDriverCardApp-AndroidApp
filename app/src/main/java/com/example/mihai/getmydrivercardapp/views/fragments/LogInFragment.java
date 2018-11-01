@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
@@ -33,16 +32,15 @@ import butterknife.OnClick;
 
 public class LogInFragment extends Fragment implements LogInView {
 
-    @BindView(R.id.et_email)
-    EditText mEmail;
-    @BindView(R.id.et_password)
-    EditText mPassword;
-    @BindView(R.id.btn_log_in)
-    Button mLoginButton;
-    @BindView(R.id.btn_sign_up)
-    Button mSignUpButton;
+    @BindView(R.id.et_email) EditText mEmail;
+    @BindView(R.id.et_password) EditText mPassword;
+    @BindView(R.id.btn_log_in) Button mLoginButton;
+    @BindView(R.id.btn_sign_up) Button mSignUpButton;
 
     private LogInPresenter mLogInPresenter;
+    private User mUser;
+    private Navigator mNavigator;
+
 
     @Inject
     public LogInFragment() {
@@ -89,60 +87,27 @@ public class LogInFragment extends Fragment implements LogInView {
         mLogInPresenter.signUp(email, password);
     }
 
-    @Override
-    public void showNoSuchUserToast(String email) {
 
-        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
-            Toast.makeText(getContext(),
-                    "There is no existing user with email: " + email + "Try to Sign Up first",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
+    @Override
+    public void showNoExistingUserError(String email) {
+        mEmail.setError("There is no existing user with email: " + email);
     }
 
     @Override
-    public void showNoMatchingPasswordToast() {
-        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
-            Toast.makeText(getContext(), "Password is invalid!",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
+    public void showNoMatchingPasswordError() {
+        mPassword.setError("Invalid Password!");
     }
 
     @Override
-    public void showCardApplicationStatus(CardApplication cardApplication) {
-        Intent intent = new Intent(getContext(), ApplicationStatusActivity.class);
-        intent.putExtra(Constants.CARD_APPLICATION_KEY, cardApplication);
-        startActivity(intent);
+    public void showUserAlreadyExistsError(String email) {
+        mEmail.setError("User with email " +  " already exists!");
     }
 
     @Override
-    public void showFillCardApplicationForm(User user) {
-
-        Intent intent = new Intent(getContext(), ApplicationStatusActivity.class);
-        startActivity(intent);
-
-//        getActivity().runOnUiThread( () -> {
-//            Toast.makeText(getContext(), "Fill the form",
-//                    Toast.LENGTH_LONG)
-//                    .show();
-//        });
+    public void setUser(User user) {
+        this.mUser = user;
     }
 
-    @Override
-    public void showUserAlreadyExists() {
-        Objects.requireNonNull(getActivity()).runOnUiThread( () -> {
-            Toast.makeText(getContext(), "User with this email already exists",
-                    Toast.LENGTH_LONG)
-                    .show();
-        });
-    }
-
-    @Override
-    public void showAllCardApplications() {
-        Intent intent = new Intent(getContext(), CardApplicationListActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void showError(Exception e) {
@@ -151,5 +116,12 @@ public class LogInFragment extends Fragment implements LogInView {
                     Toast.LENGTH_LONG)
                     .show();
         });
+    }
+
+    @Override
+    public void navigate(Class<? extends Activity> activity) {
+        Intent intent = new Intent(getContext(), activity);
+        intent.putExtra(Constants.USER_KEY, mUser);
+        startActivity(intent);
     }
 }

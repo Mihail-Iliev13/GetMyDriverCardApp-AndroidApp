@@ -28,12 +28,9 @@ import butterknife.OnClick;
 
 public class SignaturePadFragment extends Fragment implements SignaturePadView {
 
-    @BindView(R.id.sp_signature_pad)
-    SignaturePad mSignaturePad;
-    @BindView(R.id.btn_clear_signature)
-    Button mClearButton;
-    @BindView(R.id.btn_submit)
-    Button mSubmitButton;
+    @BindView(R.id.sp_signature_pad) SignaturePad mSignaturePad;
+    @BindView(R.id.btn_clear_signature) Button mClearButton;
+    @BindView(R.id.btn_submit) Button mSubmitButton;
 
     private User mUser;
     private CardApplication mCardApplication;
@@ -52,6 +49,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
         ButterKnife.bind(this, view);
 
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+
             @Override
             public void onStartSigning() {
 
@@ -90,8 +88,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     @OnClick(R.id.btn_submit)
     public void submitOnClick(){
         Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
-        byte[] byteImage = mSignaturePadPresenter.convertBitmapToByteArray(bitmapImage);
-        mSignaturePadPresenter.setValueToSignature(mCardApplication, byteImage);
+        mSignaturePadPresenter.assignApplicationSignatureValue(bitmapImage);
         mSignaturePadPresenter.saveUser(mUser.getEmail(), mCardApplication);
     }
 
@@ -112,4 +109,10 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     public void setCurrentCardApplication(CardApplication cardApplication) {
         this.mCardApplication = cardApplication;
     }
+
+    @Override
+    public void setSignature(byte[] byteArrayImage) {
+        mCardApplication.getDetails().setSignature(byteArrayImage);
+    }
+
 }

@@ -16,6 +16,20 @@
         <item>Completed</item>
     </string-array>
 
+    <string-array name="replacement_reasons">
+        <item>Stolen</item>
+        <item>Lost</item>
+        <item>Changed Address</item>
+        <item>Changed Name</item>
+        <item>Changed Photo</item>
+        <item>Damaged</item>
+        <item>Malfunctioning</item>
+    </string-array>
+
+    <string-array name="renewal_reasons">
+        <item>Expired</item>
+        <item>Withdrawn</item>
+    </string-array>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

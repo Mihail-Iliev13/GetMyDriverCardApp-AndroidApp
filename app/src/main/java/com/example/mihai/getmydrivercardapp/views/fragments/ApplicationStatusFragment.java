@@ -24,8 +24,7 @@ import butterknife.ButterKnife;
 
 public class ApplicationStatusFragment extends Fragment implements ApplicationStatusView{
 
-    @BindView(R.id.tv_message)
-    TextView mStatusTextView;
+    @BindView(R.id.tv_message) TextView mStatusTextView;
 
     private CardApplication mCardApplication;
     private ApplicationStatusPresenter mApplicationStatusPresenter;

@@ -1,7 +1,9 @@
 package com.example.mihai.getmydrivercardapp.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -17,21 +19,22 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity {
 
     @Inject
     ImageCaptureFragment mImageCaptureFragment;
-
     @Inject
     ImageCapturePresenter mImageCapturePresenter;
 
-    private User mUser;
-    private CardApplication mCardApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
+        Intent intent = getIntent();
+        User user = (User) intent.getSerializableExtra(Constants.USER_KEY);
+        CardApplication cardApplication = (CardApplication) intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY);
+
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
-        mImageCaptureFragment.setCurrentUser(mUser);
-        mImageCaptureFragment.setCurrentCardApplication(mCardApplication);
+        mImageCaptureFragment.setCurrentUser(user);
+        mImageCaptureFragment.setCurrentCardApplication(cardApplication);
         mImageCaptureFragment.setImageAttribute(ImageAttribute.SELFIE_IMAGE);
 
         getSupportFragmentManager()

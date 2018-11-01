@@ -1,6 +1,6 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardAppStatus;
+import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ApplicationStatusView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationStatusPresenter;
@@ -28,7 +28,7 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
     }
 
     @Override
-    public void showStatusMessage(CardAppStatus status) {
+    public void showStatusMessage(CardApplicationStatus status) {
         String message;
         switch (status){
             case NEW:

@@ -31,8 +31,7 @@ import butterknife.ButterKnife;
 
 public class CardApplicationListFragment extends Fragment implements CardApplicationListView {
 
-    @BindView(R.id.lv_applications)
-    ListView mListView;
+    @BindView(R.id.lv_applications) ListView mListView;
 
     private CardApplicationArrayAdapter mAdapter;
     private CardApplicationListPresenter mCardApplicationListPresenter;
@@ -115,4 +114,5 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
                     .show();
         });
     }
+
 }

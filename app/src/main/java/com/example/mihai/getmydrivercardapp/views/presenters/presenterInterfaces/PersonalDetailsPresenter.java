@@ -3,4 +3,6 @@ package com.example.mihai.getmydrivercardapp.views.presenters.presenterInterface
 public interface PersonalDetailsPresenter extends BasePresenter {
 
     void handleOnClickNext();
+    void handleOnClickPickDateButton();
+
 }

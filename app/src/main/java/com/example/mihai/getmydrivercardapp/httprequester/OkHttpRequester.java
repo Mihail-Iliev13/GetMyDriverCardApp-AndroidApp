@@ -23,7 +23,8 @@ public class OkHttpRequester implements HttpRequester {
                 .build();
         OkHttpClient client = new OkHttpClient();
 
-        Response response = client.newCall(request)
+        Response response = client
+                .newCall(request)
                 .execute();
 
         String body = response.body().string();

@@ -2,9 +2,10 @@ package com.example.mihai.getmydrivercardapp.services;
 
 import android.annotation.SuppressLint;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardAppStatus;
+import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
 import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
 import com.example.mihai.getmydrivercardapp.services.Base.Service;
 
@@ -43,10 +44,6 @@ public class UserService implements Service {
 
     }
 
-    @Override
-    public User addUser(User user) throws IOException {
-        return mRepository.addUser(user);
-    }
 
     @Override
     public CardApplication getPendingApplication(User user) {
@@ -57,7 +54,7 @@ public class UserService implements Service {
         } else {
             for (CardApplication cardApplication: cardApplicationList) {
                 if (!cardApplication.getStatus()
-                        .equals(CardAppStatus.COMPLETED)) {
+                        .equals(CardApplicationStatus.COMPLETED)) {
                     return cardApplication;
                 }
             }
@@ -94,6 +91,12 @@ public class UserService implements Service {
     @Override
     public void filterApplicationsByStatus(String pattern) {
 
+    }
+
+    @Override
+    public User addNewUser(String email, String password, UserRole userRole) throws IOException {
+        User newUser = new User(email, password, userRole);
+        return mRepository.addUser(newUser);
     }
 
 }

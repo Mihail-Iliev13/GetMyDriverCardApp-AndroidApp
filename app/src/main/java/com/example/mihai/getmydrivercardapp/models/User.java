@@ -3,9 +3,11 @@ package com.example.mihai.getmydrivercardapp.models;
 import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable{
+
     public User() {
         //required empty constructor
     }
@@ -26,6 +28,9 @@ public class User implements Serializable{
     }
 
     public void addCardApplication(CardApplication newCardApplication) {
+        if (cardApplications == null) {
+            cardApplications = new ArrayList<>();
+        }
         cardApplications.add(newCardApplication);
     }
 

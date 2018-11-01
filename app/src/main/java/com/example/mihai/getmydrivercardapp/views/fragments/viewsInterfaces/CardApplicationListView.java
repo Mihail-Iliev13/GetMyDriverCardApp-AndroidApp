@@ -7,6 +7,5 @@ import java.util.List;
 public interface CardApplicationListView extends BaseView, ErrorView {
     void showApplications(List<CardApplication> cardApplications);
     void showEmptyListMessage();
-
-    void navigateToCardApplicationDetails(CardApplication selectedCardApplication);
+    void navigateToCardApplicationDetails(CardApplication cardApplication);
 }

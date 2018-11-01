@@ -10,13 +10,15 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class LoginActivity extends DaggerAppCompatActivity{
+public class LoginActivity extends DaggerAppCompatActivity {
 
     @Inject
     LogInFragment mLoginFragment;
 
     @Inject
     LogInPresenter mLogInPresenter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +38,6 @@ public class LoginActivity extends DaggerAppCompatActivity{
         super.onResume();
         mLogInPresenter.subscribe(mLoginFragment);
     }
+
 }
 
