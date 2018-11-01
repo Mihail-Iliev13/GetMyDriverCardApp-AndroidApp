@@ -80,3 +80,4 @@ public class PresenterBindingModule {
         return new ContactDetailsPresenterImpl();
     }
 }
+
