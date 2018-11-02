@@ -30,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LogInFragment extends Fragment implements LogInView {
+public class LogInFragment extends Fragment implements LogInView{
 
     @BindView(R.id.et_email) EditText mEmail;
     @BindView(R.id.et_password) EditText mPassword;
