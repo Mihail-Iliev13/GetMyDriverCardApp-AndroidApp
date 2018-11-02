@@ -49,13 +49,7 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact_details, container, false);
         ButterKnife.bind(this, view);
-        mButtonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mContactDetailsPresenter.handleOnButtonNextClick();
-            }
-        });
+        mButtonNext.setOnClickListener(v -> mContactDetailsPresenter.handleOnButtonNextClick());
         return view;
     }
 
@@ -69,7 +63,7 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
     }
 
     @Override
-    public void assignValues() {
+    public void setCardApplicationFields() {
         String email = String.valueOf(mEmail.getText());
         String phoneNumber = String.valueOf(mPhoneNumber.getText());
         String address = String.valueOf(mUserAddress.getText());

@@ -2,6 +2,7 @@ package com.example.mihai.getmydrivercardapp.parsers;
 
 import com.example.mihai.getmydrivercardapp.parsers.base.JsonParser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ public class GsonJsonParser<T> implements JsonParser<T> {
     public GsonJsonParser(Class<T> klass, Class<T[]> arrayKlass) {
         mKlass = klass;
         mArrayKlass = arrayKlass;
-        mGson = new Gson();
+        mGson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     }
 
 

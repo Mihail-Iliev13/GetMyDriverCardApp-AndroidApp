@@ -2,7 +2,6 @@ package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -93,103 +92,98 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
 
     @Override
     public void assignValueToIDTextView(String driverID) {
-        mID.setText(driverID);
+        this.mID.setText(driverID);
     }
 
     @Override
     public void assignValueToFirstNameTextView(String firstName) {
-        mFirstName.setText(firstName);
+        this.mFirstName.setText(firstName);
     }
 
     @Override
     public void assignValueToSurnameTextView(String surName) {
-        mSurName.setText(surName);
+        this.mSurName.setText(surName);
     }
 
     @Override
     public void assignValueToBirthDateTextView(Date date) {
-        mBirthDate.setText(String.valueOf(date));
+        this.mBirthDate.setText(String.valueOf(date));
     }
 
     @Override
-    public void assignValueToDrivingLicenseImageView(byte[] drivingLicenseImage) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(drivingLicenseImage, 0, drivingLicenseImage.length);
-        mDrivingLicenseImage.setImageBitmap(bitmap);
+    public void assignValueToDrivingLicenseImageView(Bitmap drivingLicenseImage) {
+        this.mDrivingLicenseImage.setImageBitmap(drivingLicenseImage);
     }
 
     @Override
     public void assignValueToAddressTextView(String address) {
-        mAddress.setText(address);
+        this.mAddress.setText(address);
     }
 
     @Override
     public void assignValueToPhoneNumberTextView(String phoneNumber) {
-        mPhoneNumber.setText(phoneNumber);
+        this.mPhoneNumber.setText(phoneNumber);
     }
 
     @Override
     public void assignValueToEmailTextView(String email) {
-        mEmail.setText(email);
+        this.mEmail.setText(email);
     }
 
     @Override
-    public void assignValueToSelfieImageView(byte[] selfieImage) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(selfieImage, 0, selfieImage.length);
-        mSelfieImage.setImageBitmap(bitmap);
+    public void assignValueToSelfieImageView(Bitmap selfieImage) {
+        this.mSelfieImage.setImageBitmap(selfieImage);
     }
 
     @Override
-    public void assignValueToIDCardImageView(byte[] idCardImage) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(idCardImage, 0, idCardImage.length);
-        mIDCardImage.setImageBitmap(bitmap);
+    public void assignValueToIDCardImageView(Bitmap idCardImage) {
+        this.mIDCardImage.setImageBitmap(idCardImage);
     }
 
     @Override
-    public void assignValueToSignatureImageView(byte[] signatureImage) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(signatureImage, 0, signatureImage.length);
-        mSignatureImage.setImageBitmap(bitmap);
+    public void assignValueToSignatureImageView(Bitmap signatureImage) {
+        this.mSignatureImage.setImageBitmap(signatureImage);
     }
 
     @Override
-    public void assignValueToOldCardImageView(byte[] oldCardImage) {
-        mOldCardImageLayout.setVisibility(View.VISIBLE);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(oldCardImage, 0, oldCardImage.length);
-        mOldCardImage.setImageBitmap(bitmap);
+    public void assignValueToOldCardImageView(Bitmap oldCardImage) {
+        this.mOldCardImageLayout.setVisibility(View.VISIBLE);
+        this.mOldCardImage.setImageBitmap(oldCardImage);
     }
 
     @Override
     public void assignValueToCountryIssuedCardTextView(String countryIssuedCard) {
-        mCountryIssuedCardLayout.setVisibility(View.VISIBLE);
-        mCountryIssuedCard.setText(countryIssuedCard);
+        this.mCountryIssuedCardLayout.setVisibility(View.VISIBLE);
+        this.mCountryIssuedCard.setText(countryIssuedCard);
     }
 
     @Override
     public void assignValueToAuthorityIssuedCardTextView(String authorityIssuedCard) {
-        mAuthorityIssuedCardLayout.setVisibility(View.VISIBLE);
-        mAuthorityIssuedCard.setText(authorityIssuedCard);
+        this.mAuthorityIssuedCardLayout.setVisibility(View.VISIBLE);
+        this.mAuthorityIssuedCard.setText(authorityIssuedCard);
     }
 
     @Override
     public void assignValueToOldCardNumberTextView(String oldCardNumber) {
-        mOldCardNumberLayout.setVisibility(View.VISIBLE);
-        mOldCardNumber.setText(oldCardNumber);
+        this.mOldCardNumberLayout.setVisibility(View.VISIBLE);
+        this.mOldCardNumber.setText(oldCardNumber);
     }
 
     @Override
     public void assignValueToDateOfExpiryTextView(Date dateOfExpiry) {
-        mDateOfExpiryLayout.setVisibility(View.VISIBLE);
-        mDateOfExpiry.setText(String.valueOf(dateOfExpiry));
+        this.mDateOfExpiryLayout.setVisibility(View.VISIBLE);
+        this.mDateOfExpiry.setText(String.valueOf(dateOfExpiry));
     }
 
     @Override
     public void assignValueToDateOfLossTextView(Date dateOfLoss) {
-        mDateLostLayout.setVisibility(View.VISIBLE);
-        mDateOfLoss.setText(String.valueOf(dateOfLoss));
+        this.mDateLostLayout.setVisibility(View.VISIBLE);
+        this.mDateOfLoss.setText(String.valueOf(dateOfLoss));
     }
 
     @Override
     public void assignValueToPlaceLostTextView(String placeLost) {
-        mPlaceLostLayout.setVisibility(View.VISIBLE);
-        mPlaceLost.setText(placeLost);
+        this.mPlaceLostLayout.setVisibility(View.VISIBLE);
+        this.mPlaceLost.setText(placeLost);
     }
 }

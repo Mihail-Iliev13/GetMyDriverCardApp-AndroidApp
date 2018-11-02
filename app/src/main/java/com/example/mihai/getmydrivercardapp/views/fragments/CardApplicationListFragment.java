@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -51,13 +50,9 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
 
         mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()), R.layout.custom_list_item);
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CardApplication selectedCardApplication = mAdapter.getItem(position);
-                mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
-            }
+        mListView.setOnItemClickListener((parent, view1, position, id) -> {
+            CardApplication selectedCardApplication = mAdapter.getItem(position);
+            mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
         });
         return view;
     }

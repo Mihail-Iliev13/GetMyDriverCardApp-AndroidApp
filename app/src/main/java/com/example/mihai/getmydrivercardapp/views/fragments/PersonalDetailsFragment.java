@@ -28,7 +28,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -77,7 +76,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     }
 
     @Override
-    public void assignValues() {
+    public void setCardApplicationFields() {
         String id = String.valueOf(mUserIdET.getText());
         String firstName = String.valueOf(mFirstNameET.getText());
         String lastName= String.valueOf(mLastNameET.getText());
@@ -92,8 +91,9 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
         try {
-            String dateString = year + "/" +  month + "/" + dayOfMonth;
-            mBirthDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateString);
+            String dateString = dayOfMonth + "/" +  month + "/" + year;
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            mBirthDate = df.parse(dateString);
             mDatePreview.setText(dateString);
             mDatePreview.setTypeface(Typeface.DEFAULT);
         } catch (ParseException e) {
@@ -118,7 +118,9 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = initializeDatePickerDialog(year, month, day);
-        datePickerDialog.show();
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(datePickerDialog::show);
     }
 
     @Override

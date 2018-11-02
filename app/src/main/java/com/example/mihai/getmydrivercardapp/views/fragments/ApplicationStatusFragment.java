@@ -15,6 +15,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 
 import java.security.InvalidParameterException;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -46,7 +47,7 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
     @Override
     public void onResume() {
         super.onResume();
-        mApplicationStatusPresenter
+        this.mApplicationStatusPresenter
                 .showStatusMessage(mCardApplication.getStatus());
     }
 
@@ -61,7 +62,8 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
 
     @Override
     public void setMessageToTextView(String message) {
-        mStatusTextView.setText(message);
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(() -> mStatusTextView.setText(message));
     }
 
     @Override

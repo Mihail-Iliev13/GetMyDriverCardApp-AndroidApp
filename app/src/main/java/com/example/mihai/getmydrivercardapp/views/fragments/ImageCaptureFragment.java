@@ -26,6 +26,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
 
 import java.security.InvalidParameterException;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -69,7 +70,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
         mPresenter.handleActivityResult(requestCode, resultCode, data, getActivity());
 
-        getActivity().runOnUiThread(() -> {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (mImageView.getDrawable() != null) {
                 mCaptureImageButton.setGravity(Gravity.LEFT);
                 mProceedButton.setVisibility(View.VISIBLE);
@@ -79,9 +80,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
     @OnClick(R.id.btn_capture_image)
     public void captureImage () {
-        getActivity().runOnUiThread(() -> {
             mPresenter.openCamera(this);
-        });
     }
 
     @OnClick(R.id.btn_proceed)
@@ -93,14 +92,15 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
             byte[] byteImage = mPresenter.convertBitmapToByteArray(bitmap);
             mPresenter.setValueToImageAttribute(mCardApplication, mImageAttribute, byteImage);
             navigate(SignaturePadActivity.class);
-
     }
 
     @Override
     public void setImageBitmap(Bitmap bitmap) {
-        mImageView.setImageBitmap(bitmap);
-        mTxtPreview.setVisibility(View.GONE);
-        mImageView.setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mImageView.setImageBitmap(bitmap);
+            mTxtPreview.setVisibility(View.GONE);
+            mImageView.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override

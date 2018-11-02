@@ -49,12 +49,8 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_application_reason, container, false);
         ButterKnife.bind(this, view);
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                mApplicationReasonPresenter.handleOnCheckedChange(checkedId);
-            }
-        });
+        mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
+                mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
         return view;
     }
 
@@ -68,8 +64,9 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     }
 
     @Override
-    public void setCardApplicationReason(CardApplicationReason applicationCardApplicationReason) {
-        mCardApplication.setCardApplicationReason(applicationCardApplicationReason);
+    public void setCardApplicationReason(CardApplicationReason reason) {
+        mCardApplication
+                .setCardApplicationReason(reason);
     }
 
     @Override
@@ -84,7 +81,8 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     public void showDialog(String title, int resourceID) {
         AlertDialog.Builder builder = buildDialog(title, resourceID);
         AlertDialog dialog = builder.create();
-        dialog.show();
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(dialog::show);
     }
 
     @Override
@@ -103,11 +101,14 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
 
         builder.setPositiveButton("OK", (dialog, index) -> {
             String reason = values[arrayIndex[0]];
-            mApplicationReasonPresenter.handlePositiveButtonOnclick(reason, mCardApplication);
+            mApplicationReasonPresenter
+                    .handlePositiveButtonOnclick(reason, mCardApplication);
             dialog.dismiss();
         });
+
         builder.setNegativeButton("Cancel", (dialog, which) -> {
         });
+
         return builder;
     }
 

@@ -29,7 +29,7 @@ public class ContactDetailsPresenterImpl implements ContactDetailsPresenter {
 
     @Override
     public void handleOnButtonNextClick() {
-        mContactDetailsView.assignValues();
+        mContactDetailsView.setCardApplicationFields();
         mContactDetailsView.navigate(SelfieCaptureActivity.class);
     }
 }

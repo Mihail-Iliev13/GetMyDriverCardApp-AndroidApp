@@ -90,17 +90,23 @@ public class LogInFragment extends Fragment implements LogInView {
 
     @Override
     public void showNoExistingUserError(String email) {
-        mEmail.setError("There is no existing user with email: " + email);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mEmail.setError("There is no existing user with email: " + email);
+        });
     }
 
     @Override
     public void showNoMatchingPasswordError() {
-        mPassword.setError("Invalid Password!");
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mPassword.setError("Invalid Password!");
+        });
     }
 
     @Override
     public void showUserAlreadyExistsError(String email) {
-        mEmail.setError("User with email " +  " already exists!");
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mEmail.setError("User with email " +  " already exists!");
+        });
     }
 
     @Override

@@ -125,7 +125,9 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
     @Override
     public void setSpinnerSelectedItemToDefaultValue() {
-        mSpinner.setSelection(0);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mSpinner.setSelection(0);
+        });
     }
 
     @Override
@@ -146,7 +148,9 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
         DatePickerDialog datePickerDialog = initializeDatePickerDialog(year, month, day);
         datePickerDialog.setOnCancelListener(dialog -> setSpinnerSelectedItemToDefaultValue());
-        datePickerDialog.show();
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(datePickerDialog::show);
     }
 
     @Override
@@ -163,6 +167,7 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
     @Override
     public AlertDialog.Builder buildStatusDialog() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Select status: ");
         String[] statusValues = Objects.requireNonNull(getActivity())
@@ -192,6 +197,8 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
     public void showStatusDialog() {
         AlertDialog.Builder builder = buildStatusDialog();
         AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(alertDialog::show);
     }
 }

@@ -27,7 +27,7 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
 
     @Override
     public void handleOnClickNext() {
-        mPersonalDetailsView.assignValues();
+        mPersonalDetailsView.setCardApplicationFields();
         mPersonalDetailsView.navigate(ContactDetailsActivity.class);
     }
 
