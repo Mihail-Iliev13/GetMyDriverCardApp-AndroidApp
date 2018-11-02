@@ -1,7 +1,6 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
@@ -36,6 +36,7 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     private ApplicationReasonPresenter mApplicationReasonPresenter;
     private CardApplication mCardApplication;
     private User mUser;
+    private Navigator mNavigator;
 
     @Inject
     public ApplicationReasonFragment() {
@@ -70,11 +71,23 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     }
 
     @Override
-    public void navigate(Class<? extends Activity> activity) {
-        Intent intent = new Intent(getContext(), activity);
+    public void navigate() {
+        Intent intent = prepareIntent();
+        mNavigator.navigateWith(intent);
+
+    }
+
+    @Override
+    public void setNavigator(Navigator navigator) {
+        this.mNavigator = navigator;
+    }
+
+    @Override
+    public Intent prepareIntent() {
+        Intent intent = new Intent();
         intent.putExtra(Constants.CARD_APPLICATION_KEY, mCardApplication);
         intent.putExtra(Constants.USER_KEY, mUser);
-        startActivity(intent);
+        return intent;
     }
 
     @Override
@@ -121,4 +134,5 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     public void setCurrentCardApplication(CardApplication cardApplication) {
         this.mCardApplication = cardApplication;
     }
+
 }

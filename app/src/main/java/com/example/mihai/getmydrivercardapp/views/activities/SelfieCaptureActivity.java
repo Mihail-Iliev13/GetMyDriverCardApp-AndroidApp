@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
+import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class SelfieCaptureActivity extends DaggerAppCompatActivity {
+public class SelfieCaptureActivity extends DaggerAppCompatActivity implements Navigator {
 
     @Inject
     ImageCaptureFragment mImageCaptureFragment;
@@ -36,6 +37,7 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity {
         mImageCaptureFragment.setCurrentUser(user);
         mImageCaptureFragment.setCurrentCardApplication(cardApplication);
         mImageCaptureFragment.setImageAttribute(ImageAttribute.SELFIE_IMAGE);
+        mImageCaptureFragment.setNavigator(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -48,5 +50,11 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity {
         super.onResume();
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
+    }
+
+    @Override
+    public void navigateWith(Intent intent) {
+        intent.setClass(this, IDCardCaptureActivity.class);
+        startActivity(intent);
     }
 }

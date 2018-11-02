@@ -4,9 +4,6 @@ import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
 import com.example.mihai.getmydrivercardapp.services.Base.Service;
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationReasonActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
@@ -42,7 +39,6 @@ public class LogInPresenterImpl implements LogInPresenter {
     public void logIn(String email, String password) {
 
         mAsyncRunner.runInBackground(() -> {
-
             try {
                 User user = mService.getUserByEmail(email);
                 mLoginView.setUser(user);
@@ -51,12 +47,13 @@ public class LogInPresenterImpl implements LogInPresenter {
                 } else if (!user.getPassword().equals(password)) {
                     mLoginView.showNoMatchingPasswordError();
                 } else if (mService.getPendingApplication(user) != null){
-                    mLoginView.navigate(ApplicationStatusActivity.class);
+                    mLoginView.showPendingApplicationStatus();
                 } else if (user.getUserRole().equals(UserRole.ADMIN)){
-                    mLoginView.navigate(CardApplicationListActivity.class);
+                    mLoginView.showAllPendingApplications();
                 } else {
-                    mLoginView.navigate(ApplicationReasonActivity.class);
+                    mLoginView.showApplicationForm();
                 }
+
             } catch (IOException e){
                 mLoginView.showError(e);
             }
@@ -72,7 +69,7 @@ public class LogInPresenterImpl implements LogInPresenter {
                 if (user == null) {
                     User newUser = mService.addNewUser(email, password, UserRole.CLIENT);
                     mLoginView.setUser(newUser);
-                    mLoginView.navigate(ApplicationReasonActivity.class);
+                    mLoginView.showApplicationForm();
                 } else {
                     mLoginView.showUserAlreadyExistsError(email);
                 }

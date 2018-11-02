@@ -1,5 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces;
 
-public interface ContactDetailsView  extends BaseView, NavigateView, CardApplicationTransferable {
+public interface ContactDetailsView  extends BaseView,
+        Navigable,
+        CardApplicationTransferable {
     void setCardApplicationFields();
 }

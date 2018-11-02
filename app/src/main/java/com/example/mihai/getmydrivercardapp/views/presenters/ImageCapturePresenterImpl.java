@@ -9,11 +9,11 @@ import android.support.v4.app.Fragment;
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.PersonalDetails;
+import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.security.InvalidParameterException;
 
@@ -26,10 +26,11 @@ import pl.aprilapps.easyphotopicker.EasyImageConfig;
 public class ImageCapturePresenterImpl implements ImageCapturePresenter {
 
     private ImageCaptureView mImageCaptureView;
+    private BitmapConverter mBitmapConverter;
 
     @Inject
-    public ImageCapturePresenterImpl() {
-
+    public ImageCapturePresenterImpl(BitmapConverter bitmapConverter) {
+        this.mBitmapConverter = bitmapConverter;
     }
 
     @Override
@@ -49,37 +50,35 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
         });
     }
 
-    @Override
-    public byte[] convertBitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 1, baos);
-        return  baos.toByteArray();
-    }
 
     @Override
     public void setValueToImageAttribute(CardApplication cardApplication, ImageAttribute imageAttribute,
                                          byte[] byteImage) {
 
         PersonalDetails personalDetails = cardApplication.getDetails();
-        personalDetails.setSelfie(byteImage);
-        personalDetails.setIdCardImage(byteImage);
-        personalDetails.setDrivingLicenseImage(byteImage);
-//        switch (imageAttribute) {
-//            case SELFIE_IMAGE:
-//                personalDetails.setSelfie(byteImage);
-//                return;
-//            case ID_CARD_IMAGE:
-//                personalDetails.setIdCardImage(byteImage);
-//                return;
-//            case OLD_CARD_IMAGE:
-//                personalDetails.setPreviousCardImage(byteImage);
-//                return;
-//            case DRIVING_LICENSE_IMAGE:
-//                personalDetails.setDrivingLicenseImage(byteImage);
-//                return;
-//                default:
-//                    throw new IllegalArgumentException();
-//        }
+        switch (imageAttribute) {
+            case SELFIE_IMAGE:
+                personalDetails.setSelfie(byteImage);
+                return;
+            case ID_CARD_IMAGE:
+                personalDetails.setIdCardImage(byteImage);
+                return;
+            case OLD_CARD_IMAGE:
+                personalDetails.setPreviousCardImage(byteImage);
+                return;
+            case DRIVING_LICENSE_IMAGE:
+                personalDetails.setDrivingLicenseImage(byteImage);
+                return;
+                default:
+                    throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public void handleOnProceedClick(Bitmap bitmap, CardApplication cardApplication, ImageAttribute imageAttribute) {
+        byte[] byteArray = mBitmapConverter.toByteArray(bitmap);
+        setValueToImageAttribute(cardApplication, imageAttribute, byteArray);
+        mImageCaptureView.navigate();
     }
 
     @Override

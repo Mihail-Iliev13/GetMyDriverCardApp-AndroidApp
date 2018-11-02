@@ -31,8 +31,8 @@ import dagger.Provides;
 @Module
 public class PresenterBindingModule {
     @Provides
-    public ImageCapturePresenter imageCapturePresenter() {
-        return new ImageCapturePresenterImpl();
+    public ImageCapturePresenter imageCapturePresenter(BitmapConverter bitmapConverter) {
+        return new ImageCapturePresenterImpl(bitmapConverter);
     }
 
     @Provides

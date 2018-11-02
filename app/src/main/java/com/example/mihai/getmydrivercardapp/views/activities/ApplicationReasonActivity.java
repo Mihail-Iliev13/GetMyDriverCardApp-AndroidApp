@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.PersonalDetails;
@@ -16,7 +17,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class ApplicationReasonActivity extends DaggerAppCompatActivity {
+public class ApplicationReasonActivity extends DaggerAppCompatActivity implements Navigator {
 
     @Inject
     ApplicationReasonFragment mApplicationReasonFragment;
@@ -35,6 +36,7 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity {
         mApplicationReasonFragment.setPresenter(mApplicationReasonPresenter);
         mApplicationReasonFragment.setCurrentUser(user);
         mApplicationReasonFragment.setCurrentCardApplication(cardApplication);
+        mApplicationReasonFragment.setNavigator(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -55,5 +57,11 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity {
         super.onResume();
         mApplicationReasonPresenter
                 .subscribe(mApplicationReasonFragment);
+    }
+
+    @Override
+    public void navigateWith(Intent intent) {
+        intent.setClass(this, PersonalDetailsActivity.class);
+        startActivity(intent);
     }
 }

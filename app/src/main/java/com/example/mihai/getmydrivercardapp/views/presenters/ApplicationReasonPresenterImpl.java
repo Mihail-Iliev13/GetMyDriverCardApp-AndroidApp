@@ -4,8 +4,6 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationReason;
 import com.example.mihai.getmydrivercardapp.utils.reasonconverter.base.ApplicationReasonConverter;
-import com.example.mihai.getmydrivercardapp.views.activities.LostCardActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.PersonalDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ApplicationReasonView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationReasonPresenter;
@@ -38,11 +36,11 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
         switch (id) {
             case 1:
                 mApplicationReasonView.setCardApplicationReason(CardApplicationReason.NEW_CARD);
-                mApplicationReasonView.navigate(PersonalDetailsActivity.class);
+                mApplicationReasonView.navigate();
                 return;
             case 2:
                 mApplicationReasonView.setCardApplicationReason(CardApplicationReason.EXCHANGE);
-                mApplicationReasonView.navigate(PersonalDetailsActivity.class);
+                mApplicationReasonView.navigate();
                 return;
             case 3:
                 mApplicationReasonView.showDialog("Replacement card:", R.array.replacement_reasons);
@@ -62,10 +60,10 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
 
         if (reason == CardApplicationReason.STOLEN
                 || reason == CardApplicationReason.LOST) {
-            mApplicationReasonView.navigate(LostCardActivity.class);
+            mApplicationReasonView.navigate();
             return;
         }
 
-        mApplicationReasonView.navigate(PersonalDetailsActivity.class);
+        mApplicationReasonView.navigate();
     }
 }

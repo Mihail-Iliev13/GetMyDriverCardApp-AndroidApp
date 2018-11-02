@@ -1,8 +1,11 @@
 package com.example.mihai.getmydrivercardapp.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
+import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
@@ -13,7 +16,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class IDCardCaptureActivity extends DaggerAppCompatActivity {
+public class IDCardCaptureActivity extends DaggerAppCompatActivity implements Navigator {
 
     @Inject
     ImageCaptureFragment mImageCaptureFragment;
@@ -21,18 +24,22 @@ public class IDCardCaptureActivity extends DaggerAppCompatActivity {
     @Inject
     ImageCapturePresenter mImageCapturePresenter;
 
-    private User mUser;
-    private CardApplication mCardApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
+        Intent intent = getIntent();
+        User user = (User) intent.getSerializableExtra(Constants.USER_KEY);
+        CardApplication cardApplication = (CardApplication) intent
+                .getSerializableExtra(Constants.CARD_APPLICATION_KEY);
+
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
-        mImageCaptureFragment.setCurrentUser(mUser);
-        mImageCaptureFragment.setCurrentCardApplication(mCardApplication);
+        mImageCaptureFragment.setCurrentUser(user);
+        mImageCaptureFragment.setCurrentCardApplication(cardApplication);
         mImageCaptureFragment.setImageAttribute(ImageAttribute.ID_CARD_IMAGE);
+        mImageCaptureFragment.setNavigator(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -45,6 +52,12 @@ public class IDCardCaptureActivity extends DaggerAppCompatActivity {
         super.onResume();
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
+    }
+
+    @Override
+    public void navigateWith(Intent intent) {
+        intent.setClass(this, DrivingLicenseCaptureActivity.class);
+        startActivity(intent);
     }
 }
 

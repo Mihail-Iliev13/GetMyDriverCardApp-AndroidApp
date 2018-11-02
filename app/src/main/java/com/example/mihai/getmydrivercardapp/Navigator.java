@@ -1,7 +1,7 @@
 package com.example.mihai.getmydrivercardapp;
 
-import android.app.Activity;
+import android.content.Intent;
 
 public interface Navigator {
-    void navigateTo(Class<? extends Activity> to);
+    void navigateWith(Intent intent);
 }

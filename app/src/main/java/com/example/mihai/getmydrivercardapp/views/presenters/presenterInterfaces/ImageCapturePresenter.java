@@ -13,6 +13,6 @@ public interface ImageCapturePresenter extends BasePresenter {
     void openCamera(Fragment fragment);
     void handleActivityResult(int requestCode, int resultCode, Intent data,
                               Activity activity);
-    byte[] convertBitmapToByteArray(Bitmap bitmap);
     void setValueToImageAttribute(CardApplication mCardApplication, ImageAttribute mImageAttribute, byte[] byteImage);
+    void handleOnProceedClick(Bitmap bitmap, CardApplication mCardApplication, ImageAttribute mImageAttribute);
 }
