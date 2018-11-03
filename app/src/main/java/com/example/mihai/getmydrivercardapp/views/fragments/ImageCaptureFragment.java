@@ -80,7 +80,9 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
     @OnClick(R.id.btn_capture_image)
     public void captureImage () {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             mPresenter.openCamera(this);
+        });
     }
 
     @OnClick(R.id.btn_proceed)

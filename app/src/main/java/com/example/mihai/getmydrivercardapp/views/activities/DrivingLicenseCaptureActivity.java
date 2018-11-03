@@ -57,8 +57,6 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
 
     @Override
     public void navigateWith(Intent intent) {
-        CardApplication cardApplication = (CardApplication) intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY);
-        cardApplication.getDetails().setDrivingLicenseImage(cardApplication.getDetails().getDrivingLicenseImage());
         intent.setClass(this, SignaturePadActivity.class);
         startActivity(intent);
         }

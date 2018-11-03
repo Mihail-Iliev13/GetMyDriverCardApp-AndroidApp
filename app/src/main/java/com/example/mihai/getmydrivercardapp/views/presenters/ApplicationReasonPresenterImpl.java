@@ -43,10 +43,12 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
                 mApplicationReasonView.navigate();
                 return;
             case 3:
-                mApplicationReasonView.showDialog("Replacement card:", R.array.replacement_reasons);
+                mApplicationReasonView.showDialog("I want to replace my current card because:",
+                        R.array.replacement_reasons);
                 return;
             case 4:
-                mApplicationReasonView.showDialog("Renewal card", R.array.renewal_reasons);
+                mApplicationReasonView.showDialog("I want to renew my current card because:",
+                        R.array.renewal_reasons);
                 return;
                 default:
                     return;
