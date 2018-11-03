@@ -2,12 +2,11 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
 
-import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -15,13 +14,14 @@ import javax.inject.Inject;
 
 public class CardApplicationListPresenterImpl implements CardApplicationListPresenter {
 
-    private UserService mUserService;
+    private CardApplicationService mCardApplicationService;
     private AsyncRunner mAsyncRunner;
     private CardApplicationListView mCardApplicationListView;
 
     @Inject
-    public CardApplicationListPresenterImpl (UserService userService, AsyncRunner asyncRunner) {
-        this.mUserService = userService;
+    public CardApplicationListPresenterImpl (CardApplicationService cardApplicationService,
+                                             AsyncRunner asyncRunner) {
+        this.mCardApplicationService = cardApplicationService;
         this.mAsyncRunner = asyncRunner;
     }
 
@@ -29,13 +29,13 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     public void loadCardApplications() {
         mAsyncRunner.runInBackground(() -> {
             try {
-                List<CardApplication> cardApplications = mUserService.getAllCardApplications();
+                List<CardApplication> cardApplications = mCardApplicationService.getAllApplications();
                 if (cardApplications.isEmpty()) {
                     mCardApplicationListView.showEmptyListMessage();
                 } else {
                     mCardApplicationListView.showApplications(cardApplications);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 mCardApplicationListView.showError(e);
             }
         });

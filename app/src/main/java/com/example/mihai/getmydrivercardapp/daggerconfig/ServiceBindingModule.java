@@ -1,7 +1,10 @@
 package com.example.mihai.getmydrivercardapp.daggerconfig;
 
+import com.example.mihai.getmydrivercardapp.repositories.cardapplicationrepository.base.CardApplicationRepository;
 import com.example.mihai.getmydrivercardapp.repositories.imagerepository.base.ImageRepository;
 import com.example.mihai.getmydrivercardapp.repositories.userrepository.base.UserRepository;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.CardApplicationServiceImpl;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.services.imageservice.ImageServiceImpl;
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
@@ -25,5 +28,11 @@ public class ServiceBindingModule {
     @Singleton
     public ImageService imageService(ImageRepository imageRepository) {
         return new ImageServiceImpl(imageRepository);
+    }
+
+    @Provides
+    @Singleton
+    public CardApplicationService cardApplicationService(CardApplicationRepository cardApplicationRepository) {
+        return new CardApplicationServiceImpl(cardApplicationRepository);
     }
 }

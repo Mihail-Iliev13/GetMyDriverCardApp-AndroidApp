@@ -1,6 +1,8 @@
 package com.example.mihai.getmydrivercardapp.views.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,7 +13,10 @@ import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -45,6 +50,7 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
             viewHolder.showCardApplicationStatus(cardApplication);
 
             convertView.setTag(viewHolder);
+            int b =5;
 
         } else {
 
@@ -60,13 +66,13 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
 
 
     class ViewHolder {
-        @BindView(R.id.tv_date_of_submission)
+        @BindView(R.id.tv_date)
         TextView date;
-        @BindView(R.id.tv_name)
+        @BindView(R.id.tv_full_name)
         TextView name;
-        @BindView(R.id.tv_id)
+        @BindView(R.id.tv_driver_id)
         TextView id;
-        @BindView(R.id.tv_status)
+        @BindView(R.id.tv_status_text)
         TextView status;
 
 
@@ -74,29 +80,47 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
             ButterKnife.bind(this, view);
         }
 
-
+        @SuppressLint("SimpleDateFormat")
         private void showCardApplicationSubmissionDate(CardApplication cardApplication) {
-            String text = date.getText().toString() + String.valueOf(cardApplication.getDateOfSubmission());
-            this.date.setText(text);
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String date = df.format(cardApplication.getDateOfSubmission());;
+            this.date.setText(date);
         }
 
         private void showDriverName(CardApplication cardApplication) {
-            String text = name.getText().toString()
-                    + cardApplication.getDetails().getFirstNameLatin()
-                    + cardApplication.getDetails().getSurNameLatin();
-            this.name.setText(text);
+            String firstName = cardApplication.getDetails().getFirstNameLatin();
+            String surName = cardApplication.getDetails().getSurNameLatin();
+            String fullName = firstName + " " + surName;
+            this.name.setText(fullName);
         }
 
         private void showDriverID(CardApplication cardApplication){
-            String text = id.getText().toString()
-                    + cardApplication.getDetails().getDriverID();
-            this.id.setText(text);
+            String id = cardApplication.getDetails().getDriverID();
+            this.id.setText(id);
         }
 
         private void showCardApplicationStatus(CardApplication cardApplication) {
-            String text = status.getText().toString()
-                    + cardApplication.getStatus();
-            this.status.setText(text);
+            CardApplicationStatus status = cardApplication.getStatus();
+            String statusStr = status.toString();
+            switch (status){
+                case COMPLETED:
+                    this.status.setTextColor(Color.GREEN);
+                    break;
+                case APPROVED:
+                    this.status.setTextColor(Color.BLUE);
+                    statusStr = "IN PROGRESS";
+                    break;
+                case REJECTED:
+                    this.status.setTextColor(Color.RED);
+                    break;
+                case NEW:
+                    this.status.setTextColor(Color.YELLOW);
+                    break;
+                    default:
+                        break;
+            }
+
+            this.status.setText(statusStr);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.daggerconfig;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
@@ -48,9 +49,9 @@ public class PresenterBindingModule {
     }
 
     @Provides
-    public CardApplicationListPresenter cardApplicationListPresenter(UserService userService,
-                                                                     AsyncRunner asyncRunner) {
-        return new CardApplicationListPresenterImpl(userService, asyncRunner);
+    public CardApplicationListPresenter cardApplicationListPresenter
+            (CardApplicationService cardApplicationService, AsyncRunner asyncRunner) {
+        return new CardApplicationListPresenterImpl(cardApplicationService, asyncRunner);
     }
 
     @Provides

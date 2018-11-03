@@ -28,12 +28,12 @@
 
             <RadioButton
                 android:layout_marginTop="13dp"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:text="@string/New_card"
                 android:textSize="23sp" />
+
             <RadioButton
                 android:layout_marginTop="13dp"
                 android:layout_width="match_parent"

@@ -57,7 +57,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements LogInNavig
     @Override
     public void navigateToApplicationReason(Intent intent) {
        intent.setClass(this, ApplicationReasonActivity.class);
-        navigateWith(intent);
+       navigateWith(intent);
     }
 
     @Override

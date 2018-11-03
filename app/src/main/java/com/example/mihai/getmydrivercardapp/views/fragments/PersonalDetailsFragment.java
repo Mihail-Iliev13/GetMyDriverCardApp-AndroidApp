@@ -96,6 +96,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             mBirthDate = df.parse(dateString);
             mDatePreview.setText(dateString);
+            mDatePreview.setTextSize(25);
             mDatePreview.setTypeface(Typeface.DEFAULT);
         } catch (ParseException e) {
             e.printStackTrace();

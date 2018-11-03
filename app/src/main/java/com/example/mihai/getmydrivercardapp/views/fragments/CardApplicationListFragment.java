@@ -48,7 +48,9 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
         ButterKnife.bind(this, view);
 
 
-        mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()), R.layout.custom_list_item);
+        mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()),
+                R.layout.custom_list_item);
+
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener((parent, view1, position, id) -> {
             CardApplication selectedCardApplication = mAdapter.getItem(position);
@@ -58,8 +60,8 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         mCardApplicationListPresenter
                 .loadCardApplications();
     }

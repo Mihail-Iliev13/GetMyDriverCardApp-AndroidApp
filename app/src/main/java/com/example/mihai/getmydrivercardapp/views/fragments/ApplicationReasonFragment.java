@@ -74,7 +74,6 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     public void navigate() {
         Intent intent = prepareIntent();
         mNavigator.navigateWith(intent);
-
     }
 
     @Override
