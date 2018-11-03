@@ -5,14 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 
 public interface ImageCapturePresenter extends BasePresenter {
 
     void openCamera(Fragment fragment);
     void handleActivityResult(int requestCode, int resultCode, Intent data,
                               Activity activity);
-    void setValueToImageAttribute(CardApplication mCardApplication, ImageAttribute mImageAttribute, byte[] byteImage);
-    void handleOnProceedClick(Bitmap bitmap, CardApplication mCardApplication, ImageAttribute mImageAttribute);
+
+    void setValueToImage(ImageModel imageModel,
+                         byte[] byteImage);
+
+    void handleOnProceedClick(Bitmap bitmap, ImageModel imageModel);
 }

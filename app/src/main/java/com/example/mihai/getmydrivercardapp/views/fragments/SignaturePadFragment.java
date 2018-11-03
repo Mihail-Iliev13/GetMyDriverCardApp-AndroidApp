@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,13 +13,17 @@ import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SignaturePadView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -35,6 +40,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     private User mUser;
     private CardApplication mCardApplication;
     private SignaturePadPresenter mSignaturePadPresenter;
+    private ArrayList<ImageModel> mImages;
 
     @Inject
     public SignaturePadFragment() {
@@ -88,8 +94,12 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     @OnClick(R.id.btn_submit)
     public void submitOnClick(){
         Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
+        mCardApplication.setDateOfSubmission(new Date());
         mSignaturePadPresenter.assignApplicationSignatureValue(bitmapImage);
         mSignaturePadPresenter.saveUser(mUser.getEmail(), mCardApplication);
+        mSignaturePadPresenter.saveImages(mUser.getEmail(), mCardApplication.getDetails().getImages());
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -113,6 +123,11 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     @Override
     public void setSignature(byte[] byteArrayImage) {
         mCardApplication.getDetails().setSignature(byteArrayImage);
+    }
+
+    @Override
+    public void setImages(ArrayList<ImageModel> images) {
+        this.mImages = images;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
-import com.example.mihai.getmydrivercardapp.services.Base.Service;
+import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SearchToolBarView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
@@ -12,13 +12,13 @@ import javax.inject.Inject;
 
 public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
 
-    private Service mService;
+    private UserService mUserService;
     private AsyncRunner mAsyncRunner;
     private SearchToolBarView mSearchToolBarView;
 
     @Inject
-    public SearchToolBarPresenterImpl(Service service, AsyncRunner asyncRunner) {
-        this.mService = service;
+    public SearchToolBarPresenterImpl(UserService userService, AsyncRunner asyncRunner) {
+        this.mUserService = userService;
         this.mAsyncRunner = asyncRunner;
     }
 
@@ -39,13 +39,13 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
             try {
                 switch (filterCriteria){
                     case "Date":
-                        mService.filterApplicationsByDate(pattern);
+                        mUserService.filterApplicationsByDate(pattern);
                     case "Name":
-                        mService.filterApplicationsByName(pattern);
+                        mUserService.filterApplicationsByName(pattern);
                     case "ID":
-                        mService.filterApplicationsByID(pattern);
+                        mUserService.filterApplicationsByID(pattern);
                     case "Status":
-                        mService.filterApplicationsByStatus(pattern);
+                        mUserService.filterApplicationsByStatus(pattern);
                 }
             }catch (Exception e){
                 e.printStackTrace();

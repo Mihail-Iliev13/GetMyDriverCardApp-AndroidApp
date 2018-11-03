@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.PersonalDetails;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
@@ -52,32 +50,34 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
 
 
     @Override
-    public void setValueToImageAttribute(CardApplication cardApplication, ImageAttribute imageAttribute,
-                                         byte[] byteImage) {
+    public void setValueToImage(ImageModel imageModel,
+                                byte[] byteImage) {
 
-        PersonalDetails personalDetails = cardApplication.getDetails();
-        switch (imageAttribute) {
-            case SELFIE_IMAGE:
-                personalDetails.setSelfie(byteImage);
-                return;
-            case ID_CARD_IMAGE:
-                personalDetails.setIdCardImage(byteImage);
-                return;
-            case OLD_CARD_IMAGE:
-                personalDetails.setPreviousCardImage(byteImage);
-                return;
-            case DRIVING_LICENSE_IMAGE:
-                personalDetails.setDrivingLicenseImage(byteImage);
-                return;
-                default:
-                    throw new IllegalArgumentException();
-        }
+        imageModel.setImage(byteImage);
+
+//        PersonalDetails personalDetails = cardApplication.getDetails();
+//        switch (imageAttribute) {
+//            case SELFIE_IMAGE:
+//                personalDetails.setSelfie(byteImage);
+//                return;
+//            case ID_CARD_IMAGE:
+//                personalDetails.setIdCardImage(byteImage);
+//                return;
+//            case OLD_CARD_IMAGE:
+//                personalDetails.setPreviousCardImage(byteImage);
+//                return;
+//            case DRIVING_LICENSE_IMAGE:
+//                personalDetails.setDrivingLicenseImage(byteImage);
+//                return;
+//                default:
+//                    throw new IllegalArgumentException();
+//        }
     }
 
     @Override
-    public void handleOnProceedClick(Bitmap bitmap, CardApplication cardApplication, ImageAttribute imageAttribute) {
+    public void handleOnProceedClick(Bitmap bitmap, ImageModel imageModel) {
         byte[] byteArray = mBitmapConverter.toByteArray(bitmap);
-        setValueToImageAttribute(cardApplication, imageAttribute, byteArray);
+        setValueToImage(imageModel, byteArray);
         mImageCaptureView.navigate();
     }
 

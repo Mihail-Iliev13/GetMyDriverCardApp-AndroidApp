@@ -2,7 +2,7 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.services.Base.Service;
+import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
@@ -15,13 +15,13 @@ import javax.inject.Inject;
 
 public class CardApplicationListPresenterImpl implements CardApplicationListPresenter {
 
-    private Service mService;
+    private UserService mUserService;
     private AsyncRunner mAsyncRunner;
     private CardApplicationListView mCardApplicationListView;
 
     @Inject
-    public CardApplicationListPresenterImpl (Service service, AsyncRunner asyncRunner) {
-        this.mService = service;
+    public CardApplicationListPresenterImpl (UserService userService, AsyncRunner asyncRunner) {
+        this.mUserService = userService;
         this.mAsyncRunner = asyncRunner;
     }
 
@@ -29,7 +29,7 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     public void loadCardApplications() {
         mAsyncRunner.runInBackground(() -> {
             try {
-                List<CardApplication> cardApplications = mService.getAllCardApplications();
+                List<CardApplication> cardApplications = mUserService.getAllCardApplications();
                 if (cardApplications.isEmpty()) {
                     mCardApplicationListView.showEmptyListMessage();
                 } else {

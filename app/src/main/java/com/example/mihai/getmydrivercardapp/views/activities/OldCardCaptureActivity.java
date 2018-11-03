@@ -1,10 +1,12 @@
 package com.example.mihai.getmydrivercardapp.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
@@ -29,11 +31,15 @@ public class OldCardCaptureActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
+        ImageModel imageModel = new ImageModel();
+        imageModel.setImageAttribute(ImageAttribute.OLD_CARD_IMAGE);
+
+        Intent intent = getIntent();
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
         mImageCaptureFragment.setCurrentUser(mUser);
         mImageCaptureFragment.setCurrentCardApplication(mCardApplication);
 
-        mImageCaptureFragment.setImageAttribute(ImageAttribute.OLD_CARD_IMAGE);
+        mImageCaptureFragment.setImageModel(imageModel);
 
         getSupportFragmentManager()
                 .beginTransaction()

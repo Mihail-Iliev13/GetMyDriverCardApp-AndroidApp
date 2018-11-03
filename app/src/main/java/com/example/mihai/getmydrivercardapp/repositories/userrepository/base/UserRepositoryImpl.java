@@ -1,10 +1,9 @@
-package com.example.mihai.getmydrivercardapp.repositories;
+package com.example.mihai.getmydrivercardapp.repositories.userrepository.base;
 
 import com.example.mihai.getmydrivercardapp.httprequester.base.HttpRequester;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.parsers.base.JsonParser;
-import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,15 +12,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class UserRepository implements Repository {
+public class UserRepositoryImpl implements UserRepository {
 
     private String mServerUrl;
     private HttpRequester mRequester;
     private JsonParser<User> mJsonParser;
 
     @Inject
-    public UserRepository (String url, HttpRequester requester,
-                           JsonParser<User> jsonParser) {
+    public UserRepositoryImpl(String url, HttpRequester requester,
+                              JsonParser<User> jsonParser) {
 
         this.mServerUrl = url;
         this.mRequester = requester;
@@ -30,7 +29,7 @@ public class UserRepository implements Repository {
 
     @Override
     public User getUserByEmail(String email) throws IOException {
-        String url = mServerUrl + "/" + email;
+        String url = mServerUrl + "/users/" + email;
         String response = mRequester.get(url);
         return mJsonParser.fromJson(response);
     }
@@ -43,8 +42,10 @@ public class UserRepository implements Repository {
     }
 
     @Override
-    public User updateUserCardApplication(String email, CardApplication cardApplication) throws IOException {
-        String url = mServerUrl + "/" + email;
+    public User updateUserCardApplication(String email, CardApplication cardApplication)
+            throws IOException {
+
+        String url = mServerUrl + "/users/" + email;
         Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String json = gson.toJson(cardApplication);
         String response = mRequester.put(url, json);

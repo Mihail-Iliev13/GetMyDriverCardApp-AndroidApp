@@ -15,16 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.Constants;
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -43,7 +44,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     private ImageCapturePresenter mPresenter;
     private User mUser;
     private CardApplication mCardApplication;
-    private ImageAttribute mImageAttribute;
+    private ImageModel mImageModel;
     private Navigator mNavigator;
 
 
@@ -60,7 +61,6 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
         View view =  inflater.inflate(R.layout.fragment_image_capture, container, false);
 
         ButterKnife.bind(this, view);
-
         return view;
     }
 
@@ -91,7 +91,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
                 .getDrawable())
                 .getBitmap();
 
-        mPresenter.handleOnProceedClick(bitmap, mCardApplication, mImageAttribute);
+        mPresenter.handleOnProceedClick(bitmap, mImageModel);
     }
 
     @Override
@@ -123,9 +123,10 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     }
 
     @Override
-    public void setImageAttribute(ImageAttribute imageAttribute) {
-        this.mImageAttribute = imageAttribute;
+    public void setImageModel(ImageModel image) {
+        this.mImageModel = image;
     }
+
 
     @Override
     public void navigate() {

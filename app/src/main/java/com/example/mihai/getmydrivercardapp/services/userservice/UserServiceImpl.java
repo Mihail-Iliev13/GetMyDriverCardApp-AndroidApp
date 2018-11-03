@@ -1,13 +1,13 @@
-package com.example.mihai.getmydrivercardapp.services;
+package com.example.mihai.getmydrivercardapp.services.userservice;
 
 import android.annotation.SuppressLint;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
-import com.example.mihai.getmydrivercardapp.repositories.base.Repository;
-import com.example.mihai.getmydrivercardapp.services.Base.Service;
+import com.example.mihai.getmydrivercardapp.repositories.userrepository.base.UserRepository;
+import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -18,30 +18,29 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class UserService implements Service {
+public class UserServiceImpl implements UserService {
 
-    private Repository mRepository;
+    private UserRepository mUserRepository;
 
     @Inject
-    public UserService(Repository mRepository){
-        this.mRepository = mRepository;
+    public UserServiceImpl(UserRepository mUserRepository){
+        this.mUserRepository = mUserRepository;
     }
 
     @Override
     public User getUserByEmail(String email) throws IOException {
-        return mRepository.getUserByEmail(email);
+        return mUserRepository.getUserByEmail(email);
     }
 
     @Override
     public List<User> getAllUsers() throws IOException {
-        return mRepository.getAllUsers();
+        return mUserRepository.getAllUsers();
 
     }
 
     @Override
     public User updateUserCardApplication(String email, CardApplication cardApplication) throws IOException {
-        return mRepository.updateUserCardApplication(email,cardApplication);
-
+        return mUserRepository.updateUserCardApplication(email, cardApplication);
     }
 
 
@@ -96,7 +95,7 @@ public class UserService implements Service {
     @Override
     public User addNewUser(String email, String password, UserRole userRole) throws IOException {
         User newUser = new User(email, password, userRole);
-        return mRepository.addUser(newUser);
+        return mUserRepository.addUser(newUser);
     }
 
 }

@@ -6,9 +6,12 @@ import android.os.Bundle;
 import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.SignaturePadFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -22,19 +25,19 @@ public class SignaturePadActivity extends DaggerAppCompatActivity {
     @Inject
     SignaturePadPresenter mSignaturePadPresenter;
 
-    private User mUser;
-    private CardApplication mCardApplication;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
         Intent intent = getIntent();
+        ArrayList<ImageModel> images = (ArrayList<ImageModel>) intent
+                .getSerializableExtra(Constants.IMAGE_LIST_KEY);
         User user = (User) intent.getSerializableExtra(Constants.USER_KEY);
         CardApplication cardApplication = (CardApplication)
                 intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY);
 
+        mSignaturePadFragment.setImages(images);
         mSignaturePadFragment.setPresenter(mSignaturePadPresenter);
         mSignaturePadFragment.setCurrentUser(user);
         mSignaturePadFragment.setCurrentCardApplication(cardApplication);

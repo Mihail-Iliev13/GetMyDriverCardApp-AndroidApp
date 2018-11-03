@@ -1,7 +1,8 @@
 package com.example.mihai.getmydrivercardapp.daggerconfig;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
-import com.example.mihai.getmydrivercardapp.services.Base.Service;
+import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
+import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.utils.reasonconverter.base.ApplicationReasonConverter;
 import com.example.mihai.getmydrivercardapp.views.presenters.ApplicationReasonPresenterImpl;
@@ -36,23 +37,25 @@ public class PresenterBindingModule {
     }
 
     @Provides
-    public LogInPresenter userService(Service service, AsyncRunner asyncRunner) {
-        return new LogInPresenterImpl(service, asyncRunner);
+    public LogInPresenter userService(UserService userService, AsyncRunner asyncRunner) {
+        return new LogInPresenterImpl(userService, asyncRunner);
     }
 
     @Provides
-    public SignaturePadPresenter signaturePadPresenter(Service service, AsyncRunner asyncRunner, BitmapConverter bitmapConverter) {
-        return new SignaturePadPresenterImpl(service, asyncRunner, bitmapConverter);
+    public SignaturePadPresenter signaturePadPresenter(UserService userService, ImageService imageService,
+                                                       AsyncRunner asyncRunner, BitmapConverter bitmapConverter) {
+        return new SignaturePadPresenterImpl(userService, imageService, asyncRunner, bitmapConverter);
     }
 
     @Provides
-    public CardApplicationListPresenter cardApplicationListPresenter(Service service, AsyncRunner asyncRunner) {
-        return new CardApplicationListPresenterImpl(service, asyncRunner);
+    public CardApplicationListPresenter cardApplicationListPresenter(UserService userService,
+                                                                     AsyncRunner asyncRunner) {
+        return new CardApplicationListPresenterImpl(userService, asyncRunner);
     }
 
     @Provides
-    public SearchToolBarPresenter searchToolBarPresenter(Service service, AsyncRunner asyncRunner) {
-        return new SearchToolBarPresenterImpl(service, asyncRunner);
+    public SearchToolBarPresenter searchToolBarPresenter(UserService userService, AsyncRunner asyncRunner) {
+        return new SearchToolBarPresenterImpl(userService, asyncRunner);
     }
 
     @Provides
