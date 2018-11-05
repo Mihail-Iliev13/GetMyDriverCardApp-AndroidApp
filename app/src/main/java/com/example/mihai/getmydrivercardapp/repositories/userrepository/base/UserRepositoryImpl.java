@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,12 +33,6 @@ public class UserRepositoryImpl implements UserRepository {
         return mJsonParser.fromJson(response);
     }
 
-    @Override
-    public List<User> getAllUsers() throws IOException {
-        String jsonArray;
-        jsonArray = mRequester.get(mServerUrl);
-        return mJsonParser.fromJsonArray(jsonArray);
-    }
 
     @Override
     public User updateUserCardApplication(String email, CardApplication cardApplication)

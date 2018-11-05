@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.utils;
+package com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base;
 
 import android.graphics.Bitmap;
 

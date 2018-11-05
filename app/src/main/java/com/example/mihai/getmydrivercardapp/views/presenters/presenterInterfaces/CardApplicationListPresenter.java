@@ -6,4 +6,9 @@ public interface CardApplicationListPresenter extends BasePresenter {
     void loadCardApplications();
 
     void selectCardApplication(CardApplication selectedCardApplication);
+
+    void updateApplicationStatus(String status);
+
+    void handleChangeStatusOnClick();
+
 }

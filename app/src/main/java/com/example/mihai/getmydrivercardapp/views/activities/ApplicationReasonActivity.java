@@ -3,7 +3,7 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -30,7 +30,7 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
         setContentView(R.layout.activity_with_one_fragment);
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(Constants.USER_KEY);
+        User user = (User) intent.getSerializableExtra(StringConstants.USER_KEY);
         CardApplication cardApplication = initializeNewCardApplication();
 
         mApplicationReasonFragment.setPresenter(mApplicationReasonPresenter);

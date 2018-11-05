@@ -9,6 +9,7 @@ import com.example.mihai.getmydrivercardapp.services.imageservice.ImageServiceIm
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 import com.example.mihai.getmydrivercardapp.services.userservice.UserServiceImpl;
+import com.example.mihai.getmydrivercardapp.utils.statusconverter.base.ApplicationStatusConverter;
 
 import javax.inject.Singleton;
 
@@ -32,7 +33,8 @@ public class ServiceBindingModule {
 
     @Provides
     @Singleton
-    public CardApplicationService cardApplicationService(CardApplicationRepository cardApplicationRepository) {
-        return new CardApplicationServiceImpl(cardApplicationRepository);
+    public CardApplicationService cardApplicationService(CardApplicationRepository cardApplicationRepository,
+                                                         ApplicationStatusConverter applicationStatusConverter) {
+        return new CardApplicationServiceImpl(cardApplicationRepository, applicationStatusConverter);
     }
 }

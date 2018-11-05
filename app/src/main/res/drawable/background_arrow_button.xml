@@ -15,9 +15,9 @@
     <!-- This rectangle for the top arrow edge -->
     <!-- Its color should be the same as the layout's background -->
     <item
-        android:top="-40dp"
-        android:bottom="65dp"
-        android:right="-30dp">
+        android:top="-60dp"
+        android:bottom="10dp"
+        android:right="-60dp">
         <rotate
             android:fromDegrees="45">
             <shape android:shape="rectangle">

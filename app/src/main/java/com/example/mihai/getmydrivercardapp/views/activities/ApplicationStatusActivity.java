@@ -3,7 +3,7 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.views.fragments.ApplicationStatusFragment;
@@ -29,7 +29,7 @@ public class ApplicationStatusActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.activity_with_one_fragment);
 
         Intent intent = getIntent();
-        mCardApplication = (CardApplication) intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY);
+        mCardApplication = (CardApplication) intent.getSerializableExtra(StringConstants.CARD_APPLICATION_KEY);
 
         getSupportFragmentManager()
                 .beginTransaction()

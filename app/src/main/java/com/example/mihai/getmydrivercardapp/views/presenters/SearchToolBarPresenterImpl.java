@@ -1,24 +1,29 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
-import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
+import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
+import com.example.mihai.getmydrivercardapp.views.FilterCriteria;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SearchToolBarView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
 
-    private UserService mUserService;
+    private CardApplicationService mCardApplicationService;
     private AsyncRunner mAsyncRunner;
     private SearchToolBarView mSearchToolBarView;
+    private CardApplicationListView mCardApplicationsListView;
 
     @Inject
-    public SearchToolBarPresenterImpl(UserService userService, AsyncRunner asyncRunner) {
-        this.mUserService = userService;
+    public SearchToolBarPresenterImpl(CardApplicationService cardApplicationService, AsyncRunner asyncRunner) {
+        this.mCardApplicationService = cardApplicationService;
         this.mAsyncRunner = asyncRunner;
     }
 
@@ -32,23 +37,43 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
     }
 
     @Override
-    public void getFilteredCardApplications(String pattern, String filterCriteria){
+    public void setCardApplicationListView(CardApplicationListView cardApplicationListView) {
+        this.mCardApplicationsListView = cardApplicationListView;
+    }
+
+    @Override
+    public void getFilteredCardApplications(String pattern, FilterCriteria filterCriteria){
 
         mAsyncRunner.runInBackground(() -> {
 
             try {
+                List<CardApplication> filteredApplications = null;
                 switch (filterCriteria){
-                    case "Date":
-                        mUserService.filterApplicationsByDate(pattern);
-                    case "Name":
-                        mUserService.filterApplicationsByName(pattern);
-                    case "ID":
-                        mUserService.filterApplicationsByID(pattern);
-                    case "Status":
-                        mUserService.filterApplicationsByStatus(pattern);
+                    case DATE_OF_SUBMISSION:
+                        filteredApplications = mCardApplicationService
+                                .filterApplicationsByDate(pattern);
+                        break;
+                    case NAME:
+                       filteredApplications = mCardApplicationService
+                                .filterApplicationsByName(pattern);
+                       break;
+                    case ID:
+                       filteredApplications = mCardApplicationService
+                                .filterApplicationsByID(pattern);
+                       break;
+                    case STATUS:
+                       filteredApplications = mCardApplicationService
+                                .filterApplicationsByStatus(pattern);
+                       break;
                 }
-            }catch (Exception e){
-                e.printStackTrace();
+
+                if (filteredApplications != null) {
+                    mCardApplicationsListView.showApplications(filteredApplications);
+                } else {
+                    mCardApplicationsListView.showEmptyListMessage();
+                }
+            } catch (Exception e){
+                mCardApplicationsListView.showError(e);
             }
         });
     }
@@ -59,11 +84,11 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
     }
 
     @Override
-    public void handleSpinnerOnItemSelected(String item) {
+    public void handleSpinnerOnItemSelected(FilterCriteria filterCriteria) {
 
-        if (item.equals("Date")) {
+        if (filterCriteria.equals(FilterCriteria.DATE_OF_SUBMISSION)) {
             mSearchToolBarView.showDatePicker();
-        } else if (item.equals("Status")) {
+        } else if (filterCriteria.equals(FilterCriteria.STATUS)) {
             mSearchToolBarView.showStatusDialog();
         }
     }

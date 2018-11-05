@@ -1,7 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +15,6 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SignaturePadView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
@@ -23,7 +22,6 @@ import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -92,14 +90,13 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     }
 
     @OnClick(R.id.btn_submit)
+    @SuppressLint("SimpleDateFormat")
     public void submitOnClick(){
         Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
-        mCardApplication.setDateOfSubmission(new Date());
-        mSignaturePadPresenter.assignApplicationSignatureValue(bitmapImage);
+        mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
+        mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
         mSignaturePadPresenter.saveUser(mUser.getEmail(), mCardApplication);
         mSignaturePadPresenter.saveImages(mUser.getEmail(), mCardApplication.getDetails().getImages());
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
     }
 
     @Override

@@ -13,5 +13,7 @@ public interface SignaturePadPresenter extends BasePresenter{
 
     void saveImages (String email, List<ImageModel> images);
 
-    void assignApplicationSignatureValue(Bitmap bitmapImage);
+    void assignSignature(Bitmap bitmapImage, CardApplication mCardApplication);
+
+    void assignDateOfSubmission(CardApplication mCardApplication);
 }

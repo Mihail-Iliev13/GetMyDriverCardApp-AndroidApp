@@ -3,7 +3,7 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationDetailsPresenter;

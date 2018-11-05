@@ -7,7 +7,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
-import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;

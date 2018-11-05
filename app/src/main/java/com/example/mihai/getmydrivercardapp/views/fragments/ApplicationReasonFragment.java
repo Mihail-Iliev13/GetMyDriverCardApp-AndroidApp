@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -84,8 +84,8 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(Constants.CARD_APPLICATION_KEY, mCardApplication);
-        intent.putExtra(Constants.USER_KEY, mUser);
+        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, mCardApplication);
+        intent.putExtra(StringConstants.USER_KEY, mUser);
         return intent;
     }
 

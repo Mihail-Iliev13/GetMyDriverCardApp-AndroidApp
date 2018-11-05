@@ -1,7 +1,9 @@
-package com.example.mihai.getmydrivercardapp.utils;
+package com.example.mihai.getmydrivercardapp.utils.bitmapconverter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 
 import java.io.ByteArrayOutputStream;
 

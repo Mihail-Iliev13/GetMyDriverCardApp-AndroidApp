@@ -62,6 +62,8 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
                 .subscribe(mCardApplicationListFragment);
         mSearchToolBarPresenter
                 .subscribe(mSearchToolbarFragment);
+        mSearchToolBarPresenter
+                .setCardApplicationListView(mCardApplicationListFragment);
     }
 
     @Override

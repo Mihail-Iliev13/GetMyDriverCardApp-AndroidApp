@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -12,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -41,7 +43,8 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.et_user_id) EditText mUserIdET;
     @BindView(R.id.et_first_name) EditText mFirstNameET;
     @BindView(R.id.et_last_name) EditText mLastNameET;
-    @BindView(R.id.btn_next) Button mButtonNext;
+    @BindView(R.id.btn_next)
+    ImageButton mButtonNext;
     @BindView(R.id.btn_pick_date) Button mPickDateButton;
     @BindView(R.id.tv_birth_date_preview) TextView mDatePreview;
 
@@ -89,10 +92,11 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     }
 
     @Override
+    @SuppressLint({"SimpleDateFormat","DefaultLocale"})
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
         try {
-            String dateString = dayOfMonth + "/" +  month + "/" + year;
+            String dateString = String.format("%d/%d/%d", dayOfMonth, ++month, year);
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             mBirthDate = df.parse(dateString);
             mDatePreview.setText(dateString);
@@ -150,8 +154,8 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(Constants.USER_KEY, mUser);
-        intent.putExtra(Constants.CARD_APPLICATION_KEY, mCardApplication);
+        intent.putExtra(StringConstants.USER_KEY, mUser);
+        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, mCardApplication);
         return intent;
     }
 }

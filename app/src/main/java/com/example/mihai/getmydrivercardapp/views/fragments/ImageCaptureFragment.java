@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -25,7 +25,6 @@ import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces
 import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -143,8 +142,8 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(Constants.USER_KEY,mUser);
-        intent.putExtra(Constants.CARD_APPLICATION_KEY, mCardApplication);
+        intent.putExtra(StringConstants.USER_KEY,mUser);
+        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, mCardApplication);
         return intent;
     }
 }

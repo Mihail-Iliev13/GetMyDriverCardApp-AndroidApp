@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.LogInNavigator;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
@@ -159,7 +159,7 @@ public class LogInFragment extends Fragment implements LogInView{
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(Constants.USER_KEY, mUser);
+        intent.putExtra(StringConstants.USER_KEY, mUser);
         return intent;
     }
 }

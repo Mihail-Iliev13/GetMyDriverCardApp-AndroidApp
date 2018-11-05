@@ -3,7 +3,7 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.Constants;
+import com.example.mihai.getmydrivercardapp.StringConstants;
 import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
@@ -36,9 +36,9 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
         imageModel.setImageAttribute(ImageAttribute.DRIVING_LICENSE_IMAGE);
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(Constants.USER_KEY);
+        User user = (User) intent.getSerializableExtra(StringConstants.USER_KEY);
         CardApplication cardApplication = (CardApplication) intent
-                .getSerializableExtra(Constants.CARD_APPLICATION_KEY);
+                .getSerializableExtra(StringConstants.CARD_APPLICATION_KEY);
         cardApplication.getDetails().getImages().add(imageModel);
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
         mImageCaptureFragment.setCurrentUser(user);
@@ -61,7 +61,7 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
     @Override
     public void navigateWith(Intent intent) {
         intent.setClass(this, SignaturePadActivity.class);
-        List<ImageModel> images = ((CardApplication)intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY))
+        List<ImageModel> images = ((CardApplication)intent.getSerializableExtra(StringConstants.CARD_APPLICATION_KEY))
                 .getDetails().getImages();
         images.set(2, images.get(0));
         startActivity(intent);

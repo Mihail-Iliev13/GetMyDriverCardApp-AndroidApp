@@ -4,8 +4,10 @@ import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
-import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.utils.datehandler.base.DateHandler;
 import com.example.mihai.getmydrivercardapp.utils.reasonconverter.base.ApplicationReasonConverter;
+import com.example.mihai.getmydrivercardapp.utils.statusconverter.base.ApplicationStatusConverter;
 import com.example.mihai.getmydrivercardapp.views.presenters.ApplicationReasonPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.ApplicationStatusPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.CardApplicationDetailsPresenterImpl;
@@ -44,19 +46,22 @@ public class PresenterBindingModule {
 
     @Provides
     public SignaturePadPresenter signaturePadPresenter(UserService userService, ImageService imageService,
-                                                       AsyncRunner asyncRunner, BitmapConverter bitmapConverter) {
-        return new SignaturePadPresenterImpl(userService, imageService, asyncRunner, bitmapConverter);
+                                                       AsyncRunner asyncRunner, BitmapConverter bitmapConverter,
+                                                       DateHandler dateHandler) {
+        return new SignaturePadPresenterImpl(userService, imageService, asyncRunner,bitmapConverter, dateHandler);
     }
 
     @Provides
     public CardApplicationListPresenter cardApplicationListPresenter
-            (CardApplicationService cardApplicationService, AsyncRunner asyncRunner) {
-        return new CardApplicationListPresenterImpl(cardApplicationService, asyncRunner);
+            (CardApplicationService cardApplicationService, AsyncRunner asyncRunner,
+             ApplicationStatusConverter applicationStatusConverter) {
+        return new CardApplicationListPresenterImpl(cardApplicationService,asyncRunner, applicationStatusConverter);
     }
 
     @Provides
-    public SearchToolBarPresenter searchToolBarPresenter(UserService userService, AsyncRunner asyncRunner) {
-        return new SearchToolBarPresenterImpl(userService, asyncRunner);
+    public SearchToolBarPresenter searchToolBarPresenter(CardApplicationService cardApplicationService,
+                                                         AsyncRunner asyncRunner) {
+        return new SearchToolBarPresenterImpl(cardApplicationService, asyncRunner);
     }
 
     @Provides

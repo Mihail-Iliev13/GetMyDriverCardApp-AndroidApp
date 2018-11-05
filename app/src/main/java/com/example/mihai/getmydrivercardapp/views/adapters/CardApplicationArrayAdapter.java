@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,12 +27,16 @@ import butterknife.ButterKnife;
 public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
 
     private int mLayout;
+    private CardApplicationListView mCardApplicationListView;
 
     public CardApplicationArrayAdapter(@NonNull Context context, int resource) {
         super(context, resource);
         mLayout = resource;
     }
 
+    public void setCardApplicationListView(CardApplicationListView listView) {
+        this.mCardApplicationListView = listView;
+    }
 
     @NonNull
     @Override
@@ -48,9 +54,9 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
             viewHolder.showDriverName(cardApplication);
             viewHolder.showDriverID(cardApplication);
             viewHolder.showCardApplicationStatus(cardApplication);
+            viewHolder.setButtonTag(position);
 
             convertView.setTag(viewHolder);
-            int b =5;
 
         } else {
 
@@ -59,6 +65,7 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
             mainViewHolder.showDriverName(cardApplication);
             mainViewHolder.showDriverID(cardApplication);
             mainViewHolder.showCardApplicationStatus(cardApplication);
+            mainViewHolder.setButtonTag(position);
         }
 
         return convertView;
@@ -74,10 +81,18 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
         TextView id;
         @BindView(R.id.tv_status_text)
         TextView status;
+        @BindView(R.id.btn_change_status)
+        Button changeStatus;
 
 
         private ViewHolder (View view) {
             ButterKnife.bind(this, view);
+            changeStatus.setOnClickListener(v -> {
+                int position = (int) changeStatus.getTag();
+                CardApplication cardApplication = getItem(position);
+                mCardApplicationListView.setSelectedCardApplication(cardApplication);
+                mCardApplicationListView.showStatusDialog();
+            });
         }
 
         @SuppressLint("SimpleDateFormat")
@@ -122,6 +137,11 @@ public class CardApplicationArrayAdapter extends ArrayAdapter<CardApplication> {
 
             this.status.setText(statusStr);
         }
+
+        private void setButtonTag(int position) {
+            changeStatus.setTag(position);
+        }
+
     }
 
 }
