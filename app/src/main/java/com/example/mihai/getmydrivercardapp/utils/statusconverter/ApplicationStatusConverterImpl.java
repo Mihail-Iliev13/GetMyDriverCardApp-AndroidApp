@@ -1,6 +1,6 @@
 package com.example.mihai.getmydrivercardapp.utils.statusconverter;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.utils.statusconverter.base.ApplicationStatusConverter;
 
 public class ApplicationStatusConverterImpl implements ApplicationStatusConverter {

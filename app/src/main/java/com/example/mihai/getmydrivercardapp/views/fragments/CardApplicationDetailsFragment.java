@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
 
 import java.security.InvalidParameterException;
 import java.util.Date;

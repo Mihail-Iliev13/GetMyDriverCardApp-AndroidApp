@@ -2,13 +2,11 @@ package com.example.mihai.getmydrivercardapp.services.userservice;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
-import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
+import com.example.mihai.getmydrivercardapp.enums.UserRole;
 import com.example.mihai.getmydrivercardapp.repositories.userrepository.base.UserRepository;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,20 +31,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public CardApplication getPendingApplication(User user) {
-        List<CardApplication> cardApplicationList = user.getCardApplications();
-
-        if (cardApplicationList == null || cardApplicationList.isEmpty()) {
-            return null;
-        } else {
-            for (CardApplication cardApplication: cardApplicationList) {
-                if (!cardApplication.getStatus()
-                        .equals(CardApplicationStatus.COMPLETED)) {
-                    return cardApplication;
-                }
-            }
-            return null;
-        }
+    public CardApplication getPendingApplication(User user) throws IOException {
+       return mUserRepository.getPendingApplication(user);
     }
 
 

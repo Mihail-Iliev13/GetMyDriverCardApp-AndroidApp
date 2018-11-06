@@ -11,14 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.LogInNavigator;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.LogInNavigator;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -69,6 +69,7 @@ public class LogInFragment extends Fragment implements LogInView{
 
     @OnClick(R.id.btn_log_in)
     public void logInOnClick() {
+
         String email = String.valueOf(mEmail.getText());
         String password = String.valueOf(mPassword.getText());
 
@@ -159,7 +160,7 @@ public class LogInFragment extends Fragment implements LogInView{
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(StringConstants.USER_KEY, mUser);
+        intent.putExtra(IntentKeys.USER_KEY, mUser);
         return intent;
     }
 }

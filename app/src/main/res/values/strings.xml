@@ -44,20 +44,19 @@
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_selfie_capture">SelfieCaptureActivity</string>
     <string name="id">ID</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="birth_date">Birth date</string>
-    <string name="address">Address</string>
-    <string name="phone_number">Phone number</string>
-    <string name="email">Email</string>
+    <string name="address">Address:</string>
+    <string name="phone_number">Phone number:</string>
+    <string name="email">Email:</string>
     <string name="Next_button">Next</string>
-    <string name="New_card">a first digital tachograph card</string>
+    <string name="New_card">A first digital tachograph card</string>
     <string name="Exchange_card">I have an EU card and I want to exchange it for BG card</string>
-    <string name="Replace_card">to replace my digital tachograph card</string>
-    <string name="Renew_card">to renew my digital tachograph card</string>
+    <string name="Replace_card">To replace my digital tachograph card</string>
+    <string name="Renew_card">To renew my digital tachograph card</string>
     <string name="applying_question">What are you applying for?</string>
     <string name="replacement_question">Why do you want to replace your current card?</string>
 </resources>

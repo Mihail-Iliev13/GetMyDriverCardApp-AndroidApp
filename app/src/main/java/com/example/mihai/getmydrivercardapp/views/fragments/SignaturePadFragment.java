@@ -1,7 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,16 +12,16 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SignaturePadView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SignaturePadView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SignaturePadFragment extends Fragment implements SignaturePadView {
+
+public class SignaturePadFragment extends Fragment implements SignaturePadView  {
+
 
     @BindView(R.id.sp_signature_pad) SignaturePad mSignaturePad;
     @BindView(R.id.btn_clear_signature) Button mClearButton;
@@ -38,7 +40,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
     private User mUser;
     private CardApplication mCardApplication;
     private SignaturePadPresenter mSignaturePadPresenter;
-    private ArrayList<ImageModel> mImages;
+    private Navigator mNavigator;
 
     @Inject
     public SignaturePadFragment() {
@@ -71,6 +73,16 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
                 mClearButton.setEnabled(false);
             }
         });
+
+        mSubmitButton.setOnClickListener(v -> {
+            Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
+            mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
+            mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
+            mSignaturePadPresenter.saveUser(mUser, mCardApplication);
+            mSignaturePadPresenter.saveImages(mUser, mCardApplication);
+            navigate();
+        });
+
         return view;
     }
 
@@ -89,15 +101,6 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
         mSignaturePad.clear();
     }
 
-    @OnClick(R.id.btn_submit)
-    @SuppressLint("SimpleDateFormat")
-    public void submitOnClick(){
-        Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
-        mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
-        mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
-        mSignaturePadPresenter.saveUser(mUser.getEmail(), mCardApplication);
-        mSignaturePadPresenter.saveImages(mUser.getEmail(), mCardApplication.getDetails().getImages());
-    }
 
     @Override
     public void showError(Exception e) {
@@ -117,14 +120,23 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView {
         this.mCardApplication = cardApplication;
     }
 
+
     @Override
-    public void setSignature(byte[] byteArrayImage) {
-        mCardApplication.getDetails().setSignature(byteArrayImage);
+    public void setNavigator(Navigator navigator) {
+        this.mNavigator = navigator;
     }
 
     @Override
-    public void setImages(ArrayList<ImageModel> images) {
-        this.mImages = images;
+    public void navigate() {
+        Intent intent = prepareIntent();
+        mNavigator.navigateWith(intent);
+    }
+
+    @Override
+    public Intent prepareIntent() {
+        Intent intent = new Intent();
+        intent.putExtra(IntentKeys.USER_KEY, mUser);
+        return intent;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.mihai.getmydrivercardapp.utils.reasonconverter;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationReason;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
 import com.example.mihai.getmydrivercardapp.utils.reasonconverter.base.ApplicationReasonConverter;
 
 import java.security.InvalidParameterException;

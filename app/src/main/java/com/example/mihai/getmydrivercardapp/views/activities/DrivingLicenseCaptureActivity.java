@@ -3,15 +3,15 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
-import com.example.mihai.getmydrivercardapp.Navigator;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
 import java.util.List;
 
@@ -32,14 +32,19 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
-        ImageModel imageModel = new ImageModel();
-        imageModel.setImageAttribute(ImageAttribute.DRIVING_LICENSE_IMAGE);
+
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(StringConstants.USER_KEY);
+        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
         CardApplication cardApplication = (CardApplication) intent
-                .getSerializableExtra(StringConstants.CARD_APPLICATION_KEY);
+                .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
+
+
+        ImageModel imageModel = new ImageModel();
+        imageModel.setImageAttribute(ImageAttribute.DRIVING_LICENSE_IMAGE);
         cardApplication.getDetails().getImages().add(imageModel);
+
+
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
         mImageCaptureFragment.setCurrentUser(user);
         mImageCaptureFragment.setCurrentCardApplication(cardApplication);
@@ -56,12 +61,13 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
     protected void onResume() {
         super.onResume();
         mImageCapturePresenter.subscribe(mImageCaptureFragment);
+        mImageCaptureFragment.setInstructionMessage("Please, take a picture of your driving license!");
     }
 
     @Override
     public void navigateWith(Intent intent) {
         intent.setClass(this, SignaturePadActivity.class);
-        List<ImageModel> images = ((CardApplication)intent.getSerializableExtra(StringConstants.CARD_APPLICATION_KEY))
+        List<ImageModel> images = ((CardApplication)intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY))
                 .getDetails().getImages();
         images.set(2, images.get(0));
         startActivity(intent);

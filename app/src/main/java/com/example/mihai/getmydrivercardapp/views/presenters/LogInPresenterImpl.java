@@ -2,11 +2,11 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
+import com.example.mihai.getmydrivercardapp.enums.UserRole;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;

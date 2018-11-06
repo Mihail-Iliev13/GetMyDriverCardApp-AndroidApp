@@ -1,7 +1,7 @@
 package com.example.mihai.getmydrivercardapp.services.cardapplicationservice;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.repositories.cardapplicationrepository.base.CardApplicationRepository;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.utils.statusconverter.base.ApplicationStatusConverter;
@@ -45,5 +45,11 @@ public class CardApplicationServiceImpl implements CardApplicationService {
     public List<CardApplication> filterApplicationsByStatus(String pattern) throws IOException {
        CardApplicationStatus filterStatus = mApplicationStatusConverter.fromString(pattern);
        return mCardApplicationRepository.filterApplicationsByStatus(filterStatus);
+    }
+
+    @Override
+    public void updateCardApplicationStatus(CardApplication cardApplication, String statusStr) throws IOException {
+        CardApplicationStatus status = mApplicationStatusConverter.fromString(statusStr);
+        mCardApplicationRepository.updateCardApplication(cardApplication, status);
     }
 }

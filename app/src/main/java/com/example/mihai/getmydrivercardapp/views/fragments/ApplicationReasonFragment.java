@@ -10,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationReason;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ApplicationReasonView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationReasonPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationReasonView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationReasonPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
@@ -84,8 +84,8 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, mCardApplication);
-        intent.putExtra(StringConstants.USER_KEY, mUser);
+        intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
+        intent.putExtra(IntentKeys.USER_KEY, mUser);
         return intent;
     }
 
@@ -133,5 +133,4 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     public void setCurrentCardApplication(CardApplication cardApplication) {
         this.mCardApplication = cardApplication;
     }
-
 }

@@ -3,15 +3,15 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.PersonalDetails;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ApplicationReasonFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationReasonPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationReasonPresenter;
 
 import javax.inject.Inject;
 
@@ -30,7 +30,7 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
         setContentView(R.layout.activity_with_one_fragment);
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(StringConstants.USER_KEY);
+        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
         CardApplication cardApplication = initializeNewCardApplication();
 
         mApplicationReasonFragment.setPresenter(mApplicationReasonPresenter);

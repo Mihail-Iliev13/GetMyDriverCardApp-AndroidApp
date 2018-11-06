@@ -2,11 +2,11 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationReason;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
 import com.example.mihai.getmydrivercardapp.utils.reasonconverter.base.ApplicationReasonConverter;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ApplicationReasonView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationReasonPresenter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationReasonView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationReasonPresenter;
 
 import java.security.InvalidParameterException;
 

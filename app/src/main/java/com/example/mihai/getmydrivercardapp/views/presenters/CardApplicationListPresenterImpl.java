@@ -2,13 +2,12 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
-import com.example.mihai.getmydrivercardapp.utils.statusconverter.base.ApplicationStatusConverter;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -19,15 +18,12 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     private CardApplicationService mCardApplicationService;
     private AsyncRunner mAsyncRunner;
     private CardApplicationListView mCardApplicationListView;
-    private ApplicationStatusConverter mApplicationStatusConverter;
 
     @Inject
     public CardApplicationListPresenterImpl (CardApplicationService cardApplicationService,
-                                             AsyncRunner asyncRunner,
-                                             ApplicationStatusConverter applicationStatusConverter) {
+                                             AsyncRunner asyncRunner) {
         this.mCardApplicationService = cardApplicationService;
         this.mAsyncRunner = asyncRunner;
-        this.mApplicationStatusConverter = applicationStatusConverter;
     }
 
     @Override
@@ -52,8 +48,15 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     }
 
     @Override
-    public void updateApplicationStatus(String statusString) {
-       CardApplicationStatus status =  mApplicationStatusConverter.fromString(statusString);
+    public void updateApplicationStatus(CardApplication cardApplication, String status) {
+       mAsyncRunner.runInBackground(() -> {
+           try {
+               mCardApplicationService.updateCardApplicationStatus(cardApplication, status);
+               loadCardApplications();
+           } catch (IOException e) {
+               mCardApplicationListView.showError(e);
+           }
+       });
     }
 
     @Override

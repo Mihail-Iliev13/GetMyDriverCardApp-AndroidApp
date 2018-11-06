@@ -3,13 +3,13 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.PersonalDetailsFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.PersonalDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
 
 import javax.inject.Inject;
 
@@ -28,9 +28,9 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
         setContentView(R.layout.activity_personal_details);
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(StringConstants.USER_KEY);
+        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
         CardApplication cardApplication = (CardApplication) intent
-                .getSerializableExtra(StringConstants.CARD_APPLICATION_KEY);
+                .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
 
 
         mPersonalDetailsFragment.setPresenter(mPersonalDetailsPresenter);

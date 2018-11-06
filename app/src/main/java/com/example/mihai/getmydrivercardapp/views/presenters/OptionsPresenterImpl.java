@@ -1,8 +1,8 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.OptionsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.OptionsPresenter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.OptionsView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.OptionsPresenter;
 
 import java.security.InvalidParameterException;
 

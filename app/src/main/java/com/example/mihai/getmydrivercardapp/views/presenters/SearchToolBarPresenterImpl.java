@@ -3,11 +3,11 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
-import com.example.mihai.getmydrivercardapp.views.FilterCriteria;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SearchToolBarView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
+import com.example.mihai.getmydrivercardapp.enums.FilterCriteria;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SearchToolBarView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 
 import java.security.InvalidParameterException;
 import java.util.List;

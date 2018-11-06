@@ -1,6 +1,6 @@
 package com.example.mihai.getmydrivercardapp.models;
 
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
+import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 
 import java.io.Serializable;
 

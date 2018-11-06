@@ -6,13 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ApplicationStatusView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationStatusPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationStatusView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationStatusPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
@@ -26,9 +28,11 @@ import butterknife.ButterKnife;
 public class ApplicationStatusFragment extends Fragment implements ApplicationStatusView{
 
     @BindView(R.id.tv_message) TextView mStatusTextView;
+    @BindView(R.id.iv_status_image) ImageView mStatusImage;
 
     private CardApplication mCardApplication;
     private ApplicationStatusPresenter mApplicationStatusPresenter;
+    private User mUser;
 
     @Inject
     public ApplicationStatusFragment() {
@@ -48,7 +52,7 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
     public void onResume() {
         super.onResume();
         this.mApplicationStatusPresenter
-                .showStatusMessage(mCardApplication.getStatus());
+                .loadStatusMessage(mUser);
     }
 
     @Override
@@ -61,13 +65,16 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
     }
 
     @Override
-    public void setMessageToTextView(String message) {
-        Objects.requireNonNull(getActivity())
-                .runOnUiThread(() -> mStatusTextView.setText(message));
+    public void showStatus(String message, int drawableResource) {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mStatusImage.setImageResource(drawableResource);
+            mStatusTextView.setText(message);
+        });
     }
 
+
     @Override
-    public void setCardApplication(CardApplication cardApplication) {
-        this.mCardApplication = cardApplication;
+    public void setUser(User user) {
+        this.mUser = user;
     }
 }

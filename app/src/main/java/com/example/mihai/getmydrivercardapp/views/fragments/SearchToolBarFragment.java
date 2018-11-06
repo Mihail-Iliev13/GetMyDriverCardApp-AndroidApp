@@ -16,11 +16,11 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.example.mihai.getmydrivercardapp.R;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
-import com.example.mihai.getmydrivercardapp.views.FilterCriteria;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SearchToolBarView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.enums.FilterCriteria;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SearchToolBarView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.security.InvalidParameterException;
@@ -169,7 +169,7 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         try {
             FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
-            String dateString = String.format("%d-%d-%d", year, ++month, dayOfMonth);
+            String dateString = String.format("%d-%d-%d", year, month + 1, dayOfMonth);
             mSearchToolBarPresenter
                     .getFilteredCardApplications(dateString, filterCriteria);
             setSpinnerSelectedItemToDefaultValue();

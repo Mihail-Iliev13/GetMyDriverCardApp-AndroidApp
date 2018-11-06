@@ -13,17 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.PersonalDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.PersonalDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.PersonalDetailsView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
 
 import java.security.InvalidParameterException;
 import java.text.ParseException;
@@ -43,8 +42,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.et_user_id) EditText mUserIdET;
     @BindView(R.id.et_first_name) EditText mFirstNameET;
     @BindView(R.id.et_last_name) EditText mLastNameET;
-    @BindView(R.id.btn_next)
-    ImageButton mButtonNext;
+    @BindView(R.id.btn_next) Button mButtonNext;
     @BindView(R.id.btn_pick_date) Button mPickDateButton;
     @BindView(R.id.tv_birth_date_preview) TextView mDatePreview;
 
@@ -154,8 +152,8 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(StringConstants.USER_KEY, mUser);
-        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, mCardApplication);
+        intent.putExtra(IntentKeys.USER_KEY, mUser);
+        intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
         return intent;
     }
 }

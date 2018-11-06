@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ContactDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ContactDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ContactDetailsView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ContactDetailsPresenter;
 
 import java.security.InvalidParameterException;
 
@@ -88,8 +88,8 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
     @Override
     public Intent prepareIntent() {
         Intent intent = new Intent();
-        intent.putExtra(StringConstants.USER_KEY, mUser);
-        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, mCardApplication);
+        intent.putExtra(IntentKeys.USER_KEY, mUser);
+        intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
         return intent;
     }
 

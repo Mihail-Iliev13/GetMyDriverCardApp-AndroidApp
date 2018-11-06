@@ -14,20 +14,22 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     private String mServerUrl;
     private HttpRequester mRequester;
+    private Gson mJsonParser;
 
     @Inject
-    public ImageRepositoryImpl(String url, HttpRequester requester) {
+    public ImageRepositoryImpl(String url, HttpRequester requester, Gson gson) {
 
         this.mServerUrl = url;
         this.mRequester = requester;
+        this.mJsonParser = gson;
     }
 
     @Override
     public ImageModel saveImage(String email, ImageModel image) throws IOException {
         String url = mServerUrl + "/images/" + email;
-        Gson gson = new Gson();
-        String imageJson = gson.toJson(image);
+        String imageJson = mJsonParser.toJson(image);
         String response = mRequester.post(url, imageJson);
-        return gson.fromJson(response, ImageModel.class);
+//        return mJsonParser.fromJson(response, ImageModel.class);
+        return image;
     }
 }

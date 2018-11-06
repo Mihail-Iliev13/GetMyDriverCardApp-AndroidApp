@@ -12,4 +12,5 @@ public interface CardApplicationService {
     List<CardApplication> filterApplicationsByID(String id) throws IOException;
     List<CardApplication> filterApplicationsByDate(String pattern) throws ParseException, IOException;
     List<CardApplication> filterApplicationsByStatus(String pattern) throws IOException;
+    void updateCardApplicationStatus(CardApplication cardApplication, String status) throws IOException;
 }

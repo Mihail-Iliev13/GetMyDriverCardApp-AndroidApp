@@ -3,15 +3,15 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.StringConstants;
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
-import com.example.mihai.getmydrivercardapp.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
 import javax.inject.Inject;
 
@@ -34,16 +34,14 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity implements Na
         imageModel.setImageAttribute(ImageAttribute.SELFIE_IMAGE);
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(StringConstants.USER_KEY);
+        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
         CardApplication cardApplication = (CardApplication) intent
-                .getSerializableExtra(StringConstants.CARD_APPLICATION_KEY);
+                .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
         cardApplication.getDetails().getImages().add(imageModel);
-
 
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
         mImageCaptureFragment.setCurrentUser(user);
         mImageCaptureFragment.setCurrentCardApplication(cardApplication);
-
 
         mImageCaptureFragment.setImageModel(imageModel);
         mImageCaptureFragment.setNavigator(this);
@@ -59,6 +57,8 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity implements Na
         super.onResume();
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
+
+        mImageCaptureFragment.setInstructionMessage("Please, take a picture of yourself!");
     }
 
     @Override

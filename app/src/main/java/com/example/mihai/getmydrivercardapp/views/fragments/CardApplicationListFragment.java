@@ -8,20 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
-import com.example.mihai.getmydrivercardapp.StringConstants;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
-import com.example.mihai.getmydrivercardapp.views.adapters.CardApplicationArrayAdapter;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.views.customadapters.CardApplicationArrayAdapter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -35,8 +33,6 @@ import butterknife.ButterKnife;
 public class CardApplicationListFragment extends Fragment implements CardApplicationListView {
 
     @BindView(R.id.lv_applications) ListView mListView;
-    private Button mChangeStatusButton;
-    private TextView mStatusText;
 
     private CardApplicationArrayAdapter mAdapter;
     private CardApplicationListPresenter mCardApplicationListPresenter;
@@ -110,7 +106,7 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     @Override
     public void navigateToCardApplicationDetails(CardApplication selectedCardApplication) {
         Intent intent = new Intent(getContext(), CardApplicationDetailsActivity.class);
-        intent.putExtra(StringConstants.CARD_APPLICATION_KEY, selectedCardApplication);
+        intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, selectedCardApplication);
         startActivity(intent);
     }
 
@@ -133,11 +129,15 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
         builder.setTitle("Change status: ");
         String[] statusValues = CardApplicationStatus.stringValues();
 
+        final int[] statusIndex = {0};
         builder.setSingleChoiceItems(statusValues, -1, (dialog, index) -> {
-            String status = statusValues[index];
-            mCardApplicationListPresenter.updateApplicationStatus(status);
+            statusIndex[0] = index;
         });
 
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String status = statusValues[statusIndex[0]];
+            mCardApplicationListPresenter.updateApplicationStatus(mSelectedCardApplication, status);
+        });
         builder.setNegativeButton("Cancel", (dialog, which) -> {
 
         });

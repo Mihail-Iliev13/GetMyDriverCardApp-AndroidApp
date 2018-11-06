@@ -18,16 +18,16 @@ import com.example.mihai.getmydrivercardapp.views.presenters.LogInPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.PersonalDetailsPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.SearchToolBarPresenterImpl;
 import com.example.mihai.getmydrivercardapp.views.presenters.SignaturePadPresenterImpl;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationReasonPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationStatusPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationDetailsPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ContactDetailsPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.PersonalDetailsPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SignaturePadPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationReasonPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationStatusPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ContactDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -55,7 +55,7 @@ public class PresenterBindingModule {
     public CardApplicationListPresenter cardApplicationListPresenter
             (CardApplicationService cardApplicationService, AsyncRunner asyncRunner,
              ApplicationStatusConverter applicationStatusConverter) {
-        return new CardApplicationListPresenterImpl(cardApplicationService,asyncRunner, applicationStatusConverter);
+        return new CardApplicationListPresenterImpl(cardApplicationService,asyncRunner);
     }
 
     @Provides
@@ -65,8 +65,9 @@ public class PresenterBindingModule {
     }
 
     @Provides
-    public ApplicationStatusPresenter applicationStatusPresenter() {
-        return new ApplicationStatusPresenterImpl();
+    public ApplicationStatusPresenter applicationStatusPresenter(UserService userService,
+                                                                 AsyncRunner asyncRunner) {
+        return new ApplicationStatusPresenterImpl(userService, asyncRunner);
     }
 
     @Provides

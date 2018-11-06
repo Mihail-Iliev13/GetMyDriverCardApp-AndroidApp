@@ -3,10 +3,10 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.LogInNavigator;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.LogInNavigator;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.views.fragments.LogInFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 
 import javax.inject.Inject;
 
@@ -19,8 +19,6 @@ public class LoginActivity extends DaggerAppCompatActivity implements LogInNavig
 
     @Inject
     LogInPresenter mLogInPresenter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

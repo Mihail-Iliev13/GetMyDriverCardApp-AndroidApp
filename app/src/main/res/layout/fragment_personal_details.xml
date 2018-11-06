@@ -9,10 +9,11 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp">
 
             <TextView
+                android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ID:"
@@ -108,17 +109,19 @@
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
 
-            <ImageButton
+            <Button
                 android:id="@+id/btn_next"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/right"
-                android:layout_marginTop="25dp"
-                android:textStyle="bold"
-                android:text="Next"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="40dp"
+                android:text="@string/Next_button"
                 android:layout_below="@id/ll_birth_date"
-                android:layout_centerInParent="true" />
+                android:textStyle="bold"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:textSize="25dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/blue_rounded_button"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 </FrameLayout>
