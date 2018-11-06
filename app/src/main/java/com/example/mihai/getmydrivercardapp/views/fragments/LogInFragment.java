@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.ApplicationReasonActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.LogInNavigator;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
@@ -69,15 +70,17 @@ public class LogInFragment extends Fragment implements LogInView{
 
     @OnClick(R.id.btn_log_in)
     public void logInOnClick() {
+Intent intent = new Intent(getContext(),ApplicationReasonActivity.class);
+startActivity(intent);
 
-        String email = String.valueOf(mEmail.getText());
-        String password = String.valueOf(mPassword.getText());
-
-        try {
-            mLogInPresenter.logIn(email, password);
-        } catch (IOException e) {
-            showError(e);
-        }
+//        String email = String.valueOf(mEmail.getText());
+//        String password = String.valueOf(mPassword.getText());
+//
+//        try {
+//            mLogInPresenter.logIn(email, password);
+//        } catch (IOException e) {
+//            showError(e);
+//        }
 
     }
 
