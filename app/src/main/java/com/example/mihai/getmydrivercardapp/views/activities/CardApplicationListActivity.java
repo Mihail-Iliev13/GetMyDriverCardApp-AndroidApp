@@ -7,8 +7,8 @@ import android.view.MenuItem;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.views.fragments.CardApplicationListFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.SearchToolBarFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 
 import javax.inject.Inject;
 
@@ -62,6 +62,8 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
                 .subscribe(mCardApplicationListFragment);
         mSearchToolBarPresenter
                 .subscribe(mSearchToolbarFragment);
+        mSearchToolBarPresenter
+                .setCardApplicationListView(mCardApplicationListFragment);
     }
 
     @Override

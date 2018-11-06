@@ -20,8 +20,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidSupportInjectionModule.class,
         HttpRequesteModule.class,
         ParsersModule.class,
-        RepositoriesModule.class,
-        ServiceModule.class,
+        RepositoriesBindingModule.class,
+        ServiceBindingModule.class,
         AsyncRunnerModule.class,
         PresenterBindingModule.class,
         UtillitiesBindingModule.class})

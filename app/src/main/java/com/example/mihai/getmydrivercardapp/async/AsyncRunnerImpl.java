@@ -1,7 +1,6 @@
 package com.example.mihai.getmydrivercardapp.async;
 
 import android.os.AsyncTask;
-import android.os.Handler;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 
@@ -13,8 +12,6 @@ import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
         }
 
         private static void run (final Runnable action) {
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
                 new AsyncTask<Boolean, Void, Void>() {
                     @Override
                     protected Void doInBackground(Boolean... booleans) {
@@ -22,6 +19,5 @@ import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
                         return null;
                     }
                 }.execute(true);
-            }, 1000);
         }
     }

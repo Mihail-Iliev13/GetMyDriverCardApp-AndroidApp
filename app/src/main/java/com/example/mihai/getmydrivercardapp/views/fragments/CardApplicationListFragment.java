@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
-import com.example.mihai.getmydrivercardapp.views.adapters.CardApplicationArrayAdapter;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.views.customadapters.CardApplicationArrayAdapter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -34,6 +36,7 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
 
     private CardApplicationArrayAdapter mAdapter;
     private CardApplicationListPresenter mCardApplicationListPresenter;
+    private CardApplication mSelectedCardApplication;
 
     @Inject
     public CardApplicationListFragment() {
@@ -45,21 +48,29 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_card_application_list, container, false);
+
         ButterKnife.bind(this, view);
 
 
-        mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()), R.layout.custom_list_item);
+        mAdapter = new CardApplicationArrayAdapter(Objects.requireNonNull(getContext()),
+                R.layout.custom_list_item);
+
+        mAdapter.setCardApplicationListView(this);
+
+
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener((parent, view1, position, id) -> {
             CardApplication selectedCardApplication = mAdapter.getItem(position);
             mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
         });
+
+
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         mCardApplicationListPresenter
                 .loadCardApplications();
     }
@@ -95,9 +106,10 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     @Override
     public void navigateToCardApplicationDetails(CardApplication selectedCardApplication) {
         Intent intent = new Intent(getContext(), CardApplicationDetailsActivity.class);
-        intent.putExtra(Constants.CARD_APPLICATION_KEY, selectedCardApplication);
+        intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, selectedCardApplication);
         startActivity(intent);
     }
+
 
     @Override
     public void showError(Exception e) {
@@ -110,4 +122,40 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
         });
     }
 
+    @Override
+    public AlertDialog.Builder buildStatusDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Change status: ");
+        String[] statusValues = CardApplicationStatus.stringValues();
+
+        final int[] statusIndex = {0};
+        builder.setSingleChoiceItems(statusValues, -1, (dialog, index) -> {
+            statusIndex[0] = index;
+        });
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String status = statusValues[statusIndex[0]];
+            mCardApplicationListPresenter.updateApplicationStatus(mSelectedCardApplication, status);
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+
+        });
+
+        return builder;
+    }
+
+    @Override
+    public void showStatusDialog() {
+        AlertDialog.Builder builder = buildStatusDialog();
+        AlertDialog alertDialog = builder.create();
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(alertDialog::show);
+    }
+
+    @Override
+    public void setSelectedCardApplication(CardApplication selectedCardApplication) {
+        this.mSelectedCardApplication = selectedCardApplication;
+    }
 }

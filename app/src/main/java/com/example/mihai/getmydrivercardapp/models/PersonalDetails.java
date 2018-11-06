@@ -1,7 +1,9 @@
 package com.example.mihai.getmydrivercardapp.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PersonalDetails implements Serializable{
 
@@ -13,17 +15,18 @@ public class PersonalDetails implements Serializable{
     private String address;
     private String phoneNumber;
     private String email;
-    private byte[] selfie;
-    private byte[] idCardImage;
-    private byte[] drivingLicenseImage;
+//    private byte[] selfie;
+//    private byte[] idCardImage;
+//    private byte[] drivingLicenseImage;
     private byte[] signature;
-    private byte[] previousCardImage;
+//    private byte[] previousCardImage;
     private String countryIssuedCard;
     private String authorityIssuedCard;
     private String cardNumber;
     private Date dateOfExpiry;
     private Date dateOfLoss;
     private String placeOfLoss;
+    private List<ImageModel> images;
 
     public PersonalDetails () {
 
@@ -57,25 +60,32 @@ public class PersonalDetails implements Serializable{
         return email;
     }
 
-    public byte[] getSelfie() {
-        return selfie;
+    public List<ImageModel> getImages() {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        return images;
     }
 
-    public byte[] getIdCardImage() {
-        return idCardImage;
-    }
-
-    public byte[] getDrivingLicenseImage() {
-        return drivingLicenseImage;
-    }
-
+    //    public byte[] getSelfie() {
+//        return selfie;
+//    }
+//
+//    public byte[] getIdCardImage() {
+//        return idCardImage;
+//    }
+//
+//    public byte[] getDrivingLicenseImage() {
+//        return drivingLicenseImage;
+//    }
+//
     public byte[] getSignature() {
         return signature;
     }
-
-    public byte[] getPreviousCardImage() {
-        return previousCardImage;
-    }
+//
+//    public byte[] getPreviousCardImage() {
+//        return previousCardImage;
+//    }
 
     public String getCountryIssuedCard() {
         return countryIssuedCard;
@@ -101,9 +111,9 @@ public class PersonalDetails implements Serializable{
         return placeOfLoss;
     }
 
-    public void setSelfie(byte[] selfie) {
-        this.selfie = selfie;
-    }
+//    public void setSelfie(byte[] selfie) {
+//        this.selfie = selfie;
+//    }
 
     public void setDriverID(String driverID) {
         this.driverID = driverID;
@@ -133,21 +143,21 @@ public class PersonalDetails implements Serializable{
         this.email = email;
     }
 
-    public void setIdCardImage(byte[] idCardImage) {
-        this.idCardImage = idCardImage;
-    }
-
-    public void setDrivingLicenseImage(byte[] drivingLicenseImage) {
-        this.drivingLicenseImage = drivingLicenseImage;
-    }
-
+//    public void setIdCardImage(byte[] idCardImage) {
+//        this.idCardImage = idCardImage;
+//    }
+//
+//    public void setDrivingLicenseImage(byte[] drivingLicenseImage) {
+//        this.drivingLicenseImage = drivingLicenseImage;
+//    }
+//
     public void setSignature(byte[] signature) {
         this.signature = signature;
     }
-
-    public void setPreviousCardImage(byte[] previousCardImage) {
-        this.previousCardImage = previousCardImage;
-    }
+//
+//    public void setPreviousCardImage(byte[] previousCardImage) {
+//        this.previousCardImage = previousCardImage;
+//    }
 
     public void setCountryIssuedCard(String countryIssuedCard) {
         this.countryIssuedCard = countryIssuedCard;
@@ -171,5 +181,9 @@ public class PersonalDetails implements Serializable{
 
     public void setPlaceOfLoss(String placeOfLoss) {
         this.placeOfLoss = placeOfLoss;
+    }
+
+    public void setImages(ArrayList<ImageModel> images) {
+        this.images = images;
     }
 }

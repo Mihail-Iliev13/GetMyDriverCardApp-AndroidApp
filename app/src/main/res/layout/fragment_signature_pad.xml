@@ -14,14 +14,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="25sp"
             android:text="Place your signature here" />
 
 
         <com.github.gcacace.signaturepad.views.SignaturePad
             android:layout_below="@id/tv_description"
             android:id="@+id/sp_signature_pad"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="430dp"
             android:background="@android:color/white"/>
 
         <LinearLayout
@@ -29,39 +34,34 @@
             android:gravity="center"
             android:layout_below="@+id/sp_signature_pad"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_clear_signature"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_login"
+                android:background="@drawable/blue_rounded_button"
                 android:text="Clear"
                 android:textAllCaps="false"
                 android:padding="16dp"
                 android:textSize="18sp"
-                android:clickable="true"
                 android:textColor="@android:color/white"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_marginTop="24dp"
                 />
 
             <Button
                 android:id="@+id/btn_submit"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_login"
+                android:background="@drawable/blue_rounded_button"
                 android:text="Submit"
                 android:textAllCaps="false"
                 android:padding="16dp"
                 android:layout_marginLeft="20dp"
                 android:textSize="18sp"
-                android:clickable="true"
                 android:textColor="@android:color/white"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:layout_marginTop="24dp"
-                />
+                android:layout_marginTop="24dp" />
         </LinearLayout>
     </RelativeLayout>
 

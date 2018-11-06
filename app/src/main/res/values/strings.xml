@@ -17,18 +17,18 @@
     </string-array>
 
     <string-array name="replacement_reasons">
-        <item>Stolen</item>
-        <item>Lost</item>
-        <item>Changed Address</item>
-        <item>Changed Name</item>
-        <item>Changed Photo</item>
-        <item>Damaged</item>
-        <item>Malfunctioning</item>
+        <item>My card was stolen</item>
+        <item>I lost my card</item>
+        <item>I changed my address</item>
+        <item>I changed my name</item>
+        <item>I want to change my photo</item>
+        <item>My card is damaged</item>
+        <item>My card is malfunctioning</item>
     </string-array>
 
     <string-array name="renewal_reasons">
-        <item>Expired</item>
-        <item>Withdrawn</item>
+        <item>My card has expired</item>
+        <item>My card was withdrawn</item>
     </string-array>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -44,14 +44,19 @@
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_selfie_capture">SelfieCaptureActivity</string>
     <string name="id">ID</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="birth_date">Birth date</string>
-    <string name="address">Address</string>
-    <string name="phone_number">Phone number</string>
-    <string name="email">Email</string>
+    <string name="address">Address:</string>
+    <string name="phone_number">Phone number:</string>
+    <string name="email">Email:</string>
     <string name="Next_button">Next</string>
+    <string name="New_card">A first digital tachograph card</string>
+    <string name="Exchange_card">I have an EU card and I want to exchange it for BG card</string>
+    <string name="Replace_card">To replace my digital tachograph card</string>
+    <string name="Renew_card">To renew my digital tachograph card</string>
+    <string name="applying_question">What are you applying for?</string>
+    <string name="replacement_question">Why do you want to replace your current card?</string>
 </resources>

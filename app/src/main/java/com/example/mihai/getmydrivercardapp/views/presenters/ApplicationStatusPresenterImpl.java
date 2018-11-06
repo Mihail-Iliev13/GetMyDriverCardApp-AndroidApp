@@ -1,10 +1,17 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ApplicationStatusView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationStatusPresenter;
+import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
+import com.example.mihai.getmydrivercardapp.constants.StatusMessages;
+import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationStatusView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationStatusPresenter;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
@@ -12,10 +19,13 @@ import javax.inject.Inject;
 public class ApplicationStatusPresenterImpl implements ApplicationStatusPresenter {
 
     private ApplicationStatusView mApplicationStatusView;
+    private UserService mUserService;
+    private AsyncRunner mAsyncRunner;
 
     @Inject
-    public ApplicationStatusPresenterImpl () {
-
+    public ApplicationStatusPresenterImpl (UserService userService, AsyncRunner asyncRunner) {
+        this.mUserService = userService;
+        this.mAsyncRunner = asyncRunner;
     }
 
     @Override
@@ -28,22 +38,35 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
     }
 
     @Override
-    public void showStatusMessage(CardApplicationStatus status) {
-        String message;
-        switch (status){
-            case NEW:
-                message = "Your application has been sent but is not approved yet! " +
-                        "You will receive email when your application is approved/rejected";
-                break;
-            case APPROVED:
-                message = "Your application has been approved! You will receive email when your card is ready";
-                break;
-            case REJECTED:
-                message = "Your application has been rejected!";
-                break;
-            default:
-                throw new InvalidParameterException();
-        }
-        mApplicationStatusView.setMessageToTextView(message);
+    public void loadStatusMessage(User user) {
+        mAsyncRunner.runInBackground(() -> {
+            CardApplication cardApplication = null;
+            try {
+                cardApplication = mUserService.getPendingApplication(user);
+                CardApplicationStatus status = cardApplication.getStatus();
+
+                String message;
+                int drawable;
+                switch (status){
+                    case NEW:
+                        drawable = R.drawable.icon_sent;
+                        message = StatusMessages.NEW;
+                        break;
+                    case APPROVED:
+                        drawable = R.drawable.icon_checkmark;
+                        message = StatusMessages.APPROVED;
+                        break;
+                    case REJECTED:
+                        drawable = R.drawable.icon_rejected;
+                        message = StatusMessages.REJECTED;
+                        break;
+                    default:
+                        throw new InvalidParameterException();
+                }
+                mApplicationStatusView.showStatus(message, drawable);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

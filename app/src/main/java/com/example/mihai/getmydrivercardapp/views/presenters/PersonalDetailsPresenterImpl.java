@@ -1,9 +1,8 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
-import com.example.mihai.getmydrivercardapp.views.activities.ContactDetailsActivity;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.PersonalDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.PersonalDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.PersonalDetailsView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
 
 import java.security.InvalidParameterException;
 
@@ -28,7 +27,7 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     @Override
     public void handleOnClickNext() {
         mPersonalDetailsView.setCardApplicationFields();
-        mPersonalDetailsView.navigate(ContactDetailsActivity.class);
+        mPersonalDetailsView.navigate();
     }
 
     @Override

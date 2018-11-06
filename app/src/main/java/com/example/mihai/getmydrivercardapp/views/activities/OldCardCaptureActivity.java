@@ -1,13 +1,15 @@
 package com.example.mihai.getmydrivercardapp.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
+import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
 import javax.inject.Inject;
 
@@ -29,11 +31,15 @@ public class OldCardCaptureActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
+        ImageModel imageModel = new ImageModel();
+        imageModel.setImageAttribute(ImageAttribute.OLD_CARD_IMAGE);
+
+        Intent intent = getIntent();
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
         mImageCaptureFragment.setCurrentUser(mUser);
         mImageCaptureFragment.setCurrentCardApplication(mCardApplication);
 
-        mImageCaptureFragment.setImageAttribute(ImageAttribute.OLD_CARD_IMAGE);
+        mImageCaptureFragment.setImageModel(imageModel);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -46,5 +52,7 @@ public class OldCardCaptureActivity extends DaggerAppCompatActivity {
         super.onResume();
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
+
+        mImageCaptureFragment.setInstructionMessage("Please, take a picture of your existing tachograph card!");
     }
 }

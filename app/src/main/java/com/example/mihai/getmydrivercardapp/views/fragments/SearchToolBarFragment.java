@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -15,9 +16,11 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.example.mihai.getmydrivercardapp.R;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.SearchToolBarView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.SearchToolBarPresenter;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.enums.FilterCriteria;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SearchToolBarView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.security.InvalidParameterException;
@@ -55,8 +58,8 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = (String) mSpinner.getSelectedItem();
-                mSearchToolBarPresenter.handleSpinnerOnItemSelected(item);
+                FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
+                mSearchToolBarPresenter.handleSpinnerOnItemSelected(filterCriteria);
             }
 
             @Override
@@ -68,18 +71,26 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
             @Override
             public boolean onQueryTextSubmit(String pattern) {
-                String filterCriteria = (String) mSpinner.getSelectedItem();
+                FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
                 try {
                     mSearchToolBarPresenter
                             .getFilteredCardApplications(pattern, filterCriteria);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                return true;
+
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String pattern) {
+                FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
+                try {
+                    mSearchToolBarPresenter
+                            .getFilteredCardApplications(pattern, filterCriteria);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return false;
             }
         });
@@ -113,10 +124,10 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
     @Override
     public void setSpinnerDropdownList() {
-        ArrayAdapter<String> filterValuesAdapter =
-                new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),
+        ArrayAdapter<FilterCriteria> filterValuesAdapter =
+                new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 R.layout.custom_spinner_item,
-                getResources().getStringArray(R.array.filter_citeria));
+                FilterCriteria.values());
 
         filterValuesAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -154,11 +165,13 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
     }
 
     @Override
+    @SuppressLint("DefaultLocale")
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         try {
-            String filterCriteria = (String) mSpinner.getSelectedItem();
-            String dateString = year + "/" +  month + "/" + dayOfMonth;
-            mSearchToolBarPresenter.getFilteredCardApplications(dateString, filterCriteria);
+            FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
+            String dateString = String.format("%d-%d-%d", year, month + 1, dayOfMonth);
+            mSearchToolBarPresenter
+                    .getFilteredCardApplications(dateString, filterCriteria);
             setSpinnerSelectedItemToDefaultValue();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -170,13 +183,10 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Select status: ");
-        String[] statusValues = Objects.requireNonNull(getActivity())
-                .getResources()
-                .getStringArray(R.array.status);
-
+        String[] statusValues = CardApplicationStatus.stringValues();
         builder.setSingleChoiceItems(statusValues, -1, (dialog, index) -> {
             try {
-                String filterCriteria = (String) mSpinner.getSelectedItem();
+                FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
                 String status = statusValues[index];
                 mSearchToolBarPresenter.getFilteredCardApplications(status, filterCriteria);
                 setSpinnerSelectedItemToDefaultValue();

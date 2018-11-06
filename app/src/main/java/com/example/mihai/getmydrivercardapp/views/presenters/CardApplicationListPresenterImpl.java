@@ -2,10 +2,10 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.services.Base.Service;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationListView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationListPresenter;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -15,13 +15,14 @@ import javax.inject.Inject;
 
 public class CardApplicationListPresenterImpl implements CardApplicationListPresenter {
 
-    private Service mService;
+    private CardApplicationService mCardApplicationService;
     private AsyncRunner mAsyncRunner;
     private CardApplicationListView mCardApplicationListView;
 
     @Inject
-    public CardApplicationListPresenterImpl (Service service, AsyncRunner asyncRunner) {
-        this.mService = service;
+    public CardApplicationListPresenterImpl (CardApplicationService cardApplicationService,
+                                             AsyncRunner asyncRunner) {
+        this.mCardApplicationService = cardApplicationService;
         this.mAsyncRunner = asyncRunner;
     }
 
@@ -29,13 +30,13 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     public void loadCardApplications() {
         mAsyncRunner.runInBackground(() -> {
             try {
-                List<CardApplication> cardApplications = mService.getAllCardApplications();
+                List<CardApplication> cardApplications = mCardApplicationService.getAllApplications();
                 if (cardApplications.isEmpty()) {
                     mCardApplicationListView.showEmptyListMessage();
                 } else {
                     mCardApplicationListView.showApplications(cardApplications);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 mCardApplicationListView.showError(e);
             }
         });
@@ -44,6 +45,23 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     @Override
     public void selectCardApplication(CardApplication selectedCardApplication) {
         mCardApplicationListView.navigateToCardApplicationDetails(selectedCardApplication);
+    }
+
+    @Override
+    public void updateApplicationStatus(CardApplication cardApplication, String status) {
+       mAsyncRunner.runInBackground(() -> {
+           try {
+               mCardApplicationService.updateCardApplicationStatus(cardApplication, status);
+               loadCardApplications();
+           } catch (IOException e) {
+               mCardApplicationListView.showError(e);
+           }
+       });
+    }
+
+    @Override
+    public void handleChangeStatusOnClick() {
+        mCardApplicationListView.showStatusDialog();
     }
 
     @Override

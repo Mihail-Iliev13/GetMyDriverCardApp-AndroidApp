@@ -3,11 +3,11 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.Constants;
 import com.example.mihai.getmydrivercardapp.R;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.fragments.ApplicationStatusFragment;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ApplicationStatusPresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationStatusPresenter;
 
 import javax.inject.Inject;
 
@@ -21,7 +21,7 @@ public class ApplicationStatusActivity extends DaggerAppCompatActivity {
     @Inject
     ApplicationStatusFragment mApplicationStatusFragment;
 
-    private CardApplication mCardApplication;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,10 @@ public class ApplicationStatusActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.activity_with_one_fragment);
 
         Intent intent = getIntent();
-        mCardApplication = (CardApplication) intent.getSerializableExtra(Constants.CARD_APPLICATION_KEY);
+
+        mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
+        mApplicationStatusFragment.setUser(mUser);
+        mApplicationStatusFragment.setPresenter(mApplicationStatusPresenter);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -40,6 +43,7 @@ public class ApplicationStatusActivity extends DaggerAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mApplicationStatusPresenter.subscribe(mApplicationStatusFragment);
+        mApplicationStatusPresenter
+                .subscribe(mApplicationStatusFragment);
     }
 }

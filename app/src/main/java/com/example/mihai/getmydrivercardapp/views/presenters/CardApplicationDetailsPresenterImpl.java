@@ -3,10 +3,10 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.utils.BitmapConverter;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.CardApplicationDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.CardApplicationDetailsPresenter;
+import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
 
 import java.security.InvalidParameterException;
 import java.util.Date;
@@ -55,27 +55,27 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
         String email = cardApplication.getDetails().getEmail();
         mCardApplicationDetailsView.assignValueToEmailTextView(email);
 
-        byte[] selfieImage = cardApplication.getDetails().getSelfie();
-        Bitmap bitmapSelfie = mBitmapConverter.toBitMap(selfieImage);
+//        byte[] selfieImage = cardApplication.getDetails().getSelfie();
+        Bitmap bitmapSelfie = mBitmapConverter.toBitMap(new byte[2]);
         mCardApplicationDetailsView.assignValueToSelfieImageView(bitmapSelfie);
 
-        byte[] idCardImage = cardApplication.getDetails().getIdCardImage();
-        Bitmap bitmapIDCard = mBitmapConverter.toBitMap(idCardImage);
+//        byte[] idCardImage = cardApplication.getDetails().getIdCardImage();
+        Bitmap bitmapIDCard = mBitmapConverter.toBitMap(new byte[2]);
         mCardApplicationDetailsView.assignValueToIDCardImageView(bitmapIDCard);
 
-        byte[] drivingLicenseImage = cardApplication.getDetails().getDrivingLicenseImage();
-        Bitmap bitmapDrivingLicense = mBitmapConverter.toBitMap(drivingLicenseImage);
+//        byte[] drivingLicenseImage = cardApplication.getDetails().getDrivingLicenseImage();
+        Bitmap bitmapDrivingLicense = mBitmapConverter.toBitMap(new byte[2]);
         mCardApplicationDetailsView.assignValueToDrivingLicenseImageView(bitmapDrivingLicense);
 
         byte[] signatureImage = cardApplication.getDetails().getSignature();
         Bitmap bitmapSignature = mBitmapConverter.toBitMap(signatureImage);
         mCardApplicationDetailsView.assignValueToSignatureImageView(bitmapSignature);
 
-        byte[] oldCardImage = cardApplication.getDetails().getPreviousCardImage();
-        if (oldCardImage != null){
-            Bitmap bitmapOldCard = mBitmapConverter.toBitMap(oldCardImage);
+//        byte[] oldCardImage = cardApplication.getDetails().getPreviousCardImage();
+//        if (oldCardImage != null){
+            Bitmap bitmapOldCard = mBitmapConverter.toBitMap(new byte[2]);
             mCardApplicationDetailsView.assignValueToOldCardImageView(bitmapOldCard);
-        }
+//        }
 
         String countryIssuedCard = cardApplication.getDetails().getCountryIssuedCard();
         if (countryIssuedCard != null)

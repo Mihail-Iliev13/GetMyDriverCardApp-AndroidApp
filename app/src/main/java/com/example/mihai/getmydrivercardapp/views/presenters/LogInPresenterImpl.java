@@ -2,14 +2,11 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.models.enums.UserRole;
-import com.example.mihai.getmydrivercardapp.services.Base.Service;
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationReasonActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.LogInView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.LogInPresenter;
+import com.example.mihai.getmydrivercardapp.enums.UserRole;
+import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -19,12 +16,12 @@ import javax.inject.Inject;
 public class LogInPresenterImpl implements LogInPresenter {
 
     private LogInView mLoginView;
-    private Service mService;
+    private UserService mUserService;
     private AsyncRunner mAsyncRunner;
 
     @Inject
-    public LogInPresenterImpl (Service service, AsyncRunner asyncRunner) {
-        this.mService = service;
+    public LogInPresenterImpl (UserService userService, AsyncRunner asyncRunner) {
+        this.mUserService = userService;
         this.mAsyncRunner = asyncRunner;
     }
 
@@ -42,21 +39,21 @@ public class LogInPresenterImpl implements LogInPresenter {
     public void logIn(String email, String password) {
 
         mAsyncRunner.runInBackground(() -> {
-
             try {
-                User user = mService.getUserByEmail(email);
+                User user = mUserService.getUserByEmail(email);
                 mLoginView.setUser(user);
                 if (user == null) {
                     mLoginView.showNoExistingUserError(email);
                 } else if (!user.getPassword().equals(password)) {
                     mLoginView.showNoMatchingPasswordError();
-                } else if (mService.getPendingApplication(user) != null){
-                    mLoginView.navigate(ApplicationStatusActivity.class);
+                } else if (mUserService.getPendingApplication(user) != null){
+                    mLoginView.showPendingApplicationStatus();
                 } else if (user.getUserRole().equals(UserRole.ADMIN)){
-                    mLoginView.navigate(CardApplicationListActivity.class);
+                    mLoginView.showAllPendingApplications();
                 } else {
-                    mLoginView.navigate(ApplicationReasonActivity.class);
+                    mLoginView.showApplicationForm();
                 }
+
             } catch (IOException e){
                 mLoginView.showError(e);
             }
@@ -68,11 +65,11 @@ public class LogInPresenterImpl implements LogInPresenter {
         mAsyncRunner.runInBackground(() -> {
 
             try {
-                User user = mService.getUserByEmail(email);
+                User user = mUserService.getUserByEmail(email);
                 if (user == null) {
-                    User newUser = mService.addNewUser(email, password, UserRole.CLIENT);
+                    User newUser = mUserService.addNewUser(email, password, UserRole.CLIENT);
                     mLoginView.setUser(newUser);
-                    mLoginView.navigate(ApplicationReasonActivity.class);
+                    mLoginView.showApplicationForm();
                 } else {
                     mLoginView.showUserAlreadyExistsError(email);
                 }

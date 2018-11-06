@@ -57,4 +57,12 @@ dependencies {
 
     //Material SearchView
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+
+    //MagicViews library
+    implementation 'com.ivankocijan:MagicViews:3.1.0@aar'
+
+    implementation('com.ivankocijan:MagicViews:3.1.0@aar') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
 }

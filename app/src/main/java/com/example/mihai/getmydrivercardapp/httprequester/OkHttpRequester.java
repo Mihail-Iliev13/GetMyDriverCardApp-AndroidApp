@@ -3,7 +3,9 @@ package com.example.mihai.getmydrivercardapp.httprequester;
 import com.example.mihai.getmydrivercardapp.httprequester.base.HttpRequester;
 
 import java.io.IOException;
+import java.util.Objects;
 
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,8 +13,31 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class OkHttpRequester implements HttpRequester {
+
     public OkHttpRequester() {
 
+    }
+
+
+    @Override
+    public String getWithRequestParam(String url, String name, String value) throws IOException {
+        HttpUrl httpUrl = Objects.requireNonNull(HttpUrl.parse(url))
+                .newBuilder()
+                .addQueryParameter(name, value)
+                .build();
+
+        Request request = new Request.Builder()
+                .get()
+                .url(httpUrl)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        Response response = client
+                .newCall(request)
+                .execute();
+
+        return response.body().string();
     }
 
     @Override
@@ -21,14 +46,14 @@ public class OkHttpRequester implements HttpRequester {
                 .get()
                 .url(url)
                 .build();
+
         OkHttpClient client = new OkHttpClient();
 
         Response response = client
                 .newCall(request)
                 .execute();
 
-        String body = response.body().string();
-        return body;
+        return response.body().string();
     }
 
     @Override
@@ -37,6 +62,7 @@ public class OkHttpRequester implements HttpRequester {
                 MediaType.parse("application/json"),
                 bodyString
         );
+
 
         Request request = new Request.Builder()
                 .post(body)
@@ -51,6 +77,7 @@ public class OkHttpRequester implements HttpRequester {
         String responseBody = response.body().string();
         return responseBody;
     }
+
 
     @Override
     public String put(String url, String json) throws IOException {

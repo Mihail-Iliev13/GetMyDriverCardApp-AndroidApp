@@ -1,7 +1,7 @@
 package com.example.mihai.getmydrivercardapp.models;
 
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationStatus;
-import com.example.mihai.getmydrivercardapp.models.enums.CardApplicationReason;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
 
 import java.io.Serializable;
 import java.util.Date;

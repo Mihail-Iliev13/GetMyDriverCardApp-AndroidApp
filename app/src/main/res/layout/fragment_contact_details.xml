@@ -7,11 +7,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical">
 
         <TextView
+            android:layout_marginTop="130dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
             android:text="@string/address"
             android:id="@+id/tv_address" />
 
@@ -25,6 +29,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
             android:text="@string/phone_number"
             android:id="@+id/tv_phone_number"
             android:layout_below="@id/et_user_address"/>
@@ -39,6 +45,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
             android:text="@string/email"
             android:id="@+id/tv_email"
             android:layout_below="@id/et_phone_number"
@@ -53,13 +61,18 @@
 
         <Button
             android:id="@+id/btn_next"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textSize="25dp"
             android:text="@string/Next_button"
             android:layout_below="@id/et_email"
-            android:background="@android:color/holo_blue_light"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/blue_rounded_button"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-
 
 </FrameLayout>

@@ -1,29 +1,29 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.mihai.getmydrivercardapp.Constants;
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
-import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.BasePresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ImageCaptureView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
@@ -36,16 +36,18 @@ import butterknife.OnClick;
 
 public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
+    @BindView(R.id.tv_take_picture) TextView mTextMessage;
     @BindView(R.id.btn_capture_image) Button mCaptureImageButton;
     @BindView(R.id.btn_proceed) Button mProceedButton;
     @BindView(R.id.img_picture) ImageView mImageView;
     @BindView(R.id.txt_desc) TextView mTxtPreview;
+    @BindView(R.id.rl_buttons) RelativeLayout mButtons;
 
     private ImageCapturePresenter mPresenter;
     private User mUser;
     private CardApplication mCardApplication;
-    private ImageAttribute mImageAttribute;
-
+    private ImageModel mImageModel;
+    private Navigator mNavigator;
 
     @Inject
     public ImageCaptureFragment() {
@@ -57,13 +59,12 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_image_capture, container, false);
-
-        ButterKnife.bind(this, view);
-
-        return view;
+        View mView = inflater.inflate(R.layout.fragment_image_capture, container, false);
+        ButterKnife.bind(this, mView);
+        return mView;
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -72,7 +73,10 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (mImageView.getDrawable() != null) {
-                mCaptureImageButton.setGravity(Gravity.LEFT);
+                RelativeLayout.LayoutParams layoutParams =
+                        (RelativeLayout.LayoutParams)mCaptureImageButton.getLayoutParams();
+                layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT);
+                mCaptureImageButton.setLayoutParams(layoutParams);
                 mProceedButton.setVisibility(View.VISIBLE);
             }
         });
@@ -80,7 +84,9 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
     @OnClick(R.id.btn_capture_image)
     public void captureImage () {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             mPresenter.openCamera(this);
+        });
     }
 
     @OnClick(R.id.btn_proceed)
@@ -89,9 +95,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
                 .getDrawable())
                 .getBitmap();
 
-            byte[] byteImage = mPresenter.convertBitmapToByteArray(bitmap);
-            mPresenter.setValueToImageAttribute(mCardApplication, mImageAttribute, byteImage);
-            navigate(SignaturePadActivity.class);
+        mPresenter.handleOnProceedClick(bitmap, mImageModel);
     }
 
     @Override
@@ -123,15 +127,33 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     }
 
     @Override
-    public void setImageAttribute(ImageAttribute imageAttribute) {
-        this.mImageAttribute = imageAttribute;
+    public void setImageModel(ImageModel image) {
+        this.mImageModel = image;
+    }
+
+
+    @Override
+    public void navigate() {
+        Intent intent = prepareIntent();
+        mNavigator.navigateWith(intent);
     }
 
     @Override
-    public void navigate(Class<? extends Activity> activity) {
-        Intent intent = new Intent(getContext(), activity);
-        intent.putExtra(Constants.USER_KEY,mUser);
-        intent.putExtra(Constants.CARD_APPLICATION_KEY, mCardApplication);
-        startActivity(intent);
+    public void setNavigator(Navigator navigator) {
+        this.mNavigator = navigator;
+    }
+
+
+    @Override
+    public Intent prepareIntent() {
+        Intent intent = new Intent();
+        intent.putExtra(IntentKeys.USER_KEY, mUser);
+        intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
+        return intent;
+    }
+
+    @Override
+    public void setInstructionMessage(String message) {
+        mTextMessage.setText(message);
     }
 }

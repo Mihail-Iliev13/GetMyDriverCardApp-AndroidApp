@@ -6,14 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 
-import com.example.mihai.getmydrivercardapp.ImageAttribute;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.PersonalDetails;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.BaseView;
-import com.example.mihai.getmydrivercardapp.views.fragments.viewsInterfaces.ImageCaptureView;
-import com.example.mihai.getmydrivercardapp.views.presenters.presenterInterfaces.ImageCapturePresenter;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
+import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ImageCaptureView;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.security.InvalidParameterException;
 
@@ -26,10 +24,11 @@ import pl.aprilapps.easyphotopicker.EasyImageConfig;
 public class ImageCapturePresenterImpl implements ImageCapturePresenter {
 
     private ImageCaptureView mImageCaptureView;
+    private BitmapConverter mBitmapConverter;
 
     @Inject
-    public ImageCapturePresenterImpl() {
-
+    public ImageCapturePresenterImpl(BitmapConverter bitmapConverter) {
+        this.mBitmapConverter = bitmapConverter;
     }
 
     @Override
@@ -49,21 +48,14 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
         });
     }
 
-    @Override
-    public byte[] convertBitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 1, baos);
-        return  baos.toByteArray();
-    }
 
     @Override
-    public void setValueToImageAttribute(CardApplication cardApplication, ImageAttribute imageAttribute,
-                                         byte[] byteImage) {
+    public void setValueToImage(ImageModel imageModel,
+                                byte[] byteImage) {
 
-        PersonalDetails personalDetails = cardApplication.getDetails();
-        personalDetails.setSelfie(byteImage);
-        personalDetails.setIdCardImage(byteImage);
-        personalDetails.setDrivingLicenseImage(byteImage);
+        imageModel.setImage(byteImage);
+
+//        PersonalDetails personalDetails = cardApplication.getDetails();
 //        switch (imageAttribute) {
 //            case SELFIE_IMAGE:
 //                personalDetails.setSelfie(byteImage);
@@ -80,6 +72,13 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
 //                default:
 //                    throw new IllegalArgumentException();
 //        }
+    }
+
+    @Override
+    public void handleOnProceedClick(Bitmap bitmap, ImageModel imageModel) {
+        byte[] byteArray = mBitmapConverter.toByteArray(bitmap);
+        setValueToImage(imageModel, byteArray);
+        mImageCaptureView.navigate();
     }
 
     @Override
