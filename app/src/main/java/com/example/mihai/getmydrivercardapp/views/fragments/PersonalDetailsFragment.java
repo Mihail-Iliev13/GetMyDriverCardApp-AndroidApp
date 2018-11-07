@@ -46,6 +46,17 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.btn_pick_date) Button mPickDateButton;
     @BindView(R.id.tv_birth_date_preview) TextView mDatePreview;
 
+    @BindView(R.id.tv_lost_date_preview) TextView mLostDatePreview;
+    @BindView(R.id.btn_lost_date) Button mPickLostDateButton;
+    @BindView(R.id.et_place_lost) EditText mPlaceLostET;
+    @BindView(R.id.et_country) EditText mCountryIssuedCardET;
+    @BindView(R.id.et_authority) EditText mAuthorityIssuedET;
+    @BindView(R.id.et_old_card_number) EditText mEUcardNumberET;
+    @BindView(R.id.btn_expiry_date_old) Button mPickDateOfExpiryEUcardButton;
+    @BindView(R.id.tv_date_of_expiry_old) TextView mDateOfExpiryEUcardPreview;
+    @BindView(R.id.btn_expiry_date_renewal) Button mPickExpiryDate_RenewalButton;
+    @BindView(R.id.tv_date_of_expiry_renewal) TextView mExpiryDate_RenewalPreview;
+
     private PersonalDetailsPresenter mPersonalDetailsPresenter;
     private CardApplication mCardApplication;
     private User mUser;
@@ -82,11 +93,23 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         String id = String.valueOf(mUserIdET.getText());
         String firstName = String.valueOf(mFirstNameET.getText());
         String lastName= String.valueOf(mLastNameET.getText());
+        String authority=String.valueOf(mAuthorityIssuedET.getText());
+        String countryIssued=String.valueOf(mCountryIssuedCardET.getText());
+        String placeLost=String.valueOf(mPlaceLostET.getText());
+        String EuCardNumber= String.valueOf(mEUcardNumberET.getText());
 
         mCardApplication.getDetails().setDriverID(id);
         mCardApplication.getDetails().setFirstNameLatin(firstName);
         mCardApplication.getDetails().setSurNameLatin(lastName);
         mCardApplication.getDetails().setDriverBirthDate(mBirthDate);
+
+        mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication);
+
+        mCardApplication.getDetails().setAuthorityIssuedCard(authority);
+        mCardApplication.getDetails().setCountryIssuedCard(countryIssued);
+        mCardApplication.getDetails().setPlaceOfLoss(placeLost);
+        mCardApplication.getDetails().setCardNumber(EuCardNumber);
+
     }
 
     @Override
