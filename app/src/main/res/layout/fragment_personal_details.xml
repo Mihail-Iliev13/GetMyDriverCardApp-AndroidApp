@@ -229,8 +229,104 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_old_card_number"
-                    android:text=""/>
+                    android:text="Card Number:"
+                    android:layout_below="@id/et_authority"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/et_old_card_number"
+                    android:layout_below="@id/tv_old_card_number"
+                    android:inputType="number"
+                    />
+                <TextView
+                    android:id="@+id/tv_date_of_expiry_old"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:textColor="@android:color/white"
+                    android:text="Date of expiry:"/>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/ll_date_of_expiry_old"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/tv_date_of_expiry_old"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_expiry_date_preview"
+                        android:textColor="@android:color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Date preview will appear here"
+                        android:textStyle="italic"/>
+
+                    <Button
+                        android:id="@+id/btn_expiry_date_old"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pick a date"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/holo_green_rounded_button"
+                        style="@style/Base.TextAppearance.AppCompat.Body1"
+                        android:textColor="@android:color/white"
+                        android:layout_marginLeft="10dp"
+                        />
+                </LinearLayout>
 
             </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_reason_renewal"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_date_of_expiry_renewal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@android:color/white"
+            android:text="Date of expiry:"/>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/ll_date_of_expiry_renewal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_date_of_expiry_renewal">
+
+            <TextView
+                android:id="@+id/tv_expiry_date_renewal_preview"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Date preview will appear here"
+                android:textStyle="italic"/>
+
+            <Button
+                android:id="@+id/btn_expiry_date_renewal"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick a date"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/holo_green_rounded_button"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
             </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>
