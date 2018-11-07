@@ -2,14 +2,19 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import android.graphics.Bitmap;
 
+import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.models.ImageModel;
+import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -17,10 +22,15 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
 
     private CardApplicationDetailsView mCardApplicationDetailsView;
     private BitmapConverter mBitmapConverter;
+    private ImageService mImageService;
+    private AsyncRunner mAsyncRunner;
 
     @Inject
-    public CardApplicationDetailsPresenterImpl(BitmapConverter bitmapConverter) {
+    public CardApplicationDetailsPresenterImpl(ImageService imageService, AsyncRunner asyncRunner,
+                                               BitmapConverter bitmapConverter) {
         this.mBitmapConverter = bitmapConverter;
+        this.mImageService = imageService;
+        this.mAsyncRunner = asyncRunner;
     }
 
     @Override
@@ -55,32 +65,13 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
         String email = cardApplication.getDetails().getEmail();
         mCardApplicationDetailsView.assignValueToEmailTextView(email);
 
-//        byte[] selfieImage = cardApplication.getDetails().getSelfie();
-        Bitmap bitmapSelfie = mBitmapConverter.toBitMap(new byte[2]);
-        mCardApplicationDetailsView.assignValueToSelfieImageView(bitmapSelfie);
-
-//        byte[] idCardImage = cardApplication.getDetails().getIdCardImage();
-        Bitmap bitmapIDCard = mBitmapConverter.toBitMap(new byte[2]);
-        mCardApplicationDetailsView.assignValueToIDCardImageView(bitmapIDCard);
-
-//        byte[] drivingLicenseImage = cardApplication.getDetails().getDrivingLicenseImage();
-        Bitmap bitmapDrivingLicense = mBitmapConverter.toBitMap(new byte[2]);
-        mCardApplicationDetailsView.assignValueToDrivingLicenseImageView(bitmapDrivingLicense);
-
         byte[] signatureImage = cardApplication.getDetails().getSignature();
         Bitmap bitmapSignature = mBitmapConverter.toBitMap(signatureImage);
         mCardApplicationDetailsView.assignValueToSignatureImageView(bitmapSignature);
 
-//        byte[] oldCardImage = cardApplication.getDetails().getPreviousCardImage();
-//        if (oldCardImage != null){
-            Bitmap bitmapOldCard = mBitmapConverter.toBitMap(new byte[2]);
-            mCardApplicationDetailsView.assignValueToOldCardImageView(bitmapOldCard);
-//        }
-
         String countryIssuedCard = cardApplication.getDetails().getCountryIssuedCard();
         if (countryIssuedCard != null)
             mCardApplicationDetailsView.assignValueToCountryIssuedCardTextView(countryIssuedCard);
-
 
         String authorityIssuedCard = cardApplication.getDetails().getAuthorityIssuedCard();
         if (countryIssuedCard != null)
@@ -101,6 +92,45 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
         String placeLost = cardApplication.getDetails().getPlaceOfLoss();
         if (placeLost != null) {
             mCardApplicationDetailsView.assignValueToPlaceLostTextView(placeLost);
+        }
+    }
+
+    @Override
+    public void loadImages(int id) {
+        mAsyncRunner.runInBackground(() -> {
+            try {
+             List<ImageModel> images = mImageService.getImagesByApplicationID(id);
+             this.assIgnImages(images);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void assIgnImages(List<ImageModel> images) {
+        for (ImageModel image : images) {
+            Bitmap bitmapImage = mBitmapConverter.toBitMap(image.getImage());
+            switch (image.getImageAttribute()){
+                case DRIVING_LICENSE_IMAGE:
+                    mCardApplicationDetailsView
+                            .assignValueToDrivingLicenseImageView(bitmapImage);
+                    break;
+                case ID_CARD_IMAGE:
+                    mCardApplicationDetailsView
+                            .assignValueToIDCardImageView(bitmapImage);
+                    break;
+                case OLD_CARD_IMAGE:
+                    mCardApplicationDetailsView
+                            .assignValueToOldCardImageView(bitmapImage);
+                    break;
+                case SELFIE_IMAGE:
+                    mCardApplicationDetailsView
+                            .assignValueToSelfieImageView(bitmapImage);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

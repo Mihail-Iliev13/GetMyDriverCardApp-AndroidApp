@@ -6,11 +6,12 @@ import com.example.mihai.getmydrivercardapp.repositories.imagerepository.base.Im
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class ImageRepositoryImpl implements ImageRepository {
-
 
     private String mServerUrl;
     private HttpRequester mRequester;
@@ -29,7 +30,14 @@ public class ImageRepositoryImpl implements ImageRepository {
         String url = mServerUrl + "/images/" + email;
         String imageJson = mJsonParser.toJson(image);
         String response = mRequester.post(url, imageJson);
-//        return mJsonParser.fromJson(response, ImageModel.class);
-        return image;
+        ImageModel imageModel =  mJsonParser.fromJson(response, ImageModel.class);
+        return imageModel;
+    }
+
+    @Override
+    public List<ImageModel> getImagesByApplicationID(int id) throws IOException {
+        String url = mServerUrl + "/images/" + id;
+        String response = mRequester.get(url);
+        return Arrays.asList(mJsonParser.fromJson(response, ImageModel[].class));
     }
 }

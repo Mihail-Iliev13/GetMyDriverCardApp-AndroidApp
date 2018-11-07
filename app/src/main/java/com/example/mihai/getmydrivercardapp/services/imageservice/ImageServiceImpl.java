@@ -27,6 +27,11 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void saveImage(String email, ImageModel image) throws IOException {
-        this.mImageRepository.saveImage(email, image);
+        ImageModel imageModel = mImageRepository.saveImage(email, image);
+    }
+
+    @Override
+    public List<ImageModel> getImagesByApplicationID(int id) throws IOException {
+        return mImageRepository.getImagesByApplicationID(id);
     }
 }
