@@ -69,16 +69,13 @@ public class LogInFragment extends Fragment implements LogInView{
 
     @OnClick(R.id.btn_log_in)
     public void logInOnClick() {
-
         String email = String.valueOf(mEmail.getText());
         String password = String.valueOf(mPassword.getText());
-
         try {
             mLogInPresenter.logIn(email, password);
         } catch (IOException e) {
             showError(e);
         }
-
     }
 
     @OnClick(R.id.btn_sign_up)

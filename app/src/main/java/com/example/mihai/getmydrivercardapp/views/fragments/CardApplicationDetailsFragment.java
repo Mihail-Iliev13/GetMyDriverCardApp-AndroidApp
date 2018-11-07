@@ -19,6 +19,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardAppl
 
 import java.security.InvalidParameterException;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -71,8 +72,9 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        mCardApplicationDetailsPresenter.loadImages(mCardApplication.getId());
         mCardApplicationDetailsPresenter.assignValues(mCardApplication);
     }
 
@@ -132,17 +134,23 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
 
     @Override
     public void assignValueToSelfieImageView(Bitmap selfieImage) {
-        this.mSelfieImage.setImageBitmap(selfieImage);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            this.mSelfieImage.setImageBitmap(selfieImage);
+        });
     }
 
     @Override
     public void assignValueToIDCardImageView(Bitmap idCardImage) {
-        this.mIDCardImage.setImageBitmap(idCardImage);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            this.mIDCardImage.setImageBitmap(idCardImage);
+        });
     }
 
     @Override
     public void assignValueToSignatureImageView(Bitmap signatureImage) {
-        this.mSignatureImage.setImageBitmap(signatureImage);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            this.mSignatureImage.setImageBitmap(signatureImage);
+        });
     }
 
     @Override

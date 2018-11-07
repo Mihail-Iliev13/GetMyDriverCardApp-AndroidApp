@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 public class CardApplicationListFragment extends Fragment implements CardApplicationListView {
 
@@ -59,11 +61,6 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
 
 
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener((parent, view1, position, id) -> {
-            CardApplication selectedCardApplication = mAdapter.getItem(position);
-            mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
-        });
-
 
         return view;
     }
@@ -75,6 +72,11 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
                 .loadCardApplications();
     }
 
+    @OnItemClick(R.id.lv_applications)
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        CardApplication selectedCardApplication = mAdapter.getItem(position);
+        mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
+    }
     @Override
     public void setPresenter(BasePresenter presenter) {
         if ( presenter instanceof CardApplicationListPresenter) {
