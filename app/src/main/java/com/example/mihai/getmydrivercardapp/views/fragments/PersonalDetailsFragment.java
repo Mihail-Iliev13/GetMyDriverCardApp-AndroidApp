@@ -40,6 +40,10 @@ import butterknife.ButterKnife;
 public class PersonalDetailsFragment extends Fragment implements PersonalDetailsView,
         DatePickerDialog.OnDateSetListener {
 
+    @BindView(R.id.tv_user_id) TextView mUserIdTV;
+    @BindView(R.id.tv_first_name) TextView mFirstNameTV;
+    @BindView(R.id.tv_last_name) TextView mLastNameTV;
+    @BindView(R.id.tv_birth_date) TextView getmBirthDateTV;
     @BindView(R.id.et_user_id) EditText mUserIdET;
     @BindView(R.id.et_first_name) EditText mFirstNameET;
     @BindView(R.id.et_last_name) EditText mLastNameET;
@@ -151,16 +155,28 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @Override
     public void showLostOrStolenFields() {
         mLostElements.setVisibility(View.VISIBLE);
+        mUserIdTV.setTextSize(16);
+        mFirstNameTV.setTextSize(16);
+        mLastNameTV.setTextSize(16);
+        getmBirthDateTV.setTextSize(16);
     }
 
     @Override
     public void showExchangeFields() {
         mExchangeElements.setVisibility(View.VISIBLE);
+        mUserIdTV.setTextSize(16);
+        mFirstNameTV.setTextSize(16);
+        mLastNameTV.setTextSize(16);
+        getmBirthDateTV.setTextSize(16);
     }
 
     @Override
     public void showRenewalFields() {
         mRenewalElements.setVisibility(View.VISIBLE);
+        mUserIdTV.setTextSize(16);
+        mFirstNameTV.setTextSize(16);
+        mLastNameTV.setTextSize(16);
+        getmBirthDateTV.setTextSize(16);
     }
 
     @Override
@@ -228,6 +244,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
     @Override
     public void onResume() {
+        super.onResume();
         mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
     }
 }
