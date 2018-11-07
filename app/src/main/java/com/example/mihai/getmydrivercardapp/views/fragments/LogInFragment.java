@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.ApplicationReasonActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.LogInNavigator;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
