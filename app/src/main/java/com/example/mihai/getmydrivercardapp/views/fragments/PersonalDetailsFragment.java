@@ -117,13 +117,14 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         String lostDate=String.valueOf(mLostDatePreview.getText());
         String expiryDate=String.valueOf(mExpiryDate_RenewalPreview.getText());
         String birthDate=String.valueOf(mBirthDatePreview.getText());
-
+        String exchangeCardExpiry=String.valueOf(mDateOfExpiryEUcardPreview.getText());
 
         try {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
            Date mLostDate = df.parse(lostDate);
             Date mExpiryDate = df.parse(expiryDate);
             Date mBirthDate = df.parse(birthDate);
+            Date mExpiryEUcardDate = df.parse(exchangeCardExpiry);
 
             mCardApplication.getDetails().setDriverID(id);
             mCardApplication.getDetails().setFirstNameLatin(firstName);
@@ -134,7 +135,10 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
             mCardApplication.getDetails().setPlaceOfLoss(placeLost);
             mCardApplication.getDetails().setCardNumber(EuCardNumber);
             mCardApplication.getDetails().setDateOfLoss(mLostDate);
-            mCardApplication.getDetails().setDateOfExpiry(mExpiryDate);
+
+            if(exchangeCardExpiry!=null){mCardApplication.getDetails().setDateOfExpiry(mExpiryDate);}
+            else if(expiryDate!=null){ mCardApplication.getDetails().setDateOfExpiry(mExpiryEUcardDate);}
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
