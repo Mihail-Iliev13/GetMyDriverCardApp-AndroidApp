@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -57,6 +58,13 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.btn_expiry_date_renewal) Button mPickExpiryDate_RenewalButton;
     @BindView(R.id.tv_date_of_expiry_renewal) TextView mExpiryDate_RenewalPreview;
 
+    @BindView(R.id.rl_reason_lost)
+    RelativeLayout mLostElements;
+    @BindView(R.id.rl_reason_exchange)
+    RelativeLayout mExchangeElements;
+    @BindView(R.id.rl_reason_renewal)
+    RelativeLayout mRenewalElements;
+
     private PersonalDetailsPresenter mPersonalDetailsPresenter;
     private CardApplication mCardApplication;
     private User mUser;
@@ -74,7 +82,11 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_details, container, false);
         ButterKnife.bind(this, view);
+
+        mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
+
         mButtonNext.setOnClickListener(v -> mPersonalDetailsPresenter.handleOnClickNext());
+
         mPickDateButton.setOnClickListener(v -> mPersonalDetailsPresenter.handleOnClickPickDateButton());
         return view;
     }
@@ -102,14 +114,26 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         mCardApplication.getDetails().setFirstNameLatin(firstName);
         mCardApplication.getDetails().setSurNameLatin(lastName);
         mCardApplication.getDetails().setDriverBirthDate(mBirthDate);
-
-        mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication);
-
         mCardApplication.getDetails().setAuthorityIssuedCard(authority);
         mCardApplication.getDetails().setCountryIssuedCard(countryIssued);
         mCardApplication.getDetails().setPlaceOfLoss(placeLost);
         mCardApplication.getDetails().setCardNumber(EuCardNumber);
 
+    }
+
+    @Override
+    public void showLostOrStolenFields() {
+        mLostElements.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showExchangeFields() {
+        mExchangeElements.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showRenewalFields() {
+        mRenewalElements.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -20,12 +20,7 @@ import butterknife.BindView;
 public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
  private PersonalDetailsView mPersonalDetailsView;
 
-    @BindView(R.id.rl_reason_lost)
-    RelativeLayout mLostElements;
-    @BindView(R.id.rl_reason_exchange)
-    RelativeLayout mExchangeElements;
-    @BindView(R.id.rl_reason_renewal)
-    RelativeLayout mRenewalElements;
+
 
  @Inject
  public PersonalDetailsPresenterImpl(){
@@ -52,17 +47,16 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     }
 
     @Override
-    public void CheckReasonAndRevealElementsIfNeeded(CardApplication cardApp) {
+    public void CheckReasonAndRevealElementsIfNeeded(CardApplicationReason reason) {
 
-        if(cardApp.getCardApplicationReason()== CardApplicationReason.LOST){
-            mLostElements.setVisibility(View.VISIBLE);
-
+        if(reason== CardApplicationReason.LOST||reason== CardApplicationReason.STOLEN){
+        mPersonalDetailsView.showLostOrStolenFields();
             }
-        else if(cardApp.getCardApplicationReason()== CardApplicationReason.EXCHANGE){
-            mExchangeElements.setVisibility(View.VISIBLE);
+        else if(reason== CardApplicationReason.EXCHANGE){
+        mPersonalDetailsView.showExchangeFields();
         }
-        else if(cardApp.getCardApplicationReason()== CardApplicationReason.EXPIRED){
-            mRenewalElements.setVisibility(View.VISIBLE);
+        else if(reason== CardApplicationReason.EXPIRED || reason==CardApplicationReason.WITHDRAWN){
+        mPersonalDetailsView.showRenewalFields();
         }
         else ;
     }
