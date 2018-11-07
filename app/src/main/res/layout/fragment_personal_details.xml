@@ -7,326 +7,359 @@
     tools:context=".views.fragments.PersonalDetailsFragment"
     android:background="@drawable/blue_gradients">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <RelativeLayout
+            android:id="@+id/rl_default_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
+            android:layout_height="wrap_content"
+            >
 
             <TextView
-                android:layout_marginTop="50dp"
+                android:id="@+id/tv_user_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ID:"
-                android:textSize="25sp"
                 android:textColor="@android:color/white"
-                android:id="@+id/tv_user_id" />
+                android:textSize="16sp" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/et_user_id"
-                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
                 android:layout_below="@+id/tv_user_id"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@android:color/white" />
 
             <TextView
+                android:id="@+id/tv_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="@android:color/white"
-                android:text="First Name:"
-                android:id="@+id/tv_first_name"
                 android:layout_below="@+id/et_user_id"
-                />
+                android:text="First Name:"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/et_first_name"
-                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
                 android:layout_below="@+id/tv_first_name"
                 android:inputType="text"
+                android:textColor="@android:color/white"
                 tools:ignore="LabelFor" />
 
             <TextView
+                android:id="@+id/tv_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="@android:color/white"
+                android:layout_below="@id/et_first_name"
                 android:text="Surname:"
-                android:id="@+id/tv_last_name"
-                android:layout_below="@id/et_first_name" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/et_last_name"
-                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
                 android:layout_below="@+id/tv_last_name"
                 android:inputType="text"
+                android:textColor="@android:color/white"
                 tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/tv_birth_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
                 android:layout_below="@id/et_last_name"
+                android:text="Date of Birth:"
                 android:textColor="@android:color/white"
-                android:text="Date of Birth:" />
+                android:textSize="16sp" />
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/ll_birth_date"
-                android:orientation="horizontal"
-                android:layout_below="@+id/tv_birth_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_birth_date"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_birth_date_preview"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:text="Date preview will appear here"
-                        android:textStyle="italic"/>
+                <TextView
+                    android:id="@+id/tv_birth_date_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date preview will appear here"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
 
                 <Button
                     android:id="@+id/btn_pick_date"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pick a date"
-                    android:textStyle="bold"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/holo_green_rounded_button"
-                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Pick a date"
                     android:textColor="@android:color/white"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/Next_button"
-                android:layout_below="@id/ll_birth_date"
-                android:textStyle="bold"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:textSize="25dp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/blue_rounded_button"
-                android:layout_centerInParent="true"/>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/rl_reason_lost"
-    android:visibility="gone">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_reason_lost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_default_details"
+            android:visibility="visible">
+
             <TextView
                 android:id="@+id/tv_lost_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:text="Date of loss:"
                 android:textColor="@android:color/white"
-                android:text="Date of loss:"/>
+                android:textSize="16sp" />
+
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/ll_date_lost"
-                android:orientation="horizontal"
-                android:layout_below="@+id/tv_lost_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_lost_date"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_lost_date_preview"
-                    android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
                     android:text="Date preview will appear here"
-                    android:textStyle="italic"/>
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
 
                 <Button
                     android:id="@+id/btn_lost_date"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pick a date"
-                    android:textStyle="bold"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/holo_green_rounded_button"
-                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Pick a date"
                     android:textColor="@android:color/white"
-                    android:layout_marginLeft="10dp"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <TextView
+                android:id="@+id/tv_place_lost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="@android:color/white"
+                android:layout_below="@id/ll_date_lost"
                 android:text="Place of loss:"
-                android:id="@+id/tv_place_lost"
-                android:layout_below="@id/ll_date_lost" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/et_place_lost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/et_place_lost"
-                android:textColor="@android:color/white"
                 android:layout_below="@+id/tv_place_lost"
                 android:inputType="text"
+                android:textColor="@android:color/white"
                 tools:ignore="LabelFor" />
         </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rl_reason_exchange"
-                android:visibility="gone">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@android:color/white"
-                    android:text="Country issued card:"
-                    android:id="@+id/tv_country_issued_card" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_country"
-                    android:textColor="@android:color/white"
-                    android:layout_below="@+id/tv_country_issued_card"
-                    android:inputType="text"
-                    tools:ignore="LabelFor" />
-                <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="@android:color/white"
-                android:text="Authority issued card:"
-                android:id="@+id/tv_authority_issued_card"
-                android:layout_below="@id/et_country" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_authority"
-                    android:textColor="@android:color/white"
-                    android:layout_below="@+id/tv_authority_issued_card"
-                    android:inputType="text"
-                    tools:ignore="LabelFor" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_old_card_number"
-                    android:text="Card Number:"
-                    android:layout_below="@id/et_authority"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_old_card_number"
-                    android:layout_below="@id/tv_old_card_number"
-                    android:inputType="number"
-                    />
-                <TextView
-                    android:id="@+id/tv_date_of_expiry_old"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@android:color/white"
-                    android:text="Date of expiry:"/>
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/ll_date_of_expiry_old"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/tv_date_of_expiry_old"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_expiry_date_preview"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:text="Date preview will appear here"
-                        android:textStyle="italic"/>
-
-                    <Button
-                        android:id="@+id/btn_expiry_date_old"
-                        android:paddingRight="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pick a date"
-                        android:textStyle="bold"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/holo_green_rounded_button"
-                        style="@style/Base.TextAppearance.AppCompat.Body1"
-                        android:textColor="@android:color/white"
-                        android:layout_marginLeft="10dp"
-                        />
-                </LinearLayout>
-
-            </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rl_reason_renewal"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/tv_date_of_expiry_renewal"
+        <RelativeLayout
+            android:id="@+id/rl_reason_exchange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="@android:color/white"
-            android:text="Date of expiry:"/>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/ll_date_of_expiry_renewal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_date_of_expiry_renewal">
+            android:layout_below="@id/rl_default_details"
+            android:visibility="gone">
 
             <TextView
-                android:id="@+id/tv_expiry_date_renewal_preview"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_country_issued_card"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="Date preview will appear here"
-                android:textStyle="italic"/>
+                android:text="Country issued card:"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btn_expiry_date_renewal"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pick a date"
-                android:textStyle="bold"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/holo_green_rounded_button"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
+            <EditText
+                android:id="@+id/et_country"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:layout_below="@+id/tv_country_issued_card"
+                android:inputType="text"
                 android:textColor="@android:color/white"
-                android:layout_marginLeft="10dp"
-                />
-        </LinearLayout>
-            </RelativeLayout>
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:id="@+id/tv_authority_issued_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_country"
+                android:text="Authority issued card:"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_authority"
+                android:layout_width="match_parent"
+                android:layout_height="65sp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="44dp"
+                android:layout_below="@id/tv_authority_issued_card"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                tools:ignore="LabelFor"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/tv_old_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_authority"
+                android:text="Card Number:"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"/>
+
+            <EditText
+                android:id="@+id/et_old_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:layout_below="@id/tv_old_card_number"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/tv_date_of_expiry_old"
+                android:layout_width="match_parent"
+                android:layout_height="22sp"
+                android:text="Date of expiry:"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_below="@id/et_old_card_number"/>
+
+            <LinearLayout
+                android:id="@+id/ll_date_of_expiry_old"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_date_of_expiry_old"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_expiry_date_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date preview will appear here"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:id="@+id/btn_expiry_date_old"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/holo_green_rounded_button"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Pick a date"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_reason_renewal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_default_details"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_date_of_expiry_renewal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date of expiry:"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_date_of_expiry_renewal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_date_of_expiry_renewal"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_expiry_date_renewal_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date preview will appear here"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:id="@+id/btn_expiry_date_renewal"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/holo_green_rounded_button"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Pick a date"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_birth_date"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/blue_rounded_button"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+
+            android:text="@string/Next_button"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </FrameLayout>

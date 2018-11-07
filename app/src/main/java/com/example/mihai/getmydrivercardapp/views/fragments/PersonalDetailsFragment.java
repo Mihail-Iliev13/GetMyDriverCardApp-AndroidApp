@@ -82,7 +82,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         View view = inflater.inflate(R.layout.fragment_personal_details, container, false);
         ButterKnife.bind(this, view);
 
-        mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
+
 
         mButtonNext.setOnClickListener(v -> {
             try {
@@ -224,5 +224,10 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         intent.putExtra(IntentKeys.USER_KEY, mUser);
         intent.putExtra(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
         return intent;
+    }
+
+    @Override
+    public void onResume() {
+        mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
     }
 }
