@@ -12,6 +12,7 @@ import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.PersonalD
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
 
 import java.security.InvalidParameterException;
+import java.text.ParseException;
 
 import javax.inject.Inject;
 
@@ -36,8 +37,9 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     }
 
     @Override
-    public void handleOnClickNext() {
-        mPersonalDetailsView.setCardApplicationFields();
+    public void handleOnClickNext() throws ParseException {
+            mPersonalDetailsView.setCardApplicationFields();
+
         mPersonalDetailsView.navigate();
     }
 

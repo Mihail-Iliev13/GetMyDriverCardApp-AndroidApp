@@ -1,5 +1,5 @@
 package com.example.mihai.getmydrivercardapp.constants;
 
 public class URLS {
-        public static final String BASE_SERVER_URL = "http://192.168.0.105:8080";
+        public static final String BASE_SERVER_URL = "http://10.229.25.198:8080";
 }

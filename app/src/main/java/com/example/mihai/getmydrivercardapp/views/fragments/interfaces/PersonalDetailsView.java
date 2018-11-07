@@ -1,8 +1,10 @@
 package com.example.mihai.getmydrivercardapp.views.fragments.interfaces;
 
+import java.text.ParseException;
+
 public interface PersonalDetailsView extends BaseView,
         DatePickerView, Navigable, CardApplicationTransferable {
-    void setCardApplicationFields();
+    void setCardApplicationFields() throws ParseException;
 
     void showLostOrStolenFields();
 

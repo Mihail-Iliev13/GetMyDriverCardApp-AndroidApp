@@ -45,7 +45,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.et_last_name) EditText mLastNameET;
     @BindView(R.id.btn_next) Button mButtonNext;
     @BindView(R.id.btn_pick_date) Button mPickDateButton;
-    @BindView(R.id.tv_birth_date_preview) TextView mDatePreview;
+    @BindView(R.id.tv_birth_date_preview) TextView mBirthDatePreview;
 
     @BindView(R.id.tv_lost_date_preview) TextView mLostDatePreview;
     @BindView(R.id.btn_lost_date) Button mPickLostDateButton;
@@ -68,7 +68,6 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     private PersonalDetailsPresenter mPersonalDetailsPresenter;
     private CardApplication mCardApplication;
     private User mUser;
-    private Date mBirthDate;
     private Navigator mNavigator;
 
     @Inject
@@ -85,7 +84,13 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
         mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
 
-        mButtonNext.setOnClickListener(v -> mPersonalDetailsPresenter.handleOnClickNext());
+        mButtonNext.setOnClickListener(v -> {
+            try {
+                mPersonalDetailsPresenter.handleOnClickNext();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        });
 
         mPickDateButton.setOnClickListener(v -> mPersonalDetailsPresenter.handleOnClickPickDateButton());
         return view;
@@ -109,15 +114,33 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         String countryIssued=String.valueOf(mCountryIssuedCardET.getText());
         String placeLost=String.valueOf(mPlaceLostET.getText());
         String EuCardNumber= String.valueOf(mEUcardNumberET.getText());
+        String lostDate=String.valueOf(mLostDatePreview.getText());
+        String expiryDate=String.valueOf(mExpiryDate_RenewalPreview.getText());
+        String birthDate=String.valueOf(mBirthDatePreview.getText());
 
-        mCardApplication.getDetails().setDriverID(id);
-        mCardApplication.getDetails().setFirstNameLatin(firstName);
-        mCardApplication.getDetails().setSurNameLatin(lastName);
-        mCardApplication.getDetails().setDriverBirthDate(mBirthDate);
-        mCardApplication.getDetails().setAuthorityIssuedCard(authority);
-        mCardApplication.getDetails().setCountryIssuedCard(countryIssued);
-        mCardApplication.getDetails().setPlaceOfLoss(placeLost);
-        mCardApplication.getDetails().setCardNumber(EuCardNumber);
+
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+           Date mLostDate = df.parse(lostDate);
+            Date mExpiryDate = df.parse(expiryDate);
+            Date mBirthDate = df.parse(birthDate);
+
+            mCardApplication.getDetails().setDriverID(id);
+            mCardApplication.getDetails().setFirstNameLatin(firstName);
+            mCardApplication.getDetails().setSurNameLatin(lastName);
+            mCardApplication.getDetails().setDriverBirthDate(mBirthDate);
+            mCardApplication.getDetails().setAuthorityIssuedCard(authority);
+            mCardApplication.getDetails().setCountryIssuedCard(countryIssued);
+            mCardApplication.getDetails().setPlaceOfLoss(placeLost);
+            mCardApplication.getDetails().setCardNumber(EuCardNumber);
+            mCardApplication.getDetails().setDateOfLoss(mLostDate);
+            mCardApplication.getDetails().setDateOfExpiry(mExpiryDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 
@@ -140,16 +163,11 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @SuppressLint({"SimpleDateFormat","DefaultLocale"})
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-        try {
             String dateString = String.format("%d/%d/%d", dayOfMonth, ++month, year);
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            mBirthDate = df.parse(dateString);
-            mDatePreview.setText(dateString);
-            mDatePreview.setTextSize(25);
-            mDatePreview.setTypeface(Typeface.DEFAULT);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            mBirthDatePreview.setText(dateString);
+            mBirthDatePreview.setTextSize(25);
+            mBirthDatePreview.setTypeface(Typeface.DEFAULT);
+
     }
 
     @Override
