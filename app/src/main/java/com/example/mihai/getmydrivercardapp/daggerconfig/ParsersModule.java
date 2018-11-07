@@ -6,6 +6,7 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.parsers.GsonJsonParser;
 import com.example.mihai.getmydrivercardapp.parsers.base.JsonParser;
+import com.example.mihai.getmydrivercardapp.utils.bytearrayserializer.ByteArrayToBase64TypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,7 +30,8 @@ public class ParsersModule {
     public Gson gson () {
         return new GsonBuilder()
                 .setDateFormat(Formats.STRING_DATE_FORMAT)
-                .create();
+                .registerTypeHierarchyAdapter(byte[].class,
+                        new ByteArrayToBase64TypeAdapter()).create();
     }
 
 }

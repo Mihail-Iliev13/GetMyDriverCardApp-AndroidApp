@@ -12,7 +12,7 @@ public class BitmapConverterImpl implements BitmapConverter {
     @Override
     public byte[] toByteArray(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         return baos.toByteArray();
     }
 
