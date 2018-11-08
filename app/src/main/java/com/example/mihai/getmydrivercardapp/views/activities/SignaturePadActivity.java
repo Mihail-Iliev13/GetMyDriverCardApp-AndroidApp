@@ -10,6 +10,7 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.SignaturePadFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
+import com.mobsandgeeks.saripaar.Validator;
 
 import javax.inject.Inject;
 
@@ -22,6 +23,8 @@ public class SignaturePadActivity extends DaggerAppCompatActivity implements Nav
 
     @Inject
     SignaturePadPresenter mSignaturePadPresenter;
+
+    private Validator mValidator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,10 @@ public class SignaturePadActivity extends DaggerAppCompatActivity implements Nav
         mSignaturePadFragment.setCurrentCardApplication(cardApplication);
         mSignaturePadFragment.setNavigator(this);
 
+        mValidator = new Validator(mSignaturePadFragment);
+        mValidator.setValidationListener(mSignaturePadFragment);
+        mValidator.setValidationMode(Validator.Mode.BURST);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, mSignaturePadFragment)
@@ -50,6 +57,8 @@ public class SignaturePadActivity extends DaggerAppCompatActivity implements Nav
         super.onResume();
         mSignaturePadPresenter
                 .subscribe(mSignaturePadFragment);
+        mSignaturePadPresenter
+                .setValidator(mValidator);
     }
 
     @Override

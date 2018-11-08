@@ -1,9 +1,10 @@
 package com.example.mihai.getmydrivercardapp.services.cardapplicationservice;
 
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
+import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.repositories.cardapplicationrepository.base.CardApplicationRepository;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
+import com.example.mihai.getmydrivercardapp.utils.emailsender.EmailSender;
 import com.example.mihai.getmydrivercardapp.utils.statusconverter.base.ApplicationStatusConverter;
 
 import java.io.IOException;
@@ -14,6 +15,8 @@ public class CardApplicationServiceImpl implements CardApplicationService {
 
     private CardApplicationRepository mCardApplicationRepository;
     private ApplicationStatusConverter mApplicationStatusConverter;
+    private EmailSender mEmailSender;
+
 
     public CardApplicationServiceImpl (CardApplicationRepository cardApplicationRepository,
                                        ApplicationStatusConverter applicationStatusConverter) {
@@ -50,6 +53,25 @@ public class CardApplicationServiceImpl implements CardApplicationService {
     @Override
     public void updateCardApplicationStatus(CardApplication cardApplication, String statusStr) throws IOException {
         CardApplicationStatus status = mApplicationStatusConverter.fromString(statusStr);
-        mCardApplicationRepository.updateCardApplication(cardApplication, status);
+        mCardApplicationRepository
+                .updateCardApplication(cardApplication, status);
+        String email = cardApplication.getDetails().getEmail();
+        switch (status) {
+            case APPROVED:
+                sendEmail(email,
+                        "Application status change",
+                        "Your application has been approved!" );
+                break;
+            case COMPLETED:
+                sendEmail(email, "Application status change", "Your new driver card is ready!");
+                break;
+                default:
+                    break;
+        }
+    }
+
+    private void sendEmail(String email, String subject, String message) {
+        EmailSender emailSender = new EmailSender(email, subject, message);
+        emailSender.execute();
     }
 }

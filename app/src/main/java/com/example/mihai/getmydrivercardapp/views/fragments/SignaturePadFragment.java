@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -20,8 +22,13 @@ import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.Signature
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
 import com.github.gcacace.signaturepad.views.SignaturePad;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,17 +37,28 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class SignaturePadFragment extends Fragment implements SignaturePadView  {
+public class SignaturePadFragment extends Fragment implements SignaturePadView, Validator.ValidationListener {
 
 
-    @BindView(R.id.sp_signature_pad) SignaturePad mSignaturePad;
-    @BindView(R.id.btn_clear_signature) Button mClearButton;
-    @BindView(R.id.btn_submit) Button mSubmitButton;
+    @BindView(R.id.sp_signature_pad)
+    SignaturePad mSignaturePad;
+
+    @BindView(R.id.btn_clear_signature)
+    Button mClearButton;
+
+    @BindView(R.id.btn_submit)
+    Button mSubmitButton;
+
+    @BindView(R.id.cb_checkbox)
+    @Checked
+    CheckBox mCheckBox;
 
     private User mUser;
+
     private CardApplication mCardApplication;
     private SignaturePadPresenter mSignaturePadPresenter;
     private Navigator mNavigator;
+
 
     @Inject
     public SignaturePadFragment() {
@@ -75,12 +93,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView  
         });
 
         mSubmitButton.setOnClickListener(v -> {
-            Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
-            mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
-            mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
-            mSignaturePadPresenter.saveUser(mUser, mCardApplication);
-            mSignaturePadPresenter.saveImages(mUser, mCardApplication);
-            navigate();
+            mSignaturePadPresenter.validate();
         });
 
         return view;
@@ -139,4 +152,29 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView  
         return intent;
     }
 
+    @Override
+    public void onValidationSucceeded() {
+        Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
+        mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
+        mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
+        mSignaturePadPresenter.saveUser(mUser, mCardApplication);
+        mSignaturePadPresenter.saveImages(mUser, mCardApplication);
+        navigate();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            Rule failedRule = error.getFailedRules().get(0);
+            String message = failedRule.getMessage(getContext());
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }

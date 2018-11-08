@@ -13,6 +13,7 @@ import com.example.mihai.getmydrivercardapp.utils.datehandler.base.DateHandler;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SignaturePadView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
+import com.mobsandgeeks.saripaar.Validator;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -32,6 +33,7 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
     private SignaturePadView mSignaturePadView;
     private BitmapConverter mBitmapConverter;
     private DateHandler mDateHandler;
+    private Validator mValidator;
 
     @Inject
     public SignaturePadPresenterImpl(UserService userService, ImageService imageService,  AsyncRunner asyncRunner,
@@ -97,5 +99,15 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
             mSignaturePadView.showError(e);
         }
         cardApplication.setDateOfSubmission(currentDate);
+    }
+
+    @Override
+    public void validate() {
+        mValidator.validate();
+    }
+
+    @Override
+    public void setValidator(Validator validator) {
+        this.mValidator = validator;
     }
 }

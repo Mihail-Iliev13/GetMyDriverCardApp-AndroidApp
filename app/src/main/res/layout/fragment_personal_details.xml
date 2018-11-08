@@ -18,23 +18,23 @@
         <RelativeLayout
             android:id="@+id/rl_default_details"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_user_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ID:"
+                android:inputType="number"
                 android:textColor="@android:color/white"
                 android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/et_user_id"
                 android:layout_width="match_parent"
-                android:layout_height="35sp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_user_id"
-                android:inputType="text"
+                android:inputType="number"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -49,7 +49,7 @@
             <EditText
                 android:id="@+id/et_first_name"
                 android:layout_width="match_parent"
-                android:layout_height="35sp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_first_name"
                 android:inputType="text"
                 android:textColor="@android:color/white"
@@ -67,7 +67,7 @@
             <EditText
                 android:id="@+id/et_last_name"
                 android:layout_width="match_parent"
-                android:layout_height="35sp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_last_name"
                 android:inputType="text"
                 android:textColor="@android:color/white"
@@ -139,7 +139,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_lost_date"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -205,7 +204,7 @@
             <EditText
                 android:id="@+id/et_country"
                 android:layout_width="match_parent"
-                android:layout_height="35sp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_country_issued_card"
                 android:inputType="text"
                 android:textColor="@android:color/white"
@@ -223,15 +222,11 @@
             <EditText
                 android:id="@+id/et_authority"
                 android:layout_width="match_parent"
-                android:layout_height="65sp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="44dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tv_authority_issued_card"
                 android:inputType="text"
                 android:textColor="@android:color/white"
-                tools:ignore="LabelFor"
-                android:layout_alignParentLeft="true" />
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/tv_old_card_number"
@@ -245,7 +240,7 @@
             <EditText
                 android:id="@+id/et_old_card_number"
                 android:layout_width="match_parent"
-                android:layout_height="35sp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tv_old_card_number"
                 android:inputType="number" />
 
@@ -356,7 +351,6 @@
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-
             android:text="@string/Next_button"
             android:textColor="@android:color/white"
             android:textSize="15dp"

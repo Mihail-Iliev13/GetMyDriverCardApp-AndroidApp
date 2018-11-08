@@ -19,6 +19,7 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     private AsyncRunner mAsyncRunner;
     private CardApplicationListView mCardApplicationListView;
 
+
     @Inject
     public CardApplicationListPresenterImpl (CardApplicationService cardApplicationService,
                                              AsyncRunner asyncRunner) {
@@ -51,7 +52,8 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     public void updateApplicationStatus(CardApplication cardApplication, String status) {
        mAsyncRunner.runInBackground(() -> {
            try {
-               mCardApplicationService.updateCardApplicationStatus(cardApplication, status);
+               mCardApplicationService
+                       .updateCardApplicationStatus(cardApplication, status);
                loadCardApplications();
            } catch (IOException e) {
                mCardApplicationListView.showError(e);
@@ -72,4 +74,5 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
             throw new InvalidParameterException();
         }
     }
+
 }

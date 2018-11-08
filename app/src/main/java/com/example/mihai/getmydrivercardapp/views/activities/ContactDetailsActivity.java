@@ -10,6 +10,7 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ContactDetailsFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ContactDetailsPresenter;
+import com.mobsandgeeks.saripaar.Validator;
 
 import javax.inject.Inject;
 
@@ -19,8 +20,11 @@ public class ContactDetailsActivity extends DaggerAppCompatActivity implements N
 
     @Inject
     ContactDetailsFragment mContactDetailsFragment;
+
     @Inject
     ContactDetailsPresenter mContactDetailsPresenter;
+
+    private Validator mValidator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class ContactDetailsActivity extends DaggerAppCompatActivity implements N
         CardApplication cardApplication = (CardApplication)intent
                 .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
 
+        mValidator = new Validator(mContactDetailsFragment);
+        mValidator.setValidationListener(mContactDetailsFragment);
+        mValidator.setValidationMode(Validator.Mode.BURST);
 
         mContactDetailsFragment.setPresenter(mContactDetailsPresenter);
         mContactDetailsFragment.setCurrentUser(user);
@@ -48,6 +55,7 @@ public class ContactDetailsActivity extends DaggerAppCompatActivity implements N
     protected void onResume() {
         super.onResume();
         mContactDetailsPresenter.subscribe(mContactDetailsFragment);
+        mContactDetailsPresenter.setValidator(mValidator);
     }
 
     @Override
