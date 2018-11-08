@@ -29,7 +29,7 @@ public class ApplicationReasonConverterImpl implements ApplicationReasonConverte
                 return CardApplicationReason.DAMAGED;
             case "malfunctioning":
                 return CardApplicationReason.MALFUNCTIONING;
-            case "expired":
+            case "My card has expired":
                 return CardApplicationReason.EXPIRED;
             case "withdrawn":
                 return CardApplicationReason.WITHDRAWN;

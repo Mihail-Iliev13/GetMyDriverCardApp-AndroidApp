@@ -7,6 +7,7 @@ import com.example.mihai.getmydrivercardapp.views.activities.interfaces.LogInNav
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.views.fragments.LogInFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
+import com.mobsandgeeks.saripaar.Validator;
 
 import javax.inject.Inject;
 
@@ -20,6 +21,8 @@ public class LoginActivity extends DaggerAppCompatActivity implements LogInNavig
     @Inject
     LogInPresenter mLogInPresenter;
 
+    private Validator mValidator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,9 @@ public class LoginActivity extends DaggerAppCompatActivity implements LogInNavig
 
         mLoginFragment.setPresenter(mLogInPresenter);
         mLoginFragment.setNavigator(this);
+
+        mValidator = new Validator(mLoginFragment);
+        mValidator.setValidationListener(mLoginFragment);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -38,6 +44,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements LogInNavig
     protected void onResume() {
         super.onResume();
         mLogInPresenter.subscribe(mLoginFragment);
+        mLogInPresenter.setValidator(mValidator);
     }
 
     @Override

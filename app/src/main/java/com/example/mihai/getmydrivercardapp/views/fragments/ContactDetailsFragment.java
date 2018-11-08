@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
@@ -18,20 +19,47 @@ import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigato
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ContactDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ContactDetailsPresenter;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Order;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class ContactDetailsFragment extends Fragment implements ContactDetailsView {
+public class ContactDetailsFragment extends Fragment implements ContactDetailsView,
+        Validator.ValidationListener {
 
-    @BindView(R.id.et_email) EditText mEmail;
-    @BindView(R.id.et_phone_number) EditText mPhoneNumber;
-    @BindView(R.id.et_user_address) EditText mUserAddress;
-    @BindView(R.id.btn_next) Button mButtonNext;
+    @BindView(R.id.et_email)
+    @NotEmpty(sequence = 1)
+    @Email(sequence = 3)
+    @Order(3)
+    EditText mEmail;
+
+    @BindView(R.id.et_phone_number)
+    @NotEmpty(sequence = 1)
+    @Order(2)
+    @Length( sequence = 2, max = 10, min = 10, message = "Invalid length! " +
+            "The length should be exactly ten digits. " +
+            "+359 prefix is unnecessary.")
+    EditText mPhoneNumber;
+
+    @BindView(R.id.et_user_address)
+    @NotEmpty
+    @Order(1)
+    EditText mUserAddress;
+
+    @BindView(R.id.btn_next)
+    Button mButtonNext;
 
     private ContactDetailsPresenter mContactDetailsPresenter;
     private User mUser;
@@ -50,10 +78,13 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact_details, container, false);
         ButterKnife.bind(this, view);
-        mButtonNext.setOnClickListener(v -> mContactDetailsPresenter.handleOnButtonNextClick());
         return view;
     }
 
+    @OnClick(R.id.btn_next)
+    public void nextOnClick() {
+        mContactDetailsPresenter.validate();
+    }
     @Override
     public void setPresenter(BasePresenter presenter) {
         if (presenter instanceof ContactDetailsPresenter) {
@@ -101,5 +132,26 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
     @Override
     public void setCurrentCardApplication(CardApplication cardApplication) {
         this.mCardApplication = cardApplication;
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        mContactDetailsPresenter.handleOnButtonNextClick();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            Rule failedRule = error.getFailedRules().get(0);
+            String message = failedRule.getMessage(getContext());
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

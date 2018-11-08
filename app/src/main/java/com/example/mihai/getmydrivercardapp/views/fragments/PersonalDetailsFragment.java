@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
@@ -24,12 +25,17 @@ import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigato
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.PersonalDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -38,34 +44,87 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PersonalDetailsFragment extends Fragment implements PersonalDetailsView,
-        DatePickerDialog.OnDateSetListener {
+        DatePickerDialog.OnDateSetListener, Validator.ValidationListener {
 
-    @BindView(R.id.tv_user_id) TextView mUserIdTV;
-    @BindView(R.id.tv_first_name) TextView mFirstNameTV;
-    @BindView(R.id.tv_last_name) TextView mLastNameTV;
-    @BindView(R.id.tv_birth_date) TextView getmBirthDateTV;
-    @BindView(R.id.et_user_id) EditText mUserIdET;
-    @BindView(R.id.et_first_name) EditText mFirstNameET;
-    @BindView(R.id.et_last_name) EditText mLastNameET;
-    @BindView(R.id.btn_next) Button mButtonNext;
-    @BindView(R.id.btn_pick_date) Button mPickDateButton;
-    @BindView(R.id.tv_birth_date_preview) TextView mBirthDatePreview;
+    @BindView(R.id.tv_user_id)
+    TextView mUserIdTV;
 
-    @BindView(R.id.tv_lost_date_preview) TextView mLostDatePreview;
-    @BindView(R.id.btn_lost_date) Button mPickLostDateButton;
-    @BindView(R.id.et_place_lost) EditText mPlaceLostET;
-    @BindView(R.id.et_country) EditText mCountryIssuedCardET;
-    @BindView(R.id.et_authority) EditText mAuthorityIssuedET;
-    @BindView(R.id.et_old_card_number) EditText mEUcardNumberET;
-    @BindView(R.id.btn_expiry_date_old) Button mPickDateOfExpiryEUcardButton;
-    @BindView(R.id.tv_date_of_expiry_old) TextView mDateOfExpiryEUcardPreview;
-    @BindView(R.id.btn_expiry_date_renewal) Button mPickExpiryDate_RenewalButton;
-    @BindView(R.id.tv_date_of_expiry_renewal) TextView mExpiryDate_RenewalPreview;
+    @BindView(R.id.tv_first_name)
+    TextView mFirstNameTV;
+
+    @BindView(R.id.tv_last_name)
+    TextView mLastNameTV;
+
+    @BindView(R.id.tv_birth_date)
+    TextView mBirthDateTV;
+
+    @BindView(R.id.et_user_id)
+    @NotEmpty
+    EditText mUserIdET;
+
+    @BindView(R.id.et_first_name)
+    @NotEmpty(sequence = 1)
+//    @Pattern(sequence = 2, regex = "\\p{IsLatin}+",
+//            message = "This field must contain only latin characters")
+    EditText mFirstNameET;
+
+    @BindView(R.id.et_last_name)
+    @NotEmpty(sequence = 1)
+//    @Pattern(sequence = 2, regex = "[a-zA-Z]",
+//            message = "This field must contain only latin characters")
+    EditText mLastNameET;
+
+    @BindView(R.id.btn_next)
+    Button mButtonNext;
+
+    @BindView(R.id.btn_pick_date)
+    Button mPickDateButton;
+
+    @BindView(R.id.tv_birth_date_preview)
+    TextView mBirthDatePreview;
+
+    @BindView(R.id.tv_lost_date_preview)
+    TextView mLostDatePreview;
+
+    @BindView(R.id.btn_lost_date)
+    Button mPickLostDateButton;
+
+    @BindView(R.id.et_place_lost)
+    @NotEmpty
+    EditText mPlaceLostET;
+
+    @BindView(R.id.et_country)
+    @NotEmpty(sequence = 1)
+//    @Pattern(sequence = 2, regex = "[a-zA-Z][a-zA-Z]+@+.",
+//            message = "The email must not contain any other letters than latin")
+    EditText mCountryIssuedCardET;
+
+    @BindView(R.id.et_authority)
+    @NotEmpty
+    EditText mAuthorityIssuedET;
+
+    @BindView(R.id.et_old_card_number)
+    @NotEmpty
+    EditText mEUcardNumberET;
+
+    @BindView(R.id.btn_expiry_date_old)
+    Button mPickDateOfExpiryEUcardButton;
+
+    @BindView(R.id.tv_date_of_expiry_old)
+    TextView mDateOfExpiryEUcardPreview;
+
+    @BindView(R.id.btn_expiry_date_renewal)
+    Button mPickExpiryDate_RenewalButton;
+
+    @BindView(R.id.tv_date_of_expiry_renewal)
+    TextView mExpiryDate_RenewalPreview;
 
     @BindView(R.id.rl_reason_lost)
     RelativeLayout mLostElements;
+
     @BindView(R.id.rl_reason_exchange)
     RelativeLayout mExchangeElements;
+
     @BindView(R.id.rl_reason_renewal)
     RelativeLayout mRenewalElements;
 
@@ -86,20 +145,20 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         View view = inflater.inflate(R.layout.fragment_personal_details, container, false);
         ButterKnife.bind(this, view);
 
-
-
         mButtonNext.setOnClickListener(v -> {
-            try {
-                mPersonalDetailsPresenter.handleOnClickNext();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+          mPersonalDetailsPresenter.validate();
         });
 
-        mPickDateButton.setOnClickListener(v -> mPersonalDetailsPresenter.handleOnClickPickDateButton());
+        mPickDateButton.setOnClickListener(v ->
+                mPersonalDetailsPresenter.handleOnClickPickDateButton());
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPersonalDetailsPresenter.checkReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
+    }
 
     @Override
     public void setPresenter(BasePresenter presenter) {
@@ -111,45 +170,45 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
     @Override
     public void setCardApplicationFields() {
-        String id = String.valueOf(mUserIdET.getText());
-        String firstName = String.valueOf(mFirstNameET.getText());
-        String lastName= String.valueOf(mLastNameET.getText());
-        String authority=String.valueOf(mAuthorityIssuedET.getText());
-        String countryIssued=String.valueOf(mCountryIssuedCardET.getText());
-        String placeLost=String.valueOf(mPlaceLostET.getText());
-        String EuCardNumber= String.valueOf(mEUcardNumberET.getText());
-        String lostDate=String.valueOf(mLostDatePreview.getText());
-        String expiryDate=String.valueOf(mExpiryDate_RenewalPreview.getText());
-        String birthDate=String.valueOf(mBirthDatePreview.getText());
-        String exchangeCardExpiry=String.valueOf(mDateOfExpiryEUcardPreview.getText());
+
 
         try {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-           Date mLostDate = df.parse(lostDate);
-            Date mExpiryDate = df.parse(expiryDate);
-            Date mBirthDate = df.parse(birthDate);
-            Date mExpiryEUcardDate = df.parse(exchangeCardExpiry);
+//            Date lostDate = df.parse(String.valueOf(mLostDatePreview.getText()));
+            Date mBirthDate = df.parse(String.valueOf(mBirthDatePreview.getText()));
 
-            mCardApplication.getDetails().setDriverID(id);
-            mCardApplication.getDetails().setFirstNameLatin(firstName);
-            mCardApplication.getDetails().setSurNameLatin(lastName);
-            mCardApplication.getDetails().setDriverBirthDate(mBirthDate);
-            mCardApplication.getDetails().setAuthorityIssuedCard(authority);
-            mCardApplication.getDetails().setCountryIssuedCard(countryIssued);
-            mCardApplication.getDetails().setPlaceOfLoss(placeLost);
-            mCardApplication.getDetails().setCardNumber(EuCardNumber);
-            mCardApplication.getDetails().setDateOfLoss(mLostDate);
+            mCardApplication.getDetails()
+                    .setDriverID(String.valueOf(mUserIdET.getText()));
+            mCardApplication.getDetails()
+                    .setFirstNameLatin(String.valueOf(mFirstNameET.getText()));
+            mCardApplication.getDetails()
+                    .setSurNameLatin(String.valueOf(mLastNameET.getText()));
+            mCardApplication.getDetails()
+                    .setDriverBirthDate(mBirthDate);
+            mCardApplication.getDetails()
+                    .setAuthorityIssuedCard(String.valueOf(mAuthorityIssuedET.getText()));
+            mCardApplication.getDetails()
+                    .setCountryIssuedCard(String.valueOf(mCountryIssuedCardET.getText()));
+            mCardApplication.getDetails()
+                    .setPlaceOfLoss(String.valueOf(mCountryIssuedCardET.getText()));
+            mCardApplication.getDetails()
+                    .setCardNumber(String.valueOf(mCountryIssuedCardET.getText()));
+//            mCardApplication.getDetails().setDateOfLoss(lostDate);
 
-            if(exchangeCardExpiry!=null){mCardApplication.getDetails().setDateOfExpiry(mExpiryDate);}
-            else if(expiryDate!=null){ mCardApplication.getDetails().setDateOfExpiry(mExpiryEUcardDate);}
+
+            if (mExpiryDate_RenewalPreview.getText() != null) {
+                mCardApplication.getDetails()
+                        .setDateOfExpiry(df.parse(
+                                String.valueOf(mExpiryDate_RenewalPreview.getText())));
+            } else if (mDateOfExpiryEUcardPreview != null) {
+                mCardApplication.getDetails()
+                        .setDateOfExpiry(df.parse(
+                                String.valueOf(mDateOfExpiryEUcardPreview.getText())));
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 
     @Override
@@ -158,7 +217,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         mUserIdTV.setTextSize(16);
         mFirstNameTV.setTextSize(16);
         mLastNameTV.setTextSize(16);
-        getmBirthDateTV.setTextSize(16);
+        mBirthDateTV.setTextSize(16);
     }
 
     @Override
@@ -167,7 +226,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         mUserIdTV.setTextSize(16);
         mFirstNameTV.setTextSize(16);
         mLastNameTV.setTextSize(16);
-        getmBirthDateTV.setTextSize(16);
+        mBirthDateTV.setTextSize(16);
     }
 
     @Override
@@ -176,7 +235,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         mUserIdTV.setTextSize(16);
         mFirstNameTV.setTextSize(16);
         mLastNameTV.setTextSize(16);
-        getmBirthDateTV.setTextSize(16);
+        mBirthDateTV.setTextSize(16);
     }
 
     @Override
@@ -242,9 +301,30 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         return intent;
     }
 
+
+
     @Override
-    public void onResume() {
-        super.onResume();
-        mPersonalDetailsPresenter.CheckReasonAndRevealElementsIfNeeded(mCardApplication.getCardApplicationReason());
+    public void onValidationSucceeded() {
+        try {
+            mPersonalDetailsPresenter.handleOnClickNext();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            Rule failedRule = error.getFailedRules().get(0);
+            String message = failedRule.getMessage(getContext());
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

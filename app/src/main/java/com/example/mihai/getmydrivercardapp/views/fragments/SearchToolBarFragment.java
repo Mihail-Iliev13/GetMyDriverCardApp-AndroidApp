@@ -36,9 +36,14 @@ import butterknife.ButterKnife;
 public class SearchToolBarFragment extends Fragment implements SearchToolBarView,
         DatePickerDialog.OnDateSetListener {
 
-    @BindView(R.id.tb_toolbar) Toolbar mToolbar;
-    @BindView(R.id.spinner) Spinner mSpinner;
-    @BindView(R.id.search_view) MaterialSearchView mSearchView;
+    @BindView(R.id.tb_toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.spinner)
+    Spinner mSpinner;
+
+    @BindView(R.id.search_view)
+    MaterialSearchView mSearchView;
 
     private SearchToolBarPresenter mSearchToolBarPresenter;
 

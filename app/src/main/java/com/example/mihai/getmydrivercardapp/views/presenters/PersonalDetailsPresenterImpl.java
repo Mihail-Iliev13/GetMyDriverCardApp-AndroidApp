@@ -1,29 +1,22 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-
-import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.PersonalDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
+import com.mobsandgeeks.saripaar.Validator;
 
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-
 public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
- private PersonalDetailsView mPersonalDetailsView;
 
+    private PersonalDetailsView mPersonalDetailsView;
+    private Validator mValidator;
 
-
- @Inject
+    @Inject
  public PersonalDetailsPresenterImpl(){
      //
     }
@@ -39,8 +32,7 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     @Override
     public void handleOnClickNext() throws ParseException {
             mPersonalDetailsView.setCardApplicationFields();
-
-        mPersonalDetailsView.navigate();
+            mPersonalDetailsView.navigate();
     }
 
     @Override
@@ -49,7 +41,7 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     }
 
     @Override
-    public void CheckReasonAndRevealElementsIfNeeded(CardApplicationReason reason) {
+    public void checkReasonAndRevealElementsIfNeeded(CardApplicationReason reason) {
 
         if(reason== CardApplicationReason.LOST||reason== CardApplicationReason.STOLEN){
         mPersonalDetailsView.showLostOrStolenFields();
@@ -61,6 +53,16 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
         mPersonalDetailsView.showRenewalFields();
         }
         else ;
+    }
+
+    @Override
+    public void validate() {
+        mValidator.validate();
+    }
+
+    @Override
+    public void setValidator(Validator validator) {
+        this.mValidator = validator;
     }
 
 

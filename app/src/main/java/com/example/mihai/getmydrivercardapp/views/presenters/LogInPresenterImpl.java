@@ -1,12 +1,13 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
-import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.enums.UserRole;
+import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
+import com.mobsandgeeks.saripaar.Validator;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -18,6 +19,7 @@ public class LogInPresenterImpl implements LogInPresenter {
     private LogInView mLoginView;
     private UserService mUserService;
     private AsyncRunner mAsyncRunner;
+    private Validator mValidator;
 
     @Inject
     public LogInPresenterImpl (UserService userService, AsyncRunner asyncRunner) {
@@ -37,7 +39,6 @@ public class LogInPresenterImpl implements LogInPresenter {
 
     @Override
     public void logIn(String email, String password) {
-
         mAsyncRunner.runInBackground(() -> {
             try {
                 User user = mUserService.getUserByEmail(email);
@@ -63,7 +64,6 @@ public class LogInPresenterImpl implements LogInPresenter {
     @Override
     public void signUp(String email, String password) {
         mAsyncRunner.runInBackground(() -> {
-
             try {
                 User user = mUserService.getUserByEmail(email);
                 if (user == null) {
@@ -77,5 +77,15 @@ public class LogInPresenterImpl implements LogInPresenter {
                 mLoginView.showError(e);
             }
         });
+    }
+
+    @Override
+    public void setValidator(Validator validator) {
+        this.mValidator = validator;
+    }
+
+    @Override
+    public void validate(){
+        mValidator.validate();
     }
 }
