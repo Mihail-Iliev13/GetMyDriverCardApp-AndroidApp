@@ -7,8 +7,8 @@ import java.text.ParseException;
 
 public interface PersonalDetailsPresenter extends BasePresenter {
 
-    void handleOnClickNext() throws ParseException;
-    void handleOnClickPickDateButton();
+    void handleOnClickNext(CardApplicationReason cardApplicationReason) throws ParseException;
+    void handlePickDateButtonOnClick();
     void checkReasonAndRevealElementsIfNeeded(CardApplicationReason reason);
     void validate();
     void setValidator(Validator validator);

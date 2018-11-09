@@ -1,21 +1,25 @@
 package com.example.mihai.getmydrivercardapp.views.fragments;
 
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.security.InvalidParameterException;
 import java.util.Date;
@@ -53,6 +57,9 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     @BindView(R.id.ll_date_of_expiry) LinearLayout mDateOfExpiryLayout;
     @BindView(R.id.ll_date_lost) LinearLayout mDateLostLayout;
     @BindView(R.id.ll_place_of_loss) LinearLayout mPlaceLostLayout;
+    @BindView(R.id.btn_change_status) Button mChangeStatusButton;
+    @BindView(R.id.tv_status) TextView mStatus;
+    @BindView(R.id.tv_reason) TextView mReason;
 
     private CardApplicationDetailsPresenter mCardApplicationDetailsPresenter;
     private CardApplication mCardApplication;
@@ -68,6 +75,24 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_card_application_details, container, false);
         ButterKnife.bind(this, view);
+
+        View.OnClickListener imageOnCLicListener = imageView -> {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+            View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
+            PhotoView photoView = mView.findViewById(R.id.imageView);
+            photoView.setImageDrawable(((ImageView)imageView).getDrawable());
+            mBuilder.setView(mView);
+            AlertDialog mDialog = mBuilder.create();
+            mDialog.show();
+        };
+
+        mSelfieImage.setOnClickListener(imageOnCLicListener);
+        mIDCardImage.setOnClickListener(imageOnCLicListener);
+        mDrivingLicenseImage.setOnClickListener(imageOnCLicListener);
+        mSignatureImage.setOnClickListener(imageOnCLicListener);
+        mOldCardImage.setOnClickListener(imageOnCLicListener);
+        mChangeStatusButton.setOnClickListener(v -> showStatusDialog());
+
         return view;
     }
 
@@ -108,7 +133,7 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     }
 
     @Override
-    public void assignValueToBirthDateTextView(Date date) {
+    public void assignValueToBirthDateTextView(String date) {
         this.mBirthDate.setText(String.valueOf(date));
     }
 
@@ -193,5 +218,49 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     public void assignValueToPlaceLostTextView(String placeLost) {
         this.mPlaceLostLayout.setVisibility(View.VISIBLE);
         this.mPlaceLost.setText(placeLost);
+    }
+
+    @Override
+    public AlertDialog.Builder buildStatusDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Change status: ");
+        String[] statusValues = CardApplicationStatus.stringValues();
+
+        final int[] statusIndex = {0};
+        builder.setSingleChoiceItems(statusValues, -1, (dialog, index) -> {
+            statusIndex[0] = index;
+        });
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String status = statusValues[statusIndex[0]];
+            mCardApplicationDetailsPresenter.updateApplicationStatus(mCardApplication, status);
+            mStatus.setText(status);
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+
+        });
+
+        return builder;
+    }
+
+    @Override
+    public void showStatusDialog() {
+        AlertDialog.Builder builder = buildStatusDialog();
+        AlertDialog alertDialog = builder.create();
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(alertDialog::show);
+    }
+
+    @Override
+    public void assignValueToStatusTextView(String status) {
+        mStatus.setText(status);
+    }
+
+    @Override
+    public void assignValueToReasonTextView(String reason) {
+        mReason.setText(reason);
     }
 }

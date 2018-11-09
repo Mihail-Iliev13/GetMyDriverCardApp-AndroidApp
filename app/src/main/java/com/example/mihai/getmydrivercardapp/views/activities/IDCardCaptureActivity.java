@@ -58,7 +58,7 @@ public class IDCardCaptureActivity extends DaggerAppCompatActivity implements Na
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
 
-        mImageCaptureFragment.setInstructionMessage("Please, take a picture of your ID card!");
+        mImageCaptureFragment.setInstructionMessage("Take a horizontal picture of your ID card");
     }
 
     @Override

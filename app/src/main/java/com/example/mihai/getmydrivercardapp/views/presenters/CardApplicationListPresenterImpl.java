@@ -59,6 +59,7 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
                mCardApplicationListView.showError(e);
            }
        });
+
     }
 
     @Override

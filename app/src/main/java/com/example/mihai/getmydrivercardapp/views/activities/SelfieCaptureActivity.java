@@ -58,7 +58,7 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity implements Na
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
 
-        mImageCaptureFragment.setInstructionMessage("Please, take a picture of yourself!");
+        mImageCaptureFragment.setInstructionMessage("Take a vertical portrait picture of yourself");
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.customannotations.DateFormat;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
@@ -44,6 +45,7 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
         mValidator = new Validator(mPersonalDetailsFragment);
         mValidator.setValidationMode(Validator.Mode.BURST);
         mValidator.setValidationListener(mPersonalDetailsFragment);
+        Validator.registerAnnotation(DateFormat.class);
 
         getSupportFragmentManager()
                 .beginTransaction()

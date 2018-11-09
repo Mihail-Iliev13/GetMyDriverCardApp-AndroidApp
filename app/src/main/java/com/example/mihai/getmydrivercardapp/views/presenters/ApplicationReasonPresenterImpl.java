@@ -35,12 +35,16 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
     public void handleOnCheckedChange(int id) {
         switch (id) {
             case 1:
-                mApplicationReasonView.setCardApplicationReason(CardApplicationReason.NEW_CARD);
-                mApplicationReasonView.navigate();
+                mApplicationReasonView
+                        .setCardApplicationReason(CardApplicationReason.NEW_CARD);
+                mApplicationReasonView
+                        .navigate();
                 return;
             case 2:
-                mApplicationReasonView.setCardApplicationReason(CardApplicationReason.EXCHANGE);
-                mApplicationReasonView.navigate();
+                mApplicationReasonView
+                        .setCardApplicationReason(CardApplicationReason.EXCHANGE);
+                mApplicationReasonView
+                        .navigate();
                 return;
             case 3:
                 mApplicationReasonView.showDialog("I want to replace my current card because:",
@@ -56,16 +60,21 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
     }
 
     @Override
-    public void handlePositiveButtonOnclick(String reasonStr, CardApplication cardApplication) {
-        CardApplicationReason reason = mConverter.fromString(reasonStr);
-        cardApplication.setCardApplicationReason(reason);
-
-        if (reason == CardApplicationReason.STOLEN
-                || reason == CardApplicationReason.LOST) {
+    public void handleDialogPositiveButtonOnclick(String reasonStr, CardApplication cardApplication) {
+        try {
+            CardApplicationReason reason = mConverter.fromString(reasonStr);
+            cardApplication.setCardApplicationReason(reason);
             mApplicationReasonView.navigate();
-            return;
+
+//            if (reason == CardApplicationReason.STOLEN
+//                    || reason == CardApplicationReason.LOST) {
+//                mApplicationReasonView.navigate();
+//                return;
+//            }
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
         }
 
-        mApplicationReasonView.navigate();
+
     }
 }

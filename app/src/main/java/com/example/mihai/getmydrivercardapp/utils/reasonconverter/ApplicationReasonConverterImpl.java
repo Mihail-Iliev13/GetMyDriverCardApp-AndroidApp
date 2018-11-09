@@ -15,23 +15,23 @@ public class ApplicationReasonConverterImpl implements ApplicationReasonConverte
                 return CardApplicationReason.NEW_CARD;
             case "exchange":
                 return CardApplicationReason.EXCHANGE;
-            case "stolen":
+            case "my card was stolen":
                 return CardApplicationReason.STOLEN;
-            case "lost":
+            case "i lost my card":
                 return CardApplicationReason.LOST;
-            case "changed address":
+            case "i changed my address":
                 return CardApplicationReason.ADDRESS_CHANGE;
-            case "changed photo":
+            case "i want to change my photo":
                 return CardApplicationReason.PHOTO_CHANGE;
-            case "changed name":
+            case "i changed my name":
                 return CardApplicationReason.NAME_CHANGE;
-            case "damaged":
+            case "my card is damaged":
                 return CardApplicationReason.DAMAGED;
-            case "malfunctioning":
+            case "my card is malfunctioning":
                 return CardApplicationReason.MALFUNCTIONING;
-            case "My card has expired":
+            case "my card has expired":
                 return CardApplicationReason.EXPIRED;
-            case "withdrawn":
+            case "my card was withdrawn":
                 return CardApplicationReason.WITHDRAWN;
                 default:
                     throw new InvalidParameterException();

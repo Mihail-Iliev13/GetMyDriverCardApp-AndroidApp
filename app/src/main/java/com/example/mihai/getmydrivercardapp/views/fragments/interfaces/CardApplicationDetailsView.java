@@ -1,5 +1,6 @@
 package com.example.mihai.getmydrivercardapp.views.fragments.interfaces;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -11,7 +12,7 @@ public interface CardApplicationDetailsView extends BaseView{
     void assignValueToIDTextView(String driverID);
     void assignValueToFirstNameTextView(String firstName);
     void assignValueToSurnameTextView(String surName);
-    void assignValueToBirthDateTextView(Date date);
+    void assignValueToBirthDateTextView(String date);
     void assignValueToDrivingLicenseImageView(Bitmap drivingLicenseImage);
     void assignValueToAddressTextView(String address);
     void assignValueToPhoneNumberTextView(String phoneNumber);
@@ -26,4 +27,12 @@ public interface CardApplicationDetailsView extends BaseView{
     void assignValueToDateOfLossTextView(Date dateOfLoss);
     void assignValueToPlaceLostTextView(String placeLost);
     void assignValueToOldCardImageView(Bitmap oldCardImage);
+
+    AlertDialog.Builder buildStatusDialog();
+
+    void showStatusDialog();
+
+    void assignValueToStatusTextView(String string);
+
+    void assignValueToReasonTextView(String string);
 }

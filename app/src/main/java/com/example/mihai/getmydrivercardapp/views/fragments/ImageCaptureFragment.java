@@ -4,6 +4,7 @@ package com.example.mihai.getmydrivercardapp.views.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
@@ -100,12 +102,22 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
     @Override
     public void setImageBitmap(Bitmap bitmap) {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+
+        if (mImageModel.getImageAttribute() == ImageAttribute.SELFIE_IMAGE) {
+            bitmap = flipImage(bitmap, -1.0f, 1.0f);
+        } else {
+//            Matrix matrix = new Matrix();
+//            matrix.postRotate(90);
+//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
+//            bitmap = Bitmap.createBitmap(scaledBitmap, 0,0,scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+        }
+
             mImageView.setImageBitmap(bitmap);
             mTxtPreview.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
-        });
+
     }
+
 
     @Override
     public void setPresenter(BasePresenter presenter) {
@@ -156,4 +168,12 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     public void setInstructionMessage(String message) {
         mTextMessage.setText(message);
     }
+
+    private Bitmap flipImage(Bitmap bitmap, float sx, float sy) {
+        Matrix matrix = new Matrix();
+        matrix.preScale(sx, sy);
+        return Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),
+                bitmap.getHeight(), matrix, true);
+    }
+
 }

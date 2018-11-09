@@ -72,8 +72,8 @@ public class PresenterBindingModule {
 
     @Provides
     public CardApplicationDetailsPresenter applicationDetailsPresenter
-            (ImageService imageService, AsyncRunner asyncRunner, BitmapConverter bitmapConverter) {
-        return new CardApplicationDetailsPresenterImpl(imageService, asyncRunner, bitmapConverter);
+            (CardApplicationService cardApplicationService, ImageService imageService, AsyncRunner asyncRunner, BitmapConverter bitmapConverter) {
+        return new CardApplicationDetailsPresenterImpl(cardApplicationService, imageService, asyncRunner, bitmapConverter);
     }
 
     @Provides

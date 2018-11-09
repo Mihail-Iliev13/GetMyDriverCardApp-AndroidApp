@@ -154,12 +154,16 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
 
     @Override
     public void onValidationSucceeded() {
-        Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
-        mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
-        mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
-        mSignaturePadPresenter.saveUser(mUser, mCardApplication);
-        mSignaturePadPresenter.saveImages(mUser, mCardApplication);
-        navigate();
+        if (mSignaturePad.isEmpty()) {
+            Toast.makeText(getContext(), "Place your signature before proceeding!", Toast.LENGTH_SHORT).show();
+        } else {
+            Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
+            mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
+            mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
+            mSignaturePadPresenter.saveUser(mUser, mCardApplication);
+            mSignaturePadPresenter.saveImages(mUser, mCardApplication);
+            navigate();
+        }
     }
 
     @Override

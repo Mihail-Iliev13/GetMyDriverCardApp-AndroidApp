@@ -33,7 +33,6 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
         setContentView(R.layout.activity_with_one_fragment);
 
 
-
         Intent intent = getIntent();
         User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
         CardApplication cardApplication = (CardApplication) intent
@@ -61,7 +60,7 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
     protected void onResume() {
         super.onResume();
         mImageCapturePresenter.subscribe(mImageCaptureFragment);
-        mImageCaptureFragment.setInstructionMessage("Please, take a picture of your driving license!");
+        mImageCaptureFragment.setInstructionMessage("Take a horizontal picture of your driving license");
     }
 
     @Override

@@ -39,13 +39,13 @@ import butterknife.OnClick;
 public class LogInFragment extends Fragment implements LogInView, Validator.ValidationListener {
 
     @BindView(R.id.et_email)
-    @Email()
-    @NotEmpty
+    @Email(sequence = 2)
+    @NotEmpty(sequence = 1)
     EditText mEmail;
 
-    @NotEmpty
     @BindView(R.id.et_password)
-    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE,
+    @NotEmpty(sequence = 1)
+    @Password(sequence = 2, min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE,
             message = "Invalid Password!" +
                     " Password must be at least 8 characters long and contain at least one digit, capital letter and small letter")
     EditText mPassword;
@@ -115,7 +115,7 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
     @Override
     public void showUserAlreadyExistsError(String email) {
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            mEmail.setError("User with email " + " already exists!");
+            mEmail.setError("User with email " + email + " already exists!");
         });
     }
 

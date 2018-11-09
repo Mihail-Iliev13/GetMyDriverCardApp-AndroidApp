@@ -8,6 +8,6 @@ import java.util.List;
 public interface CardApplicationDetailsPresenter extends BasePresenter{
     void assignValues(CardApplication cardApplication);
     void loadImages(int id);
-
     void assIgnImages(List<ImageModel> images);
+    void updateApplicationStatus(CardApplication mCardApplication, String status);
 }

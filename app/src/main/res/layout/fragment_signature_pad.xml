@@ -26,7 +26,7 @@
             android:id="@+id/sp_signature_pad"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="430dp"
+            android:layout_height="400dp"
             android:background="@android:color/white"/>
 
         <CheckBox
@@ -34,7 +34,8 @@
             android:layout_below="@+id/sp_signature_pad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="I agree"
+            android:text="Hereby I declare that all the
+provided details are correct and understand that it is a criminal offence if I make a false declaration"
             android:textSize="15sp"
             android:textStyle="italic"
             android:textColor="@android:color/white"/>

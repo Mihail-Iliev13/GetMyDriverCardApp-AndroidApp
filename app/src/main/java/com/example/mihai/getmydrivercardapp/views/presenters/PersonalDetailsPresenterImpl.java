@@ -30,29 +30,39 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     }
 
     @Override
-    public void handleOnClickNext() throws ParseException {
+    public void handleOnClickNext(CardApplicationReason reason) throws ParseException {
             mPersonalDetailsView.setCardApplicationFields();
+
+            if (reason == CardApplicationReason.EXCHANGE) {
+                mPersonalDetailsView.setOptionalExchangeFields();
+            } else if (reason == CardApplicationReason.LOST
+                    || reason == CardApplicationReason.STOLEN) {
+                mPersonalDetailsView.setOptionalLostFields();
+            } else if (reason == CardApplicationReason.EXPIRED
+                    || reason == CardApplicationReason.WITHDRAWN) {
+                mPersonalDetailsView.setOptionalExpireFields();
+            }
+
             mPersonalDetailsView.navigate();
     }
 
     @Override
-    public void handleOnClickPickDateButton() {
-        (mPersonalDetailsView).showDatePicker();
+    public void handlePickDateButtonOnClick() {
+        mPersonalDetailsView.showDatePicker();
     }
 
     @Override
     public void checkReasonAndRevealElementsIfNeeded(CardApplicationReason reason) {
 
-        if(reason== CardApplicationReason.LOST||reason== CardApplicationReason.STOLEN){
+        if(reason == CardApplicationReason.LOST
+                ||reason== CardApplicationReason.STOLEN){
         mPersonalDetailsView.showLostOrStolenFields();
-            }
-        else if(reason== CardApplicationReason.EXCHANGE){
-        mPersonalDetailsView.showExchangeFields();
-        }
-        else if(reason== CardApplicationReason.EXPIRED || reason==CardApplicationReason.WITHDRAWN){
+        } else if (reason == CardApplicationReason.EXCHANGE){
+            mPersonalDetailsView.showExchangeFields();
+        } else if (reason == CardApplicationReason.EXPIRED
+                || reason==CardApplicationReason.WITHDRAWN){
         mPersonalDetailsView.showRenewalFields();
         }
-        else ;
     }
 
     @Override

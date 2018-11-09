@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:StrokeAttrs="http://schemas.android.com/apk/res-auto"
     tools:context=".views.fragments.PersonalDetailsFragment"
     android:background="@drawable/blue_gradients">
 
@@ -22,11 +22,13 @@
 
             <TextView
                 android:id="@+id/tv_user_id"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ID:"
                 android:inputType="number"
-                android:textColor="@android:color/white"
+                android:layout_marginTop="100dp"
                 android:textSize="25sp" />
 
             <EditText
@@ -39,6 +41,7 @@
 
             <TextView
                 android:id="@+id/tv_first_name"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/et_user_id"
@@ -57,6 +60,7 @@
 
             <TextView
                 android:id="@+id/tv_last_name"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_first_name"
@@ -75,6 +79,7 @@
 
             <TextView
                 android:id="@+id/tv_birth_date"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_last_name"
@@ -132,7 +137,8 @@
                 android:layout_height="wrap_content"
                 android:text="Date of loss:"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textStyle="bold"
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:id="@+id/ll_date_lost"
@@ -147,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:text="Date preview will appear here"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="italic" />
 
                 <Button
@@ -174,7 +180,8 @@
                 android:layout_below="@id/ll_date_lost"
                 android:text="Place of loss:"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="25sp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/et_place_lost"
@@ -199,7 +206,8 @@
                 android:layout_height="wrap_content"
                 android:text="Country issued card:"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/et_country"
@@ -215,6 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_country"
+                android:textStyle="bold"
                 android:text="Authority issued card:"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
@@ -234,6 +243,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_authority"
                 android:text="Card Number:"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@android:color/white"/>
 
@@ -241,6 +251,7 @@
                 android:id="@+id/et_old_card_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
                 android:layout_below="@id/tv_old_card_number"
                 android:inputType="number" />
 
@@ -249,6 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="22sp"
                 android:text="Date of expiry:"
+                android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:layout_below="@id/et_old_card_number"/>
@@ -292,7 +304,7 @@
         <RelativeLayout
             android:id="@+id/rl_reason_renewal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/rl_default_details"
             android:visibility="gone">
 
@@ -302,7 +314,8 @@
                 android:layout_height="wrap_content"
                 android:text="Date of expiry:"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="25sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/ll_date_of_expiry_renewal"
@@ -318,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:text="Date preview will appear here"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="italic" />
 
                 <Button
@@ -339,19 +352,17 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
-
         <Button
             android:id="@+id/btn_next"
-            android:layout_width="150sp"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_birth_date"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:background="@drawable/blue_rounded_button"
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/Next_button"
+            android:paddingTop="13dp"
+            android:text="Change Status"
             android:textColor="@android:color/white"
             android:textSize="15dp"
             android:textStyle="bold" />

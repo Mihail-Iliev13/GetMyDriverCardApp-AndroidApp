@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
@@ -39,6 +41,7 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     private CardApplication mCardApplication;
     private User mUser;
     private Navigator mNavigator;
+    private int mIndex;
 
     @Inject
     public ApplicationReasonFragment() {
@@ -55,6 +58,13 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
         mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
                 mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mRadioGroup.clearCheck();
+        mIndex = -1;
     }
 
     @Override
@@ -95,6 +105,26 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     public void showDialog(String title, int resourceID) {
         AlertDialog.Builder builder = buildDialog(title, resourceID);
         AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(dialog1 -> {
+            Button button = ((AlertDialog) dialog1).getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> {
+                String[] values = Objects.requireNonNull(getActivity())
+                        .getResources()
+                        .getStringArray(resourceID);
+
+                if (mIndex == -1) {
+                    Toast.makeText(getContext(),
+                            "Choose an option to proceed",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    String reason = values[mIndex];
+                    mApplicationReasonPresenter
+                            .handleDialogPositiveButtonOnclick(reason, mCardApplication);
+                    dialog1.dismiss();
+                }
+            });
+        });
+        dialog.setOnDismissListener(dialog12 -> mRadioGroup.clearCheck());
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(dialog::show);
     }
@@ -108,18 +138,12 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
                 .getResources()
                 .getStringArray(resourceID);
 
-        final int[] arrayIndex = new int[1];
         builder.setSingleChoiceItems(values, -1, (dialog, index) -> {
-            arrayIndex[0] = index;
+            mIndex  = index;
         });
 
-        builder.setPositiveButton("OK", (dialog, index) -> {
-            String reason = values[arrayIndex[0]];
-            mApplicationReasonPresenter
-                    .handlePositiveButtonOnclick(reason, mCardApplication);
-            dialog.dismiss();
-        });
 
+        builder.setPositiveButton("OK",  null);
         builder.setNegativeButton("Cancel", (dialog, which) -> {
         });
 

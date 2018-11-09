@@ -53,6 +53,6 @@ public class OldCardCaptureActivity extends DaggerAppCompatActivity {
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
 
-        mImageCaptureFragment.setInstructionMessage("Please, take a picture of your existing tachograph card!");
+        mImageCaptureFragment.setInstructionMessage("Take a horizontal picture of your existing tachograph card!");
     }
 }

@@ -3,8 +3,12 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
+import com.example.mihai.getmydrivercardapp.constants.Formats;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
@@ -13,6 +17,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardAppl
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,10 +29,12 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
     private BitmapConverter mBitmapConverter;
     private ImageService mImageService;
     private AsyncRunner mAsyncRunner;
+    private CardApplicationService mCardApplicationService;
 
     @Inject
-    public CardApplicationDetailsPresenterImpl(ImageService imageService, AsyncRunner asyncRunner,
+    public CardApplicationDetailsPresenterImpl(CardApplicationService cardApplicationService, ImageService imageService, AsyncRunner asyncRunner,
                                                BitmapConverter bitmapConverter) {
+        this.mCardApplicationService = cardApplicationService;
         this.mBitmapConverter = bitmapConverter;
         this.mImageService = imageService;
         this.mAsyncRunner = asyncRunner;
@@ -53,8 +60,15 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
         String surName = cardApplication.getDetails().getSurNameLatin();
         mCardApplicationDetailsView.assignValueToSurnameTextView(surName);
 
-        Date date = cardApplication.getDetails().getDriverBirthDate();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Formats.STRING_DATE_FORMAT);
+        String date = simpleDateFormat.format(cardApplication.getDetails().getDriverBirthDate());
         mCardApplicationDetailsView.assignValueToBirthDateTextView(date);
+
+        CardApplicationStatus status = cardApplication.getStatus();
+        mCardApplicationDetailsView.assignValueToStatusTextView(status.toString());
+
+        CardApplicationReason reason = cardApplication.getCardApplicationReason();
+        mCardApplicationDetailsView.assignValueToReasonTextView(reason.toString());
 
         String address = cardApplication.getDetails().getAddress();
         mCardApplicationDetailsView.assignValueToAddressTextView(address);
@@ -132,5 +146,16 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
                     break;
             }
         }
+    }
+
+    @Override
+    public void updateApplicationStatus(CardApplication mCardApplication, String status) {
+       mAsyncRunner.runInBackground( () -> {
+           try {
+               mCardApplicationService.updateCardApplicationStatus(mCardApplication, status);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       });
     }
 }

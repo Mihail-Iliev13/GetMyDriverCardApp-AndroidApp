@@ -11,4 +11,10 @@ public interface PersonalDetailsView extends BaseView,
     void showExchangeFields();
 
     void showRenewalFields();
+
+    void setOptionalExchangeFields();
+
+    void setOptionalLostFields();
+
+    void setOptionalExpireFields();
 }
