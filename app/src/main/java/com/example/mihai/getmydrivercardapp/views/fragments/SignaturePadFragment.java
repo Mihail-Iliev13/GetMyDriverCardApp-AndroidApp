@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -58,6 +59,9 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
     private CardApplication mCardApplication;
     private SignaturePadPresenter mSignaturePadPresenter;
     private Navigator mNavigator;
+
+    @BindView(R.id.loading)
+    private ProgressBar mLoadingView;
 
 
     @Inject
@@ -155,10 +159,12 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
     @Override
     public void onValidationSucceeded() {
         Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
+        showLoading();
         mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
         mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
         mSignaturePadPresenter.saveUser(mUser, mCardApplication);
         mSignaturePadPresenter.saveImages(mUser, mCardApplication);
+        hideLoading();
         navigate();
     }
 
@@ -176,5 +182,15 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void showLoading() {
+        mLoadingView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+mLoadingView.setVisibility(View.GONE);
     }
 }
