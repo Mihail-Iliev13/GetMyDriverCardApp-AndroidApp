@@ -238,6 +238,9 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
         builder.setPositiveButton("OK", (dialog, which) -> {
             String status = statusValues[statusIndex[0]];
             mCardApplicationDetailsPresenter.updateApplicationStatus(mCardApplication, status);
+            mCardApplicationDetailsPresenter.sendEmail(getContext(), mCardApplication
+                    .getDetails()
+                    .getEmail(), mCardApplication.getStatus());
             mStatus.setText(status);
         });
 

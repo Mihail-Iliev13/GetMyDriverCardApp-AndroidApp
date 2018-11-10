@@ -1,5 +1,6 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
@@ -11,6 +12,7 @@ import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
+import com.example.mihai.getmydrivercardapp.utils.emailsender.EmailSender;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
@@ -152,7 +154,7 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
 
     @Override
     public void updateApplicationStatus(CardApplication mCardApplication, String status) {
-       mAsyncRunner.runInBackground( () -> {
+        mAsyncRunner.runInBackground( () -> {
            try {
                mCardApplicationService.updateCardApplicationStatus(mCardApplication, status);
            } catch (IOException e) {
@@ -160,4 +162,22 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
            }
        });
     }
+
+    @Override
+    public void sendEmail(Context context, String email, CardApplicationStatus status) {
+        String message = null;
+        switch (status) {
+            case APPROVED:
+                message = "Your application has been approved!";
+                break;
+            case COMPLETED:
+                message = "Your new driver card is ready!";
+                break;
+            default:
+                return;
+        }
+        EmailSender emailSender = new EmailSender(context, email, "Changed Status", message);
+        emailSender.execute();
+    }
+
 }

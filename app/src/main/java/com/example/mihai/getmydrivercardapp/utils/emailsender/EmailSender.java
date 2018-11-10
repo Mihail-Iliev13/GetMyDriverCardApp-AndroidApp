@@ -1,7 +1,9 @@
 package com.example.mihai.getmydrivercardapp.utils.emailsender;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.util.Properties;
 
@@ -15,6 +17,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailSender extends AsyncTask<Void, Void, Void> {
 
+    private Context context;
     private Session session;
 
     //Information to send email
@@ -25,13 +28,31 @@ public class EmailSender extends AsyncTask<Void, Void, Void> {
     private ProgressDialog progressDialog;
 
     //Class Constructor
-    public EmailSender(String email, String subject, String message){
+    public EmailSender(Context context, String email, String subject, String message){
         //Initializing variables
+        this.context = context;
         this.email = email;
         this.subject = subject;
         this.message = message;
     }
 
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        //Showing progress dialog while sending email
+        progressDialog = ProgressDialog.show(context,"Sending message","Please wait...",false,false);
+    }
+
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        //Dismissing the progress dialog
+        progressDialog.dismiss();
+        //Showing a success message
+        Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -51,10 +72,10 @@ public class EmailSender extends AsyncTask<Void, Void, Void> {
                 new javax.mail.Authenticator() {
                     //Authenticating the password
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(EmailSenderConfig.EMAIL, EmailSenderConfig.PASSWORD);
+                        return new PasswordAuthentication(EmailSenderConfig.EMAIL,
+                                EmailSenderConfig.PASSWORD);
                     }
                 });
-
         try {
             //Creating MimeMessage object
             MimeMessage mm = new MimeMessage(session);

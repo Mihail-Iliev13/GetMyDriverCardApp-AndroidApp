@@ -61,7 +61,6 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
 
         mAdapter.setCardApplicationListView(this);
 
-
         mListView.setAdapter(mAdapter);
 
         return view;
