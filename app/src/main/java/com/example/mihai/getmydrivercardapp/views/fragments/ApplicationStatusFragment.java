@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -29,6 +30,7 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
 
     @BindView(R.id.tv_message) TextView mStatusTextView;
     @BindView(R.id.iv_status_image) ImageView mStatusImage;
+    @BindView(R.id.pb_loading) ProgressBar mProgressBar;
 
     private CardApplication mCardApplication;
     private ApplicationStatusPresenter mApplicationStatusPresenter;
@@ -76,5 +78,23 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
     @Override
     public void setUser(User user) {
         this.mUser = user;
+    }
+
+    @Override
+    public void showLoading() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mStatusTextView.setVisibility(View.GONE);
+            mStatusImage.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
+        });
+    }
+
+    @Override
+    public void hideLoading() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mProgressBar.setVisibility(View.GONE);
+            mStatusTextView.setVisibility(View.VISIBLE);
+            mStatusImage.setVisibility(View.VISIBLE);
+        });
     }
 }

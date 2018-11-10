@@ -29,9 +29,11 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
 
     @Override
     public void loadCardApplications() {
+        mCardApplicationListView.showLoading();
         mAsyncRunner.runInBackground(() -> {
             try {
                 List<CardApplication> cardApplications = mCardApplicationService.getAllApplications();
+
                 if (cardApplications.isEmpty()) {
                     mCardApplicationListView.showEmptyListMessage();
                 } else {
@@ -40,6 +42,7 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
             } catch (Exception e) {
                 mCardApplicationListView.showError(e);
             }
+            mCardApplicationListView.hideLoading();
         });
     }
 
@@ -50,6 +53,7 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
 
     @Override
     public void updateApplicationStatus(CardApplication cardApplication, String status) {
+
        mAsyncRunner.runInBackground(() -> {
            try {
                mCardApplicationService

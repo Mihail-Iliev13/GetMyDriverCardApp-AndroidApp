@@ -39,6 +39,7 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
 
     @Override
     public void loadStatusMessage(User user) {
+        mApplicationStatusView.showLoading();
         mAsyncRunner.runInBackground(() -> {
             CardApplication cardApplication = null;
             try {
@@ -63,6 +64,7 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
                     default:
                         throw new InvalidParameterException();
                 }
+                mApplicationStatusView.hideLoading();
                 mApplicationStatusView.showStatus(message, drawable);
             } catch (IOException e) {
                 e.printStackTrace();

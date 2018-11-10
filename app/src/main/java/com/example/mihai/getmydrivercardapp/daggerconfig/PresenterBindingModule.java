@@ -77,8 +77,10 @@ public class PresenterBindingModule {
     }
 
     @Provides
-    public ApplicationReasonPresenter applicationReasonPresenter(ApplicationReasonConverter applicationReasonConverter) {
-        return new ApplicationReasonPresenterImpl(applicationReasonConverter);
+    public ApplicationReasonPresenter applicationReasonPresenter(
+            ApplicationReasonConverter applicationReasonConverter,
+            CardApplicationService service, AsyncRunner asyncRunner) {
+        return new ApplicationReasonPresenterImpl(applicationReasonConverter, service, asyncRunner);
     }
 
     @Provides

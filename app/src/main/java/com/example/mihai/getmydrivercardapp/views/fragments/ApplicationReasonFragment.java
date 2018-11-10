@@ -4,6 +4,7 @@ package com.example.mihai.getmydrivercardapp.views.fragments;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,11 +38,16 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Checked
     RadioGroup mRadioGroup;
 
+//    @BindView(R.id.pb_loading)
+//    ProgressBar mProgressbar;
+
     private ApplicationReasonPresenter mApplicationReasonPresenter;
     private CardApplication mCardApplication;
     private User mUser;
     private Navigator mNavigator;
     private int mIndex;
+
+
 
     @Inject
     public ApplicationReasonFragment() {
@@ -55,16 +61,21 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_application_reason, container, false);
         ButterKnife.bind(this, view);
-        mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
-                mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mRadioGroup.clearCheck();
+//        mApplicationReasonPresenter.checkUserReason(mUser);
         mIndex = -1;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
+                mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
     }
 
     @Override
@@ -145,6 +156,7 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
 
         builder.setPositiveButton("OK",  null);
         builder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
         });
 
         return builder;
@@ -158,5 +170,30 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Override
     public void setCurrentCardApplication(CardApplication cardApplication) {
         this.mCardApplication = cardApplication;
+    }
+
+    @Override
+    public void showLoading() {
+//        mProgressbar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+//        mProgressbar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Checked Button", mRadioGroup.getCheckedRadioButtonId());
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            int checkedId = savedInstanceState.getInt("Checked Button");
+            mRadioGroup.check(checkedId);
+        }
     }
 }

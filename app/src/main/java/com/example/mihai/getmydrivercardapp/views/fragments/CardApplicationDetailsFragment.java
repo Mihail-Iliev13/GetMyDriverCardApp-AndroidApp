@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -60,6 +61,8 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     @BindView(R.id.btn_change_status) Button mChangeStatusButton;
     @BindView(R.id.tv_status) TextView mStatus;
     @BindView(R.id.tv_reason) TextView mReason;
+    @BindView(R.id.ll_content) LinearLayout mContent;
+    @BindView(R.id.pb_loading) ProgressBar mProgressBar;
 
     private CardApplicationDetailsPresenter mCardApplicationDetailsPresenter;
     private CardApplication mCardApplication;
@@ -262,5 +265,21 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     @Override
     public void assignValueToReasonTextView(String reason) {
         mReason.setText(reason);
+    }
+
+    @Override
+    public void showLoading() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mContent.setVisibility(View.GONE);
+        });
+    }
+
+    @Override
+    public void hideLoading() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mContent.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
+        });
     }
 }

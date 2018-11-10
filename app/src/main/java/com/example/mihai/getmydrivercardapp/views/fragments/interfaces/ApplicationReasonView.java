@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
 
-public interface ApplicationReasonView extends BaseView, Navigable, CardApplicationTransferable {
+public interface ApplicationReasonView extends BaseView, Navigable, CardApplicationTransferable, Loadable {
     void setCardApplicationReason(CardApplicationReason newCard);
     void showDialog(String title, int resourceID);
     AlertDialog.Builder buildDialog(String title, int resourceID);

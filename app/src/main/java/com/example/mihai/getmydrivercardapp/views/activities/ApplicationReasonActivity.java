@@ -24,17 +24,24 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
     @Inject
     ApplicationReasonPresenter mApplicationReasonPresenter;
 
+    private User mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
-        Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
-        CardApplication cardApplication = initializeNewCardApplication();
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
+        } else {
+            mUser = (User) savedInstanceState.getSerializable(IntentKeys.USER_KEY);
+        }
 
+
+        CardApplication cardApplication = initializeNewCardApplication();
         mApplicationReasonFragment.setPresenter(mApplicationReasonPresenter);
-        mApplicationReasonFragment.setCurrentUser(user);
+        mApplicationReasonFragment.setCurrentUser(mUser);
         mApplicationReasonFragment.setCurrentCardApplication(cardApplication);
         mApplicationReasonFragment.setNavigator(this);
 
@@ -63,5 +70,11 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
     public void navigateWith(Intent intent) {
         intent.setClass(this, PersonalDetailsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(IntentKeys.USER_KEY, mUser);
     }
 }

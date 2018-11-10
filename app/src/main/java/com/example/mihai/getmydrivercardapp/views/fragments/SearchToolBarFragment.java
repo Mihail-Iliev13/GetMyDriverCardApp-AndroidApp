@@ -84,7 +84,7 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
                     e.printStackTrace();
                 }
 
-                return false;
+                return true;
             }
 
             @Override
@@ -96,9 +96,11 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                return false;
+                return true;
             }
         });
+
+
         return view;
     }
 
@@ -163,7 +165,9 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = initializeDatePickerDialog(year, month, day);
-        datePickerDialog.setOnCancelListener(dialog -> setSpinnerSelectedItemToDefaultValue());
+        datePickerDialog.setOnCancelListener(dialog -> {
+           setSpinnerSelectedItemToDefaultValue();
+        });
 
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(datePickerDialog::show);
@@ -204,7 +208,12 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
         builder.setNegativeButton("Cancel", (dialog, which) -> {
             setSpinnerSelectedItemToDefaultValue();
         });
-        builder.setOnCancelListener(dialog -> setSpinnerSelectedItemToDefaultValue());
+
+        builder.setOnCancelListener(dialog -> {
+            if (mSearchView.isSearchOpen()) {
+                mSearchView.closeSearch();
+            }
+        });
         return builder;
     }
 

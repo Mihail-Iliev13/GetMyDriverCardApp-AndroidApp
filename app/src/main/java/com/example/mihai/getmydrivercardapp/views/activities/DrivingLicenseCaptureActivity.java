@@ -3,16 +3,18 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
-import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
-import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
+import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -65,10 +67,20 @@ public class DrivingLicenseCaptureActivity extends DaggerAppCompatActivity imple
 
     @Override
     public void navigateWith(Intent intent) {
-        intent.setClass(this, SignaturePadActivity.class);
+        CardApplication cardApplication = (CardApplication) intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
+        CardApplicationReason reason = cardApplication.getCardApplicationReason();
+        EnumSet<CardApplicationReason> set = EnumSet.of(CardApplicationReason.LOST, CardApplicationReason.NEW_CARD,
+                CardApplicationReason.STOLEN, CardApplicationReason.DAMAGED, CardApplicationReason.WITHDRAWN);
+
+        if (!set.contains(reason)) {
+            intent.setClass(this, OldCardCaptureActivity.class);
+        } else {
+            intent.setClass(this, SignaturePadActivity.class);
+        }
+
         List<ImageModel> images = ((CardApplication)intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY))
                 .getDetails().getImages();
         images.set(2, images.get(0));
         startActivity(intent);
-        }
+    }
 }

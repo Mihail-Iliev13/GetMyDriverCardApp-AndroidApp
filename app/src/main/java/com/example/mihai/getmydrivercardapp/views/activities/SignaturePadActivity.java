@@ -2,6 +2,7 @@ package com.example.mihai.getmydrivercardapp.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
@@ -65,5 +66,6 @@ public class SignaturePadActivity extends DaggerAppCompatActivity implements Nav
     public void navigateWith(Intent intent) {
         intent.setClass(this, ApplicationStatusActivity.class);
         startActivity(intent);
+        ActivityCompat.finishAffinity(this);
     }
 }

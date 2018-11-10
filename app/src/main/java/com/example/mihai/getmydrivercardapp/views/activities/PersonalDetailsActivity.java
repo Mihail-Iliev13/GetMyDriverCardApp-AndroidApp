@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
-import com.example.mihai.getmydrivercardapp.customannotations.DateFormat;
+import com.example.mihai.getmydrivercardapp.customannotations.dateformat.DateFormat;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
@@ -25,21 +25,28 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
     PersonalDetailsPresenter mPersonalDetailsPresenter;
 
     private Validator mValidator;
+    private User mUser;
+    private CardApplication mCardApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_details);
 
-        Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
-        CardApplication cardApplication = (CardApplication) intent
-                .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
-
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
+            mCardApplication = (CardApplication) intent
+                    .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
+        } else {
+            mUser = (User) savedInstanceState.getSerializable(IntentKeys.USER_KEY);
+            mCardApplication = (CardApplication) savedInstanceState
+                    .getSerializable(IntentKeys.CARD_APPLICATION_KEY);
+        }
 
         mPersonalDetailsFragment.setPresenter(mPersonalDetailsPresenter);
-        mPersonalDetailsFragment.setCurrentUser(user);
-        mPersonalDetailsFragment.setCurrentCardApplication(cardApplication);
+        mPersonalDetailsFragment.setCurrentUser(mUser);
+        mPersonalDetailsFragment.setCurrentCardApplication(mCardApplication);
         mPersonalDetailsFragment.setNavigator(this);
 
         mValidator = new Validator(mPersonalDetailsFragment);
@@ -53,6 +60,7 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
                 .commit();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -65,4 +73,13 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
         intent.setClass(this, ContactDetailsActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(IntentKeys.USER_KEY, mUser);
+        outState.putSerializable(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
+    }
+
+
 }

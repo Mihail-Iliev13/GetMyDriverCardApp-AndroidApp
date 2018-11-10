@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -35,6 +36,7 @@ import butterknife.OnItemClick;
 public class CardApplicationListFragment extends Fragment implements CardApplicationListView {
 
     @BindView(R.id.lv_applications) ListView mListView;
+    @BindView(R.id.pb_loading) ProgressBar mProgressBar;
 
     private CardApplicationArrayAdapter mAdapter;
     private CardApplicationListPresenter mCardApplicationListPresenter;
@@ -66,8 +68,8 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         mCardApplicationListPresenter
                 .loadCardApplications();
     }
@@ -159,5 +161,22 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     @Override
     public void setSelectedCardApplication(CardApplication selectedCardApplication) {
         this.mSelectedCardApplication = selectedCardApplication;
+    }
+
+    @Override
+    public void showLoading() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            mListView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
+        });
+    }
+
+    @Override
+    public void hideLoading() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            mProgressBar.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+
+        });
     }
 }

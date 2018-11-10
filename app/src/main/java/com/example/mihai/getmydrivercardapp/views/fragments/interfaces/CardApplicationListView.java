@@ -6,7 +6,7 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 
 import java.util.List;
 
-public interface CardApplicationListView extends BaseView, ErrorView {
+public interface CardApplicationListView extends BaseView, ErrorView, Loadable {
     void showApplications(List<CardApplication> cardApplications);
     void showEmptyListMessage();
     void navigateToCardApplicationDetails(CardApplication cardApplication);

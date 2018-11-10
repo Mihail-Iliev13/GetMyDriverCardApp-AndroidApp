@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.customannotations;
+package com.example.mihai.getmydrivercardapp.customannotations.dateformat;
 
 import com.mobsandgeeks.saripaar.AnnotationRule;
 

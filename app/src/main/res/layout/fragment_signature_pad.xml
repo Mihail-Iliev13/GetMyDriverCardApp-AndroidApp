@@ -5,78 +5,84 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.SignaturePadFragment">
 
-    <RelativeLayout
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:text="Place your signature here" />
 
-
-        <com.github.gcacace.signaturepad.views.SignaturePad
-            android:layout_below="@id/tv_description"
-            android:id="@+id/sp_signature_pad"
-            android:layout_marginTop="10dp"
+        <RelativeLayout
+            android:id="@+id/rl_content"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:background="@android:color/white"/>
+            android:layout_height="match_parent">
 
-        <CheckBox
-            android:id="@+id/cb_checkbox"
-            android:layout_below="@+id/sp_signature_pad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hereby I declare that all the
-provided details are correct and understand that it is a criminal offence if I make a false declaration"
-            android:textSize="15sp"
-            android:textStyle="italic"
-            android:textColor="@android:color/white"/>
-
-        <LinearLayout
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_below="@+id/cb_checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_clear_signature"
-                android:layout_width="150dp"
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blue_rounded_button"
-                android:text="Clear"
-                android:textAllCaps="false"
-                android:padding="16dp"
-                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
                 android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:text="Place your signature here" />
+
+
+            <com.github.gcacace.signaturepad.views.SignaturePad
+                android:layout_below="@id/tv_description"
+                android:id="@+id/sp_signature_pad"
                 android:layout_marginTop="10dp"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="380dp"
+                android:background="@android:color/white"/>
 
-            <Button
-                android:id="@+id/btn_submit"
-                android:layout_width="150dp"
+            <CheckBox
+                android:id="@+id/cb_checkbox"
+                android:layout_below="@+id/sp_signature_pad"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blue_rounded_button"
-                android:text="Submit"
-                android:textAllCaps="false"
-                android:padding="16dp"
-                android:layout_marginLeft="20dp"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="10dp" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:text="Hereby I declare that all the
+provided details are correct and understand that it is a criminal offence if I make a false declaration"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:textColor="@android:color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:layout_below="@+id/cb_checkbox"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_clear_signature"
+                    android:layout_width="150dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/blue_rounded_button"
+                    android:padding="16dp"
+                    android:text="Clear"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/blue_rounded_button"
+                    android:padding="16dp"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

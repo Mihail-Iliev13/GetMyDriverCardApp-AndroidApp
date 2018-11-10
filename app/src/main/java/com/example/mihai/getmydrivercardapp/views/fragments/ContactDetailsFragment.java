@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
+import com.example.mihai.getmydrivercardapp.customannotations.bgphoneprefix.BGPhoneNumber;
+import com.example.mihai.getmydrivercardapp.customannotations.latincharacters.LatinCharacters;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
@@ -51,10 +53,12 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
     @Length( sequence = 2, max = 10, min = 10, message = "Invalid length! " +
             "The length should be exactly ten digits. " +
             "+359 prefix is unnecessary.")
+    @BGPhoneNumber(sequence = 3)
     EditText mPhoneNumber;
 
     @BindView(R.id.et_user_address)
-    @NotEmpty
+    @NotEmpty(sequence = 1)
+    @LatinCharacters(sequence = 2)
     @Order(1)
     EditText mUserAddress;
 

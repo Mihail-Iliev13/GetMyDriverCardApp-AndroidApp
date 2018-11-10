@@ -20,7 +20,8 @@ import android.widget.Toast;
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.Formats;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
-import com.example.mihai.getmydrivercardapp.customannotations.DateFormat;
+import com.example.mihai.getmydrivercardapp.customannotations.dateformat.DateFormat;
+import com.example.mihai.getmydrivercardapp.customannotations.latincharacters.LatinCharacters;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
@@ -58,14 +59,12 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
     @BindView(R.id.et_first_name)
     @NotEmpty(sequence = 1)
-//    @Pattern(sequence = 2, regex = "\\p{IsLatin}+",
-//            message = "This field must contain only latin characters")
+    @LatinCharacters
     EditText mFirstNameET;
 
     @BindView(R.id.et_last_name)
     @NotEmpty(sequence = 1)
-//    @Pattern(sequence = 2, regex = "[a-zA-Z]",
-//            message = "This field must contain only latin characters")
+    @LatinCharacters
     EditText mLastNameET;
 
     @BindView(R.id.btn_next) Button mButtonNext;
@@ -77,23 +76,25 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.tv_lost_date_preview)
     @DateFormat(format =  Formats.STRING_DATE_FORMAT)
     TextView mLostDatePreview;
+
     @BindView(R.id.btn_lost_date) Button mPickLostDateButton;
     @BindView(R.id.et_place_lost)
-    @NotEmpty
+    @NotEmpty(sequence = 1)
+    @LatinCharacters(sequence = 2)
     EditText mPlaceLostET;
 
     @BindView(R.id.et_country)
     @NotEmpty(sequence = 1)
-//    @Pattern(sequence = 2, regex = "[a-zA-Z][a-zA-Z]+@+.",
-//            message = "The email must not contain any other letters than latin")
+    @LatinCharacters(sequence = 2)
     EditText mCountryIssuedCardET;
 
     @BindView(R.id.et_authority)
-    @NotEmpty
+    @NotEmpty(sequence = 1)
+    @LatinCharacters(sequence = 2)
     EditText mAuthorityIssuedET;
 
     @BindView(R.id.et_old_card_number)
-    @NotEmpty
+    @NotEmpty(sequence = 1)
     EditText mEUcardNumberET;
 
     @BindView(R.id.btn_expiry_date_old) Button mPickDateOfExpiryEUcardButton;
@@ -155,6 +156,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
         return view;
     }
+
 
     @Override
     public void onResume() {

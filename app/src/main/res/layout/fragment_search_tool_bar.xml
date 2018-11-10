@@ -33,8 +33,11 @@
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
-            android:layout_width="match_parent"
+            android:focusable="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:searchCloseIcon="@drawable/ic_clear_24dp"
+            app:searchBackIcon="@drawable/ic_arrow_back_24dp"
             app:searchBackground="@color/colorPrimary"
             app:searchSuggestionBackground="@color/colorPrimary"
             android:textColorHint="#FFFF"

@@ -7,7 +7,7 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 
 import java.util.Date;
 
-public interface CardApplicationDetailsView extends BaseView{
+public interface CardApplicationDetailsView extends BaseView, Loadable{
     void setCardApplication(CardApplication mCardApplication);
     void assignValueToIDTextView(String driverID);
     void assignValueToFirstNameTextView(String firstName);

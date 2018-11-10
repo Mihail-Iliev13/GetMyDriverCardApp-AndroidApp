@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.customannotations;
+package com.example.mihai.getmydrivercardapp.customannotations.latincharacters;
 
 
 import com.mobsandgeeks.saripaar.annotation.ValidateUsing;
@@ -8,13 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@ValidateUsing(DateFormatRule.class)
+@ValidateUsing(LatinCharacterRule.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface DateFormat {
+public @interface LatinCharacters {
     int messageResId()   default -1;                     // Mandatory attribute
-    String message()     default "All date fields are required";   // Mandatory attribute
+    String message()     default "Only latin letters are allowed";   // Mandatory attribute
     int sequence()       default -1;
-
-    String format();                         // Your attributes
 }

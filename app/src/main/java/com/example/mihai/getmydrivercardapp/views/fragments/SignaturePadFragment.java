@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mihai.getmydrivercardapp.R;
@@ -27,9 +28,11 @@ import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.Order;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -40,7 +43,7 @@ import butterknife.OnClick;
 
 public class SignaturePadFragment extends Fragment implements SignaturePadView, Validator.ValidationListener {
 
-
+    @Order(1)
     @BindView(R.id.sp_signature_pad)
     SignaturePad mSignaturePad;
 
@@ -50,18 +53,21 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
     @BindView(R.id.btn_submit)
     Button mSubmitButton;
 
+    @Order(2)
     @BindView(R.id.cb_checkbox)
     @Checked
     CheckBox mCheckBox;
 
-    private User mUser;
+    @BindView(R.id.loading)
+    ProgressBar mLoadingView;
 
+    @BindView(R.id.rl_content)
+    RelativeLayout mLayout;
+
+    private User mUser;
     private CardApplication mCardApplication;
     private SignaturePadPresenter mSignaturePadPresenter;
     private Navigator mNavigator;
-
-    @BindView(R.id.loading)
-    private ProgressBar mLoadingView;
 
 
     @Inject
@@ -75,6 +81,9 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signature_pad, container, false);
         ButterKnife.bind(this, view);
+
+        mClearButton.setEnabled(false);
+        mSubmitButton.setEnabled(false);
 
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
 
@@ -137,7 +146,6 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
         this.mCardApplication = cardApplication;
     }
 
-
     @Override
     public void setNavigator(Navigator navigator) {
         this.mNavigator = navigator;
@@ -160,12 +168,17 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
     public void onValidationSucceeded() {
         Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
         showLoading();
-        mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
-        mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
-        mSignaturePadPresenter.saveUser(mUser, mCardApplication);
-        mSignaturePadPresenter.saveImages(mUser, mCardApplication);
-        hideLoading();
-        navigate();
+        try{
+            mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
+            mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
+            mSignaturePadPresenter.saveUser(mUser, mCardApplication);
+            mSignaturePadPresenter.saveImages(mUser, mCardApplication);
+            hideLoading();
+            navigate();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -186,11 +199,16 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
 
     @Override
     public void showLoading() {
-        mLoadingView.setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mLayout.setVisibility(View.GONE);
+            mLoadingView.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override
     public void hideLoading() {
-mLoadingView.setVisibility(View.GONE);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            mLoadingView.setVisibility(View.GONE);
+        });
     }
 }

@@ -19,25 +19,62 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".views.activities.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activities.SelfieCaptureActivity" />
-        <activity android:name=".views.activities.IDCardCaptureActivity" />
-        <activity android:name=".views.activities.DrivingLicenseCaptureActivity" />
-        <activity android:name=".views.activities.OldCardCaptureActivity" />
-        <activity android:name=".views.activities.SignaturePadActivity" />
-        <activity android:name=".views.activities.CardApplicationListActivity" />
-        <activity android:name=".views.activities.ApplicationStatusActivity" />
-        <activity android:name=".views.activities.CardApplicationDetailsActivity" />
-        <activity android:name=".views.activities.PersonalDetailsActivity" />
-        <activity android:name=".views.activities.ApplicationReasonActivity" />
+        <activity android:name=".views.activities.SelfieCaptureActivity"
+            android:label="SelfieCaptureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.IDCardCaptureActivity"
+            android:label="IDCardCaptureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.DrivingLicenseCaptureActivity"
+            android:label="DrivingLicenseCaptureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.OldCardCaptureActivity"
+            android:label="OldCardCaptureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.SignaturePadActivity"
+            android:label="SignaturePadActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.activities.CardApplicationListActivity"
+            android:label="CardApplicationListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.ApplicationStatusActivity"
+            android:label="ApplicationStatusActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.CardApplicationDetailsActivity"
+            android:label="CardApplicationDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.PersonalDetailsActivity"
+            android:label="PersonalDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".views.activities.ApplicationReasonActivity"
+            android:label="ApplicationReasonActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".views.activities.LostCardActivity" />
-        <activity android:name=".views.activities.ContactDetailsActivity"></activity>
+        <activity
+            android:name=".views.activities.ContactDetailsActivity"
+            android:label="ContactDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

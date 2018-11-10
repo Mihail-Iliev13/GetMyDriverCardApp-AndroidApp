@@ -9,6 +9,7 @@ import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardAppli
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SearchToolBarView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -44,39 +45,47 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
     @Override
     public void getFilteredCardApplications(String pattern, FilterCriteria filterCriteria){
 
-        mAsyncRunner.runInBackground(() -> {
+            mAsyncRunner.runInBackground(() -> {
+                try {
+                    if (pattern.length() == 0) {
+                        mCardApplicationsListView
+                                .showApplications(mCardApplicationService.getAllApplications());
+                        return;
+                    }
 
-            try {
-                List<CardApplication> filteredApplications = null;
-                switch (filterCriteria){
-                    case DATE_OF_SUBMISSION:
-                        filteredApplications = mCardApplicationService
-                                .filterApplicationsByDate(pattern);
-                        break;
-                    case NAME:
-                       filteredApplications = mCardApplicationService
-                                .filterApplicationsByName(pattern);
-                       break;
-                    case ID:
-                       filteredApplications = mCardApplicationService
-                                .filterApplicationsByID(pattern);
-                       break;
-                    case STATUS:
-                       filteredApplications = mCardApplicationService
-                                .filterApplicationsByStatus(pattern);
-                       break;
-                }
+                    List<CardApplication> filteredApplications = null;
+                    switch (filterCriteria) {
+                        case DATE_OF_SUBMISSION:
+                            filteredApplications = mCardApplicationService
+                                    .filterApplicationsByDate(pattern);
+                            break;
+                        case NAME:
+                            filteredApplications = mCardApplicationService
+                                    .filterApplicationsByName(pattern);
+                            break;
+                        case ID:
+                            filteredApplications = mCardApplicationService
+                                    .filterApplicationsByID(pattern);
+                            break;
+                        case STATUS:
+                            filteredApplications = mCardApplicationService
+                                    .filterApplicationsByStatus(pattern);
+                            break;
+                        case SHOW_ALL:
+                         filteredApplications = mCardApplicationService.getAllApplications();
+                            break;
+                    }
 
-                if (filteredApplications != null) {
-                    mCardApplicationsListView.showApplications(filteredApplications);
-                } else {
-                    mCardApplicationsListView.showEmptyListMessage();
+                        mCardApplicationsListView.showApplications(filteredApplications);
+
+                    if (filteredApplications.isEmpty()) {
+                        mCardApplicationsListView.showEmptyListMessage();
+                    }
+                } catch (Exception e) {
+                    mCardApplicationsListView.showError(e);
                 }
-            } catch (Exception e){
-                mCardApplicationsListView.showError(e);
-            }
-        });
-    }
+            });
+        }
 
     @Override
     public void setFilterValues() {
@@ -90,6 +99,16 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
             mSearchToolBarView.showDatePicker();
         } else if (filterCriteria.equals(FilterCriteria.STATUS)) {
             mSearchToolBarView.showStatusDialog();
+        } else if (filterCriteria.equals(FilterCriteria.SHOW_ALL)) {
+            mAsyncRunner.runInBackground(() -> {
+                try {
+                    mCardApplicationsListView.showApplications(mCardApplicationService
+                            .getAllApplications());
+                } catch (IOException e) {
+                    mCardApplicationsListView.showError(e);
+                }
+            });
+            mSearchToolBarView.setSpinnerSelectedItemToDefaultValue();
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
+import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
 import com.example.mihai.getmydrivercardapp.utils.reasonconverter.base.ApplicationReasonConverter;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationReasonView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
@@ -16,10 +19,16 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
 
     private ApplicationReasonView mApplicationReasonView;
     private ApplicationReasonConverter mConverter;
+    private CardApplicationService mCardApplicationService;
+    private AsyncRunner mAsyncRunner;
 
     @Inject
-    public ApplicationReasonPresenterImpl (ApplicationReasonConverter converter) {
+    public ApplicationReasonPresenterImpl (ApplicationReasonConverter converter,
+                                           CardApplicationService cardApplicationService,
+                                           AsyncRunner asyncRunner) {
         this.mConverter = converter;
+        this.mCardApplicationService = cardApplicationService;
+        this.mAsyncRunner = asyncRunner;
     }
 
     @Override
@@ -76,5 +85,12 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
         }
 
 
+    }
+
+    @Override
+    public void checkUserReason(User user) {
+        mAsyncRunner.runInBackground(() -> {
+
+        });
     }
 }

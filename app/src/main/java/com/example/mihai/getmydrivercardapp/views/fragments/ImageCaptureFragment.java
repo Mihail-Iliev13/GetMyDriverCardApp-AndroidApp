@@ -115,7 +115,6 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
             mImageView.setImageBitmap(bitmap);
             mTxtPreview.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
-
     }
 
 

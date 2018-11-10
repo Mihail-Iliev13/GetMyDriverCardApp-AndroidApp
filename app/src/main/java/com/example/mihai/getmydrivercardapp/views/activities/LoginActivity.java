@@ -68,6 +68,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements LogInNavig
     @Override
     public void navigateWith(Intent intent) {
         startActivity(intent);
+        finish();
     }
 }
 
