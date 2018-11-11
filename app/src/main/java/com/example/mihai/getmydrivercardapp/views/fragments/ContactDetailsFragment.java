@@ -129,7 +129,7 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
     }
 
     @Override
-    public void setCurrentUser(User user) {
+    public void setLoggedUser(User user) {
         this.mUser = user;
     }
 

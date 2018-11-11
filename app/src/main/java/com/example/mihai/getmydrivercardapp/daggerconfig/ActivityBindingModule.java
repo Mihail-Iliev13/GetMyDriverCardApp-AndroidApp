@@ -1,18 +1,18 @@
 package com.example.mihai.getmydrivercardapp.daggerconfig;
 
 
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationReasonActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.ApplicationStatusActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationListActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.ContactDetailsActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.DrivingLicenseCaptureActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.IDCardCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.clientactivities.ApplicationReasonActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.clientactivities.ApplicationStatusActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.adminactivities.CardApplicationDetailsActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.adminactivities.CardApplicationListActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.clientactivities.ContactDetailsActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities.DrivingLicenseCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities.IDCardCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.OldCardCaptureActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.PersonalDetailsActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.SelfieCaptureActivity;
-import com.example.mihai.getmydrivercardapp.views.activities.SignaturePadActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities.OldCardCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.clientactivities.PersonalDetailsActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities.SelfieCaptureActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.clientactivities.SignaturePadActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.utils.ImageHolder;
+import com.example.mihai.getmydrivercardapp.views.activities.clientactivities.SignaturePadActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ImageCaptureFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
@@ -17,33 +19,34 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class SelfieCaptureActivity extends DaggerAppCompatActivity implements Navigator {
+public class OldCardCaptureActivity extends DaggerAppCompatActivity implements Navigator {
+
+    public static final String MESSAGE = "Take a horizontal picture of your existing tachograph card!";
 
     @Inject
     ImageCaptureFragment mImageCaptureFragment;
+
     @Inject
     ImageCapturePresenter mImageCapturePresenter;
-
-
+    
+    private ImageModel mImageModel;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
-        ImageModel imageModel = new ImageModel();
-        imageModel.setImageAttribute(ImageAttribute.SELFIE_IMAGE);
+        mImageModel = new ImageModel();
+        mImageModel.setImageAttribute(ImageAttribute.OLD_CARD_IMAGE);
 
         Intent intent = getIntent();
         User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
-        CardApplication cardApplication = (CardApplication) intent
-                .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
-        cardApplication.getDetails().getImages().add(imageModel);
+        CardApplication cardApplication = (CardApplication) intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
 
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
-        mImageCaptureFragment.setCurrentUser(user);
+        mImageCaptureFragment.setLoggedUser(user);
         mImageCaptureFragment.setCurrentCardApplication(cardApplication);
-
-        mImageCaptureFragment.setImageModel(imageModel);
+        mImageCaptureFragment.setImageModel(mImageModel);
         mImageCaptureFragment.setNavigator(this);
 
         getSupportFragmentManager()
@@ -58,12 +61,14 @@ public class SelfieCaptureActivity extends DaggerAppCompatActivity implements Na
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
 
-        mImageCaptureFragment.setInstructionMessage("Take a vertical portrait picture of yourself");
+        mImageCaptureFragment
+                .setInstructionMessage(MESSAGE);
     }
 
     @Override
     public void navigateWith(Intent intent) {
-        intent.setClass(this, IDCardCaptureActivity.class);
+        ImageHolder.setOldcard(mImageModel);
+        intent.setClass(this, SignaturePadActivity.class);
         startActivity(intent);
     }
 }

@@ -1,11 +1,14 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.clientactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ApplicationStatusFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationStatusPresenter;
 
@@ -13,15 +16,13 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class ApplicationStatusActivity extends DaggerAppCompatActivity {
+public class ApplicationStatusActivity extends DaggerAppCompatActivity implements Navigator{
 
     @Inject
     ApplicationStatusPresenter mApplicationStatusPresenter;
 
     @Inject
     ApplicationStatusFragment mApplicationStatusFragment;
-
-    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,10 @@ public class ApplicationStatusActivity extends DaggerAppCompatActivity {
 
         Intent intent = getIntent();
 
-        mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
-        mApplicationStatusFragment.setUser(mUser);
+        User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
+        mApplicationStatusFragment.setUser(user);
         mApplicationStatusFragment.setPresenter(mApplicationStatusPresenter);
+        mApplicationStatusFragment.setNavigator(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -45,5 +47,12 @@ public class ApplicationStatusActivity extends DaggerAppCompatActivity {
         super.onResume();
         mApplicationStatusPresenter
                 .subscribe(mApplicationStatusFragment);
+    }
+
+    @Override
+    public void navigateWith(Intent intent) {
+        intent.setClass(this, LoginActivity.class);
+        startActivity(intent);
+        ActivityCompat.finishAffinity(this);
     }
 }

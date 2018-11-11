@@ -93,6 +93,7 @@ public class EmailSender extends AsyncTask<Void, Void, Void> {
             Transport.send(mm);
 
         } catch (MessagingException e) {
+            int b = 5;
             e.printStackTrace();
         }
         return null;

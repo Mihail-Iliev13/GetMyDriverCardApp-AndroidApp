@@ -161,10 +161,6 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
         this.mNavigator = (LogInNavigator) navigator;
     }
 
-    @Override
-    public void navigate() {
-
-    }
 
     @Override
     public Intent prepareIntent() {

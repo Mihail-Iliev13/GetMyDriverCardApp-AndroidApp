@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ImageService {
-    void saveImages(String email, List<ImageModel> images) throws IOException;
-
     void saveImage(String email, ImageModel image) throws IOException;
-
     List<ImageModel> getImagesByApplicationID(int id) throws IOException;
 }

@@ -17,7 +17,7 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.views.activities.CardApplicationDetailsActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.adminactivities.CardApplicationDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.customadapters.CardApplicationArrayAdapter;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;

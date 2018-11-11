@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.clientactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,17 +31,12 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
-        if (savedInstanceState == null) {
-            Intent intent = getIntent();
-            mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
-        } else {
-            mUser = (User) savedInstanceState.getSerializable(IntentKeys.USER_KEY);
-        }
-
+        Intent intent = getIntent();
+        mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
 
         CardApplication cardApplication = initializeNewCardApplication();
         mApplicationReasonFragment.setPresenter(mApplicationReasonPresenter);
-        mApplicationReasonFragment.setCurrentUser(mUser);
+        mApplicationReasonFragment.setLoggedUser(mUser);
         mApplicationReasonFragment.setCurrentCardApplication(cardApplication);
         mApplicationReasonFragment.setNavigator(this);
 
@@ -49,14 +44,6 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
                 .beginTransaction()
                 .replace(R.id.content, mApplicationReasonFragment)
                 .commit();
-    }
-
-    private CardApplication initializeNewCardApplication() {
-        CardApplication cardApplication = new CardApplication();
-        cardApplication.setStatus(CardApplicationStatus.NEW);
-        PersonalDetails personalDetails = new PersonalDetails();
-        cardApplication.setDetails(personalDetails);
-        return cardApplication;
     }
 
     @Override
@@ -72,9 +59,11 @@ public class ApplicationReasonActivity extends DaggerAppCompatActivity implement
         startActivity(intent);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.USER_KEY, mUser);
+    private CardApplication initializeNewCardApplication() {
+        CardApplication cardApplication = new CardApplication();
+        cardApplication.setStatus(CardApplicationStatus.NEW);
+        PersonalDetails personalDetails = new PersonalDetails();
+        cardApplication.setDetails(personalDetails);
+        return cardApplication;
     }
 }

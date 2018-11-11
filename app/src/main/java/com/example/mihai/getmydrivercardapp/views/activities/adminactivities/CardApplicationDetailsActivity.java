@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.adminactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,6 @@ public class CardApplicationDetailsActivity extends DaggerAppCompatActivity {
     @Inject
     CardApplicationDetailsPresenter mCardApplicationDetailsPresenter;
 
-    private CardApplication mCardApplication;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +29,9 @@ public class CardApplicationDetailsActivity extends DaggerAppCompatActivity {
         mCardApplicationDetailsFragment.setPresenter(mCardApplicationDetailsPresenter);
 
         Intent intent = getIntent();
-        mCardApplication = (CardApplication) intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
-        mCardApplicationDetailsFragment.setCardApplication(mCardApplication);
+        CardApplication cardApplication =
+                (CardApplication) intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
+        mCardApplicationDetailsFragment.setCardApplication(cardApplication);
 
         getSupportFragmentManager()
                 .beginTransaction()

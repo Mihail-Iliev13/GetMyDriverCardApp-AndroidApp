@@ -8,4 +8,5 @@ public interface ApplicationReasonView extends BaseView, Navigable, CardApplicat
     void setCardApplicationReason(CardApplicationReason newCard);
     void showDialog(String title, int resourceID);
     AlertDialog.Builder buildDialog(String title, int resourceID);
+    void disableApplicationReasonOptionNew();
 }

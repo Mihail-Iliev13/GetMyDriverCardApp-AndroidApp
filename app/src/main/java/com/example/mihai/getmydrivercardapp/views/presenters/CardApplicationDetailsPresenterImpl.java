@@ -97,13 +97,19 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
         if (oldCardNumber != null)
             mCardApplicationDetailsView.assignValueToOldCardNumberTextView(oldCardNumber);
 
+
         Date dateOfExpiry = cardApplication.getDetails().getDateOfExpiry();
-        if (dateOfExpiry != null)
-            mCardApplicationDetailsView.assignValueToDateOfExpiryTextView(dateOfExpiry);
+        if (dateOfExpiry != null) {
+            String dateOfExpiryStr = simpleDateFormat.format(dateOfExpiry);
+            mCardApplicationDetailsView.assignValueToDateOfExpiryTextView(dateOfExpiryStr);
+
+        }
 
         Date dateOfLoss = cardApplication.getDetails().getDateOfLoss();
-        if (dateOfLoss != null)
-            mCardApplicationDetailsView.assignValueToDateOfLossTextView(dateOfLoss);
+        if (dateOfLoss != null) {
+            String dateOfLossStr = simpleDateFormat.format(dateOfLoss);
+            mCardApplicationDetailsView.assignValueToDateOfLossTextView(dateOfLossStr);
+        }
 
         String placeLost = cardApplication.getDetails().getPlaceOfLoss();
         if (placeLost != null) {
@@ -113,7 +119,7 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
 
     @Override
     public void loadImages(int id) {
-        mCardApplicationDetailsView.showLoading();
+//        mCardApplicationDetailsView.showLoading();
         mAsyncRunner.runInBackground(() -> {
             try {
              List<ImageModel> images = mImageService.getImagesByApplicationID(id);
@@ -121,7 +127,7 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            mCardApplicationDetailsView.hideLoading();
+//            mCardApplicationDetailsView.hideLoading();
         });
     }
 

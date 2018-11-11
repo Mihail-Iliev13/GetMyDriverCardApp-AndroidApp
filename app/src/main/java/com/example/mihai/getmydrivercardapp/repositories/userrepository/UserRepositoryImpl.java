@@ -7,6 +7,8 @@ import com.example.mihai.getmydrivercardapp.repositories.userrepository.base.Use
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -59,4 +61,10 @@ public class UserRepositoryImpl implements UserRepository {
         return mJsonParser.fromJson(json, CardApplication.class);
     }
 
+    @Override
+    public List<CardApplication> getApplications(String email) throws IOException {
+        String url = mServerUrl = "/users/applications" + email;
+        String json = mRequester.get(url);
+        return Arrays.asList(mJsonParser.fromJson(json, CardApplication[].class));
+    }
 }

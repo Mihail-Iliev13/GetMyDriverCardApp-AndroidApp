@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.clientactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
+import com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities.SelfieCaptureActivity;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.ContactDetailsFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ContactDetailsPresenter;
@@ -36,12 +37,14 @@ public class ContactDetailsActivity extends DaggerAppCompatActivity implements N
         CardApplication cardApplication = (CardApplication)intent
                 .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
 
+        //Validator configuring. Mode.Burst is needed so the validator could
+        // show validation errors consecutively
         mValidator = new Validator(mContactDetailsFragment);
         mValidator.setValidationListener(mContactDetailsFragment);
         mValidator.setValidationMode(Validator.Mode.BURST);
 
         mContactDetailsFragment.setPresenter(mContactDetailsPresenter);
-        mContactDetailsFragment.setCurrentUser(user);
+        mContactDetailsFragment.setLoggedUser(user);
         mContactDetailsFragment.setCurrentCardApplication(cardApplication);
         mContactDetailsFragment.setNavigator(this);
 

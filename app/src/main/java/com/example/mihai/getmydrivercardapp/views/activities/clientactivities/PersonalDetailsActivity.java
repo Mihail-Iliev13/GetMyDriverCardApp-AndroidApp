@@ -1,11 +1,10 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.clientactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
-import com.example.mihai.getmydrivercardapp.customannotations.dateformat.DateFormat;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
@@ -33,26 +32,21 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_details);
 
-        if (savedInstanceState == null) {
             Intent intent = getIntent();
             mUser = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
-            mCardApplication = (CardApplication) intent
+            mCardApplication = (CardApplication)intent
                     .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
-        } else {
-            mUser = (User) savedInstanceState.getSerializable(IntentKeys.USER_KEY);
-            mCardApplication = (CardApplication) savedInstanceState
-                    .getSerializable(IntentKeys.CARD_APPLICATION_KEY);
-        }
 
         mPersonalDetailsFragment.setPresenter(mPersonalDetailsPresenter);
-        mPersonalDetailsFragment.setCurrentUser(mUser);
+        mPersonalDetailsFragment.setLoggedUser(mUser);
         mPersonalDetailsFragment.setCurrentCardApplication(mCardApplication);
         mPersonalDetailsFragment.setNavigator(this);
 
+        //Validator configuring. Mode.Burst is needed so the validator could
+        // show validation errors consecutively
         mValidator = new Validator(mPersonalDetailsFragment);
         mValidator.setValidationMode(Validator.Mode.BURST);
         mValidator.setValidationListener(mPersonalDetailsFragment);
-        Validator.registerAnnotation(DateFormat.class);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -73,13 +67,4 @@ public class PersonalDetailsActivity extends DaggerAppCompatActivity implements 
         intent.setClass(this, ContactDetailsActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(IntentKeys.USER_KEY, mUser);
-        outState.putSerializable(IntentKeys.CARD_APPLICATION_KEY, mCardApplication);
-    }
-
-
 }

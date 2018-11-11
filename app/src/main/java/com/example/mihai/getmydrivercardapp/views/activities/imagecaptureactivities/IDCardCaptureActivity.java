@@ -1,9 +1,10 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.imagecaptureactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.utils.ImageHolder;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.enums.ImageAttribute;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -19,31 +20,31 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 public class IDCardCaptureActivity extends DaggerAppCompatActivity implements Navigator {
 
+    public static final String MESSAGE = "Take a horizontal picture of your ID card";
+
     @Inject
     ImageCaptureFragment mImageCaptureFragment;
-
     @Inject
     ImageCapturePresenter mImageCapturePresenter;
-
+    private ImageModel mImageModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_one_fragment);
 
-        ImageModel imageModel = new ImageModel();
-        imageModel.setImageAttribute(ImageAttribute.ID_CARD_IMAGE);
+        mImageModel = new ImageModel();
+        mImageModel.setImageAttribute(ImageAttribute.ID_CARD_IMAGE);
 
         Intent intent = getIntent();
         User user = (User) intent.getSerializableExtra(IntentKeys.USER_KEY);
         CardApplication cardApplication = (CardApplication) intent
                 .getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
 
-        cardApplication.getDetails().getImages().add(imageModel);
         mImageCaptureFragment.setPresenter(mImageCapturePresenter);
-        mImageCaptureFragment.setCurrentUser(user);
+        mImageCaptureFragment.setLoggedUser(user);
         mImageCaptureFragment.setCurrentCardApplication(cardApplication);
-        mImageCaptureFragment.setImageModel(imageModel);
+        mImageCaptureFragment.setImageModel(mImageModel);
         mImageCaptureFragment.setNavigator(this);
 
         getSupportFragmentManager()
@@ -58,11 +59,13 @@ public class IDCardCaptureActivity extends DaggerAppCompatActivity implements Na
         mImageCapturePresenter
                 .subscribe(mImageCaptureFragment);
 
-        mImageCaptureFragment.setInstructionMessage("Take a horizontal picture of your ID card");
+        mImageCaptureFragment
+                .setInstructionMessage(MESSAGE);
     }
 
     @Override
     public void navigateWith(Intent intent) {
+        ImageHolder.setIDCard(mImageModel);
         intent.setClass(this, DrivingLicenseCaptureActivity.class);
         startActivity(intent);
     }

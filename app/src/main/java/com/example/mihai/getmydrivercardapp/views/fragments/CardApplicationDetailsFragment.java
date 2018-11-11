@@ -23,7 +23,6 @@ import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardAppl
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.security.InvalidParameterException;
-import java.util.Date;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -142,7 +141,9 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
 
     @Override
     public void assignValueToDrivingLicenseImageView(Bitmap drivingLicenseImage) {
-        this.mDrivingLicenseImage.setImageBitmap(drivingLicenseImage);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            this.mDrivingLicenseImage.setImageBitmap(drivingLicenseImage);
+        });
     }
 
     @Override
@@ -183,8 +184,10 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
 
     @Override
     public void assignValueToOldCardImageView(Bitmap oldCardImage) {
-        this.mOldCardImageLayout.setVisibility(View.VISIBLE);
-        this.mOldCardImage.setImageBitmap(oldCardImage);
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            this.mOldCardImageLayout.setVisibility(View.VISIBLE);
+            this.mOldCardImage.setImageBitmap(oldCardImage);
+        });
     }
 
     @Override
@@ -206,13 +209,13 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     }
 
     @Override
-    public void assignValueToDateOfExpiryTextView(Date dateOfExpiry) {
+    public void assignValueToDateOfExpiryTextView(String dateOfExpiry) {
         this.mDateOfExpiryLayout.setVisibility(View.VISIBLE);
         this.mDateOfExpiry.setText(String.valueOf(dateOfExpiry));
     }
 
     @Override
-    public void assignValueToDateOfLossTextView(Date dateOfLoss) {
+    public void assignValueToDateOfLossTextView(String dateOfLoss) {
         this.mDateLostLayout.setVisibility(View.VISIBLE);
         this.mDateOfLoss.setText(String.valueOf(dateOfLoss));
     }

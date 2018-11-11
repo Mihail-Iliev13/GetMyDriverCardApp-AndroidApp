@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.clientactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,10 +39,12 @@ public class SignaturePadActivity extends DaggerAppCompatActivity implements Nav
                 intent.getSerializableExtra(IntentKeys.CARD_APPLICATION_KEY);
 
         mSignaturePadFragment.setPresenter(mSignaturePadPresenter);
-        mSignaturePadFragment.setCurrentUser(user);
+        mSignaturePadFragment.setLoggedUser(user);
         mSignaturePadFragment.setCurrentCardApplication(cardApplication);
         mSignaturePadFragment.setNavigator(this);
 
+        //Validator configuring. Mode.Burst is needed so the validator could
+        // show validation errors consecutively
         mValidator = new Validator(mSignaturePadFragment);
         mValidator.setValidationListener(mSignaturePadFragment);
         mValidator.setValidationMode(Validator.Mode.BURST);
@@ -66,6 +68,8 @@ public class SignaturePadActivity extends DaggerAppCompatActivity implements Nav
     public void navigateWith(Intent intent) {
         intent.setClass(this, ApplicationStatusActivity.class);
         startActivity(intent);
+
+        //finishes all previous activities
         ActivityCompat.finishAffinity(this);
     }
 }
