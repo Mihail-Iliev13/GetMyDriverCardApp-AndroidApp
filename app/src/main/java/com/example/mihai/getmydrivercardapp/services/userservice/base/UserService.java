@@ -5,10 +5,12 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.enums.UserRole;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface UserService {
     User getUserByEmail(String email) throws IOException;
     User updateUserCardApplication(String email, CardApplication cardApplication) throws IOException;
     CardApplication getPendingApplication(User user) throws IOException;
     User addNewUser(String email, String password, UserRole client) throws IOException;
+    List<CardApplication> getApplications(User user) throws IOException;
 }

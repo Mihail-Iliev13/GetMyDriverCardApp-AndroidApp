@@ -137,7 +137,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
     }
 
     @Override
-    public void setCurrentUser(User user) {
+    public void setLoggedUser(User user) {
         this.mUser = user;
     }
 
@@ -167,13 +167,11 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
     @Override
     public void onValidationSucceeded() {
         Bitmap bitmapImage = mSignaturePad.getSignatureBitmap();
-        showLoading();
         try{
             mSignaturePadPresenter.assignSignature(bitmapImage, mCardApplication);
             mSignaturePadPresenter.assignDateOfSubmission(mCardApplication);
             mSignaturePadPresenter.saveUser(mUser, mCardApplication);
-            mSignaturePadPresenter.saveImages(mUser, mCardApplication);
-            hideLoading();
+            mSignaturePadPresenter.saveImages(mUser);
             navigate();
         } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();

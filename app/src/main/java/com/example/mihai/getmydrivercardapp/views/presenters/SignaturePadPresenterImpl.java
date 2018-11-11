@@ -4,10 +4,10 @@ import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
-import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.services.userservice.base.UserService;
+import com.example.mihai.getmydrivercardapp.utils.ImageHolder;
 import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.utils.datehandler.base.DateHandler;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
@@ -68,19 +67,23 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
     }
 
     @Override
-    public void saveImages(User user, CardApplication cardApplication) {
+    public void saveImages(User user) {
 
         String email = user.getEmail();
-        List<ImageModel> images = cardApplication.getDetails().getImages();
-        for (ImageModel image : images) {
             mAsyncRunner.runInBackground(() -> {
                 try {
-                    mImageService.saveImage(email, image);
+                    mImageService.saveImage(email, ImageHolder.getSelfie());
+                    mImageService.saveImage(email, ImageHolder.getIdCard());
+                    mImageService.saveImage(email, ImageHolder.getDrivingLicense());
+
+                    if (ImageHolder.getOldCard() != null) {
+                        mImageService.saveImage(email, ImageHolder.getOldCard());
+                    }
+                    ImageHolder.clearImages();
                 } catch (IOException e){
                     mSignaturePadView.showError(e);
                 }
             });
-        }
     }
 
 

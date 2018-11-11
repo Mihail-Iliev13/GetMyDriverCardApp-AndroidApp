@@ -1,4 +1,4 @@
-package com.example.mihai.getmydrivercardapp.views.activities;
+package com.example.mihai.getmydrivercardapp.views.activities.adminactivities;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,10 +66,12 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
                 .setCardApplicationListView(mCardApplicationListFragment);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_item, menu);
 
+        //defines the outlook of the toolbar search view
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         mSearchToolbarFragment
                 .getSearchView()

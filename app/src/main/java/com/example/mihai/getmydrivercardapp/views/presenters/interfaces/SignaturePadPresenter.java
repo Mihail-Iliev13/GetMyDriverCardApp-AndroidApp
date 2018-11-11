@@ -6,13 +6,11 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.mobsandgeeks.saripaar.Validator;
 
-public interface SignaturePadPresenter extends BasePresenter{
+public interface SignaturePadPresenter extends BasePresenter {
     void saveUser(User user, CardApplication cardApplication);
-    void saveImages (User user, CardApplication cardApplication);
+    void saveImages (User user);
     void assignSignature(Bitmap bitmapImage, CardApplication cardApplication);
     void assignDateOfSubmission(CardApplication cardApplication);
-
     void validate();
-
     void setValidator(Validator validator);
 }

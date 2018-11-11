@@ -18,16 +18,10 @@ public class ImageServiceImpl implements ImageService {
         this.mImageRepository = imageRepository;
     }
 
-    @Override
-    public void saveImages(String email, List<ImageModel> images) throws IOException {
-        for (ImageModel image : images) {
-            mImageRepository.saveImage(email, image);
-        }
-    }
 
     @Override
     public void saveImage(String email, ImageModel image) throws IOException {
-        ImageModel imageModel = mImageRepository.saveImage(email, image);
+        mImageRepository.saveImage(email, image);
     }
 
     @Override

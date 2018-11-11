@@ -30,8 +30,7 @@ public class ImageRepositoryImpl implements ImageRepository {
         String url = mServerUrl + "/images/" + email;
         String imageJson = mJsonParser.toJson(image);
         String response = mRequester.post(url, imageJson);
-        ImageModel imageModel =  mJsonParser.fromJson(response, ImageModel.class);
-        return imageModel;
+        return mJsonParser.fromJson(response, ImageModel.class);
     }
 
     @Override

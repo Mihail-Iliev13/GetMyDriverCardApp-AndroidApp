@@ -29,6 +29,7 @@
             android:layout_marginTop="20dp">
 
             <RadioButton
+                android:id="@+id/rb_reason_new"
                 android:layout_marginTop="13dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,20 +38,25 @@
                 android:textSize="23sp" />
 
             <RadioButton
+                android:id="@+id/rb_reason_exchange"
                 android:layout_marginTop="13dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:text="@string/Exchange_card"
                 android:textSize="23sp"/>
+
             <RadioButton
+                android:id="@+id/rb_reason_replacement"
                 android:layout_marginTop="13dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:text="@string/Replace_card"
                 android:textSize="23sp"/>
+
             <RadioButton
+                android:id="@+id/rb_reason_renewal"
                 android:layout_marginTop="13dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

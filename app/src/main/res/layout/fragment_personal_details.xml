@@ -139,7 +139,7 @@
                         android:id="@+id/tv_lost_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Date of loss:"
+                        android:text="Date Lost/Stolen:"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
                         android:textSize="25sp" />
@@ -182,7 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ll_date_lost"
-                        android:text="Place of Loss:"
+                        android:text="Place Lost/Stolen:"
                         android:textColor="@android:color/white"
                         android:textSize="25sp"
                         android:textStyle="bold"/>

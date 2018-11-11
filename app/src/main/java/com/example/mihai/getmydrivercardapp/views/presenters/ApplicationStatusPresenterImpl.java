@@ -71,4 +71,9 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
             }
         });
     }
+
+    @Override
+    public void logOut() {
+        mApplicationStatusView.navigate();
+    }
 }

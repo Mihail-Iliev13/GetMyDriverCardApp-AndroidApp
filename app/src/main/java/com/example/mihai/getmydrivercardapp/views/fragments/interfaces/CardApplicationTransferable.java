@@ -4,6 +4,6 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 
 public interface CardApplicationTransferable {
-    void setCurrentUser(User user);
+    void setLoggedUser(User user);
     void setCurrentCardApplication(CardApplication cardApplication);
 }

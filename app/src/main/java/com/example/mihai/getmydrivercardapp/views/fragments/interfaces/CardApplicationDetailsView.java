@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 
-import java.util.Date;
-
 public interface CardApplicationDetailsView extends BaseView, Loadable{
     void setCardApplication(CardApplication mCardApplication);
     void assignValueToIDTextView(String driverID);
@@ -23,8 +21,8 @@ public interface CardApplicationDetailsView extends BaseView, Loadable{
     void assignValueToCountryIssuedCardTextView(String countryIssuedCard);
     void assignValueToAuthorityIssuedCardTextView(String authorityIssuedCard);
     void assignValueToOldCardNumberTextView(String oldCardNumber);
-    void assignValueToDateOfExpiryTextView(Date dateOfExpiry);
-    void assignValueToDateOfLossTextView(Date dateOfLoss);
+    void assignValueToDateOfExpiryTextView(String dateOfExpiry);
+    void assignValueToDateOfLossTextView(String dateOfLoss);
     void assignValueToPlaceLostTextView(String placeLost);
     void assignValueToOldCardImageView(Bitmap oldCardImage);
 

@@ -4,12 +4,12 @@ package com.example.mihai.getmydrivercardapp.views.fragments;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -38,16 +38,21 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Checked
     RadioGroup mRadioGroup;
 
-//    @BindView(R.id.pb_loading)
-//    ProgressBar mProgressbar;
+    @BindView(R.id.rb_reason_new)
+    RadioButton mReasonNeRadioButton;
+    @BindView(R.id.rb_reason_exchange)
+    RadioButton mReasonExchangeButton;
+    @BindView(R.id.rb_reason_replacement)
+    RadioButton mReplacementReasonButton;
+    @BindView(R.id.rb_reason_renewal)
+    RadioButton mRenewalReasonButton;
+
 
     private ApplicationReasonPresenter mApplicationReasonPresenter;
     private CardApplication mCardApplication;
     private User mUser;
     private Navigator mNavigator;
     private int mIndex;
-
-
 
     @Inject
     public ApplicationReasonFragment() {
@@ -61,6 +66,18 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_application_reason, container, false);
         ButterKnife.bind(this, view);
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int checked = group.getCheckedRadioButtonId();
+                mApplicationReasonPresenter.handleOnCheckedChange(checked);
+            }
+        });
+
+//        mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
+//                mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
+
         return view;
     }
 
@@ -71,12 +88,6 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
         mIndex = -1;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
-                mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
-    }
 
     @Override
     public void setPresenter(BasePresenter presenter) {
@@ -116,9 +127,11 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     public void showDialog(String title, int resourceID) {
         AlertDialog.Builder builder = buildDialog(title, resourceID);
         AlertDialog dialog = builder.create();
+
         dialog.setOnShowListener(dialog1 -> {
             Button button = ((AlertDialog) dialog1).getButton(AlertDialog.BUTTON_POSITIVE);
             button.setOnClickListener(view -> {
+
                 String[] values = Objects.requireNonNull(getActivity())
                         .getResources()
                         .getStringArray(resourceID);
@@ -135,7 +148,9 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
                 }
             });
         });
-        dialog.setOnDismissListener(dialog12 -> mRadioGroup.clearCheck());
+
+//        dialog.setOnDismissListener(dialog12 -> mRadioGr);
+
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(dialog::show);
     }
@@ -163,7 +178,12 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     }
 
     @Override
-    public void setCurrentUser(User user) {
+    public void disableApplicationReasonOptionNew() {
+        mReasonNeRadioButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setLoggedUser(User user) {
         this.mUser = user;
     }
 
@@ -180,20 +200,5 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Override
     public void hideLoading() {
 //        mProgressbar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("Checked Button", mRadioGroup.getCheckedRadioButtonId());
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            int checkedId = savedInstanceState.getInt("Checked Button");
-            mRadioGroup.check(checkedId);
-        }
     }
 }
