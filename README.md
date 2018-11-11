@@ -1,5 +1,5 @@
 # GetMyDriverCardApp-AndroidApp
-======================
+==============================================================================================================
 
 Created by Mihail Iliev and Todor Slavov
 ----------------------
@@ -14,7 +14,8 @@ programming for our Java+Android Telerik Academy Alpha course.
 ### Repository URL
 Front-end:
 https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp
-Back-end
+
+Back-end:
 https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp
 
 **Created by Todor Slavov and Mihail Iliev, 2018**
