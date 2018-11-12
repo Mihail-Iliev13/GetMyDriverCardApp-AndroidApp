@@ -29,25 +29,27 @@ Todor Slavov - https://github.com/todorslavov
 
 ### Login as a user or admin
 
-<img src="g" width="350">    <img src="" width="350">
+<img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-04-04.png" width="350">    <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-07-11.png" width="350">
 
 
 ### Fill the required information depending on the reason you chose
 
-<img src="" width="350">  <img src="" width="350">
+<img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-07-48.png" width="350">  <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-10-17.png" width="350"> <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-13-25.png" width="350">
+
 
 ### Check the status of the application
 
-<img src="" width="350">   <img src="" width="350">
+<img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-16-12.png" width="350">   <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-26-20.png" width="350">
 
-<img src="" width="350">   <img src="" width="350">
+<img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-26-43.png" width="350">   
   
 ### Admin panel
 In order to login in the admin panel you need the admin email and password which are 
-Email:admin
-Password:admin
+Email:admin@gmail.bg
+Password:Admin12345
 
-<img src="" width="350">   <img src="" width="350">
+<img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-28-41.png" width="350">   <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-29-07.png" width="350">    
+<img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-29-27.png" width="350"> <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-30-29.png" width="350"> <img src="https://github.com/Mihail-Iliev13/GetMyDriverCardApp-AndroidApp/blob/master/Screenshot_2018-11-11-21-30-34.png" width="350">
 
 
 ### Required software
@@ -76,7 +78,6 @@ Password:admin
 * Butter Knife: https://jakewharton.github.io/butterknife/
 * Dagger: https://google.github.io/dagger/
 * Android Saripaar: https://github.com/ragunathjawahar/android-saripaar
-* Mockito: https://site.mockito.org/
 
 ##### Spring
 * Hibernate: http://hibernate.org/
