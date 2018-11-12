@@ -72,6 +72,7 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
             }
         });
 
+
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 
             @Override
@@ -99,8 +100,6 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
                 return true;
             }
         });
-
-
         return view;
     }
 
@@ -193,6 +192,7 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Select status: ");
         String[] statusValues = CardApplicationStatus.stringValues();
+
         builder.setSingleChoiceItems(statusValues, -1, (dialog, index) -> {
             try {
                 FilterCriteria filterCriteria = (FilterCriteria) mSpinner.getSelectedItem();
@@ -211,8 +211,7 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
 
         builder.setOnCancelListener(dialog -> {
             if (mSearchView.isSearchOpen()) {
-                mSearchView.closeSearch();
-            }
+                mSearchView.closeSearch(); }
         });
         return builder;
     }

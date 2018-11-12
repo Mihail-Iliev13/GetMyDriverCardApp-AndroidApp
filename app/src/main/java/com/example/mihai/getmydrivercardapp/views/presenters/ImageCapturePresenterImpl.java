@@ -38,7 +38,8 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
 
     @Override
     public void handleActivityResult(int requestCode, int resultCode, Intent data, Activity activity) {
-        EasyImage.handleActivityResult(requestCode, resultCode, data, activity, new DefaultCallback() {
+        EasyImage.handleActivityResult
+                (requestCode, resultCode, data, activity, new DefaultCallback() {
             @Override
             public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
                 String path = imageFile.getPath();
@@ -52,26 +53,7 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
     @Override
     public void setValueToImage(ImageModel imageModel,
                                 byte[] byteImage) {
-
         imageModel.setImage(byteImage);
-
-//        PersonalDetails personalDetails = cardApplication.getDetails();
-//        switch (imageAttribute) {
-//            case SELFIE_IMAGE:
-//                personalDetails.setSelfie(byteImage);
-//                return;
-//            case ID_CARD_IMAGE:
-//                personalDetails.setIdCardImage(byteImage);
-//                return;
-//            case OLD_CARD_IMAGE:
-//                personalDetails.setPreviousCardImage(byteImage);
-//                return;
-//            case DRIVING_LICENSE_IMAGE:
-//                personalDetails.setDrivingLicenseImage(byteImage);
-//                return;
-//                default:
-//                    throw new IllegalArgumentException();
-//        }
     }
 
     @Override

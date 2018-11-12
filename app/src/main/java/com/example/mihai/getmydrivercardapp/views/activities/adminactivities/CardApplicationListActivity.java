@@ -1,10 +1,13 @@
 package com.example.mihai.getmydrivercardapp.views.activities.adminactivities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.mihai.getmydrivercardapp.R;
+import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
 import com.example.mihai.getmydrivercardapp.views.fragments.CardApplicationListFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.SearchToolBarFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
@@ -76,6 +79,18 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
         mSearchToolbarFragment
                 .getSearchView()
                 .setMenuItem(menuItem);
+
+        MenuItem menuItem1 = menu.findItem(R.id.log_out);
+        mSearchToolbarFragment
+                .getSearchView()
+                .setMenuItem(menuItem1);
+
+        menuItem1.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            ActivityCompat.finishAffinity(this);
+           return true;
+        });
 
         return true;
     }

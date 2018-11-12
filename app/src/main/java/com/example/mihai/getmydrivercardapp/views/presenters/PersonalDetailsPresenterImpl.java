@@ -54,7 +54,7 @@ public class PersonalDetailsPresenterImpl implements PersonalDetailsPresenter {
     @Override
     public void checkReasonAndRevealElementsIfNeeded(CardApplicationReason reason) {
 
-        if(reason == CardApplicationReason.LOST
+        if (reason == CardApplicationReason.LOST
                 ||reason== CardApplicationReason.STOLEN){
         mPersonalDetailsView.showLostOrStolenFields();
         } else if (reason == CardApplicationReason.EXCHANGE){

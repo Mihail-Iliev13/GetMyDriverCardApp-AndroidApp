@@ -48,6 +48,10 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
 
                 String message;
                 int drawable;
+
+                // shows different image and message depending
+                // on application status
+
                 switch (status){
                     case NEW:
                         drawable = R.drawable.icon_sent;

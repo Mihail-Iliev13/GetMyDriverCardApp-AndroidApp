@@ -35,8 +35,10 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
     private Validator mValidator;
 
     @Inject
-    public SignaturePadPresenterImpl(UserService userService, ImageService imageService,  AsyncRunner asyncRunner,
-                                     BitmapConverter bitmapConverter, DateHandler dateHandler){
+    public SignaturePadPresenterImpl(UserService userService, ImageService imageService,
+                                     AsyncRunner asyncRunner,
+                                     BitmapConverter bitmapConverter,
+                                     DateHandler dateHandler){
         this.mUserService = userService;
         this.mAsyncRunner = asyncRunner;
         this.mBitmapConverter = bitmapConverter;

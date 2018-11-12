@@ -65,6 +65,24 @@
                 android:layout_marginTop="4dp"
                 android:drawableStart="@drawable/ic_lock_24dp" />
 
+            <EditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:visibility="gone"
+                android:background="@android:color/transparent"
+                android:drawablePadding="12dp"
+                android:padding="8dp"
+                android:hint="Confirm Password"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:maxLines="1"
+                android:drawableLeft="@drawable/ic_lock_24dp"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@drawable/ic_lock_24dp" />
+
             <Button
                 android:id="@+id/btn_log_in"
                 android:layout_width="150dp"

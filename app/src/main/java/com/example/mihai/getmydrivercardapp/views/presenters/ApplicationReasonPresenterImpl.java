@@ -18,6 +18,11 @@ import javax.inject.Inject;
 
 public class ApplicationReasonPresenterImpl implements ApplicationReasonPresenter {
 
+    private static final int FIRST_RADIO_BUTTON_ID = 2131296456;
+    private static final int SECOND_RADIO_BUTTON_ID = 2131296455;
+    private static final int THIRD_RADIO_BUTTON_ID = 2131296458;
+    private static final int FOURTH_RADIO_BUTTON_ID = 2131296457;
+
     private ApplicationReasonView mApplicationReasonView;
     private ApplicationReasonConverter mConverter;
     private CardApplicationService mCardApplicationService;
@@ -47,30 +52,30 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
     @Override
     public void handleOnCheckedChange(int id) {
         switch (id) {
-            case 2131296454:
+            case FIRST_RADIO_BUTTON_ID:
                 mApplicationReasonView
                         .setCardApplicationReason(CardApplicationReason.NEW_CARD);
                 mApplicationReasonView
                         .navigate();
                 return;
-            case 2131296453:
+            case SECOND_RADIO_BUTTON_ID:
                 mApplicationReasonView
                         .setCardApplicationReason(CardApplicationReason.EXCHANGE);
                 mApplicationReasonView
                         .navigate();
                 return;
-            case 2131296456:
+            case THIRD_RADIO_BUTTON_ID:
                 mApplicationReasonView.showDialog(
                         "I want to replace my current card because:",
                         R.array.replacement_reasons);
                 return;
-            case 2131296455:
+            case FOURTH_RADIO_BUTTON_ID:
                 mApplicationReasonView.showDialog(
                         "I want to renew my current card because:",
                         R.array.renewal_reasons);
                 return;
                 default:
-                    return;
+                    break;
         }
     }
 
@@ -83,8 +88,6 @@ public class ApplicationReasonPresenterImpl implements ApplicationReasonPresente
         } catch (InvalidParameterException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override

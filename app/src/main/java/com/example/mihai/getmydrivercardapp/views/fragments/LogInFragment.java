@@ -21,6 +21,7 @@ import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePres
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
@@ -47,13 +48,19 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
     @NotEmpty(sequence = 1)
     @Password(sequence = 2, min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE,
             message = "Invalid Password!" +
-                    " Password must be at least 8 characters long and contain at least one digit, capital letter and small letter")
+                    " Password must be at least 8 " +
+                    "characters long and contain at least one digit, capital letter and small letter")
     EditText mPassword;
 
     @BindView(R.id.btn_log_in)
     Button mLoginButton;
     @BindView(R.id.btn_sign_up)
     Button mSignUpButton;
+
+    @BindView(R.id.et_confirm_password)
+    @NotEmpty(sequence = 1)
+    @ConfirmPassword(sequence = 2)
+    EditText mConfirmPassword;
 
     private LogInPresenter mLogInPresenter;
     private User mUser;
@@ -96,6 +103,7 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
     public void signUpOnClick() {
         mClickedButton = mSignUpButton;
         mLogInPresenter.validate();
+
     }
 
     @Override
@@ -171,23 +179,30 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
 
     @Override
     public void onValidationSucceeded() {
-        if (mClickedButton == mLoginButton) {
-            String email = String.valueOf(mEmail.getText());
-            String password = String.valueOf(mPassword.getText());
+
+        if ( mClickedButton == mLoginButton) {
             try {
+                String email = String.valueOf(mEmail.getText());
+                String password = String.valueOf(mPassword.getText());
                 mLogInPresenter.logIn(email, password);
             } catch (IOException e) {
                 showError(e);
             }
         } else if (mClickedButton == mSignUpButton) {
-            String email = String.valueOf(mEmail.getText());
-            String password = String.valueOf(mPassword.getText());
-            mLogInPresenter.signUp(email, password);
+
+            if (mConfirmPassword.getVisibility() == View.GONE) {
+                mConfirmPassword.setVisibility(View.VISIBLE);
+            }  else {
+                String email = String.valueOf(mEmail.getText());
+                String password = String.valueOf(mPassword.getText());
+                mLogInPresenter.signUp(email, password);
+            }
         }
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getContext());

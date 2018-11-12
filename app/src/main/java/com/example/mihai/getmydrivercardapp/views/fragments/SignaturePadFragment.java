@@ -55,7 +55,7 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
 
     @Order(2)
     @BindView(R.id.cb_checkbox)
-    @Checked
+    @Checked(message = "You must agree to the terms and conditions before submit")
     CheckBox mCheckBox;
 
     @BindView(R.id.loading)

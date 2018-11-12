@@ -54,7 +54,6 @@ public class LogInPresenterImpl implements LogInPresenter {
                 } else {
                     mLoginView.showApplicationForm();
                 }
-
             } catch (IOException e){
                 mLoginView.showError(e);
             }

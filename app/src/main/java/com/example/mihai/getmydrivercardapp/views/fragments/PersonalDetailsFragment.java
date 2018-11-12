@@ -73,6 +73,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.tv_birth_date_preview)
     @DateFormat(format = Formats.STRING_DATE_FORMAT)
     TextView mBirthDatePreview;
+
     @BindView(R.id.tv_lost_date_preview)
     @DateFormat(format =  Formats.STRING_DATE_FORMAT)
     TextView mLostDatePreview;
@@ -108,6 +109,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @BindView(R.id.tv_expiry_date_renewal_preview)
     @DateFormat(format = Formats.STRING_DATE_FORMAT)
     TextView mExpiryDate_RenewalPreview;
+
     @BindView(R.id.rl_reason_lost) RelativeLayout mLostElements;
     @BindView(R.id.rl_reason_exchange) RelativeLayout mExchangeElements;
     @BindView(R.id.rl_reason_renewal) RelativeLayout mRenewalElements;
@@ -344,16 +346,27 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         }
     }
 
+    @Override
+    public void showError(Exception e) {
+        Toast.makeText(getContext(),
+                "Error: " + e.getMessage(),
+                Toast.LENGTH_SHORT )
+                .show();
+    }
+
+    //adjusts layout when optional fields are shown
     private void adjustCardExchangeLayout(int marginTop, int textSize) {
-       adjustMarginTop(marginTop);
+        adjustMarginTop(marginTop);
         mUserIdTV.setTextSize(textSize);
         mFirstNameTV.setTextSize(textSize);
         mLastNameTV.setTextSize(textSize);
         mBirthDateTV.setTextSize(textSize);
     }
 
+    //adjust margin top when optional fields are shown
     private void adjustMarginTop(int marginTop){
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mUserIdTV.getLayoutParams();
+        ViewGroup.MarginLayoutParams params =
+                (ViewGroup.MarginLayoutParams) mUserIdTV.getLayoutParams();
         params.topMargin = marginTop;
     }
 }

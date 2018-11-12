@@ -78,6 +78,8 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
         View view = inflater.inflate(R.layout.fragment_card_application_details, container, false);
         ButterKnife.bind(this, view);
 
+        //onclick listener for all the images in the view
+        // when image is clicked it gets larger
         View.OnClickListener imageOnCLicListener = imageView -> {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
             View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
@@ -93,6 +95,7 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
         mDrivingLicenseImage.setOnClickListener(imageOnCLicListener);
         mSignatureImage.setOnClickListener(imageOnCLicListener);
         mOldCardImage.setOnClickListener(imageOnCLicListener);
+
         mChangeStatusButton.setOnClickListener(v -> showStatusDialog());
 
         return view;
@@ -101,8 +104,10 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     @Override
     public void onResume() {
         super.onResume();
-        mCardApplicationDetailsPresenter.loadImages(mCardApplication.getId());
-        mCardApplicationDetailsPresenter.assignValues(mCardApplication);
+        mCardApplicationDetailsPresenter
+                .loadImages(mCardApplication.getId());
+        mCardApplicationDetailsPresenter
+                .assignValues(mCardApplication);
     }
 
     @Override

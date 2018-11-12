@@ -52,7 +52,7 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     private CardApplication mCardApplication;
     private User mUser;
     private Navigator mNavigator;
-    private int mIndex;
+    private int mAlertDialogSelectedItemIndex;
 
     @Inject
     public ApplicationReasonFragment() {
@@ -67,16 +67,11 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
         View view = inflater.inflate(R.layout.fragment_application_reason, container, false);
         ButterKnife.bind(this, view);
 
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int checked = group.getCheckedRadioButtonId();
-                mApplicationReasonPresenter.handleOnCheckedChange(checked);
-            }
+        mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            int checked = group.getCheckedRadioButtonId();
+            mApplicationReasonPresenter.handleOnCheckedChange(checked);
         });
 
-//        mRadioGroup.setOnCheckedChangeListener((group, checkedId) ->
-//                mApplicationReasonPresenter.handleOnCheckedChange(checkedId));
 
         return view;
     }
@@ -84,8 +79,8 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Override
     public void onStart() {
         super.onStart();
-//        mApplicationReasonPresenter.checkUserReason(mUser);
-        mIndex = -1;
+        //select it back to -1 so none of the items is selected
+        mAlertDialogSelectedItemIndex = -1;
     }
 
 
@@ -136,12 +131,12 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
                         .getResources()
                         .getStringArray(resourceID);
 
-                if (mIndex == -1) {
+                if (mAlertDialogSelectedItemIndex == -1) {
                     Toast.makeText(getContext(),
                             "Choose an option to proceed",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    String reason = values[mIndex];
+                    String reason = values[mAlertDialogSelectedItemIndex];
                     mApplicationReasonPresenter
                             .handleDialogPositiveButtonOnclick(reason, mCardApplication);
                     dialog1.dismiss();
@@ -165,7 +160,7 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
                 .getStringArray(resourceID);
 
         builder.setSingleChoiceItems(values, -1, (dialog, index) -> {
-            mIndex  = index;
+            mAlertDialogSelectedItemIndex = index;
         });
 
 
@@ -190,15 +185,5 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
     @Override
     public void setCurrentCardApplication(CardApplication cardApplication) {
         this.mCardApplication = cardApplication;
-    }
-
-    @Override
-    public void showLoading() {
-//        mProgressbar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-//        mProgressbar.setVisibility(View.GONE);
     }
 }

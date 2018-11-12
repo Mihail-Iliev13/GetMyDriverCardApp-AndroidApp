@@ -9,4 +9,11 @@
         android:icon="@drawable/ic_search_24dp"
         />
 
+    <item
+        android:id="@+id/log_out"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/logout_24"
+        android:title="" />
+
 </menu>

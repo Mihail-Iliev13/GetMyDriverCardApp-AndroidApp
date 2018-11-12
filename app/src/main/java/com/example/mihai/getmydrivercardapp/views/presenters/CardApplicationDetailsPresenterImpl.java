@@ -119,7 +119,6 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
 
     @Override
     public void loadImages(int id) {
-//        mCardApplicationDetailsView.showLoading();
         mAsyncRunner.runInBackground(() -> {
             try {
              List<ImageModel> images = mImageService.getImagesByApplicationID(id);
@@ -127,7 +126,6 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            mCardApplicationDetailsView.hideLoading();
         });
     }
 

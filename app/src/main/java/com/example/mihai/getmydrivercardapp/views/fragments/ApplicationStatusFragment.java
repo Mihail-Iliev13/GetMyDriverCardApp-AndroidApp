@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mihai.getmydrivercardapp.R;
-import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationStatusView;
@@ -36,7 +35,6 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
     @BindView(R.id.pb_loading) ProgressBar mProgressBar;
     @BindView(R.id.btn_log_out) Button mLogOut;
 
-    private CardApplication mCardApplication;
     private ApplicationStatusPresenter mApplicationStatusPresenter;
     private User mUser;
     private Navigator mNavigator;
@@ -80,7 +78,6 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
             mStatusTextView.setText(message);
         });
     }
-
 
     @Override
     public void setUser(User user) {

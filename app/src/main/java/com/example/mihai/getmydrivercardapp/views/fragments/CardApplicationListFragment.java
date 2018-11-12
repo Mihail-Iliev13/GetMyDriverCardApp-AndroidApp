@@ -78,6 +78,7 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
         CardApplication selectedCardApplication = mAdapter.getItem(position);
         mCardApplicationListPresenter.selectCardApplication(selectedCardApplication);
     }
+
     @Override
     public void setPresenter(BasePresenter presenter) {
         if ( presenter instanceof CardApplicationListPresenter) {

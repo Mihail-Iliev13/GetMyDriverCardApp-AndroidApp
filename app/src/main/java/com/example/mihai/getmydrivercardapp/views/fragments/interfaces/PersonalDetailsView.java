@@ -3,7 +3,7 @@ package com.example.mihai.getmydrivercardapp.views.fragments.interfaces;
 import java.text.ParseException;
 
 public interface PersonalDetailsView extends BaseView,
-        DatePickerView, Navigable, CardApplicationTransferable {
+        DatePickerView, Navigable, CardApplicationTransferable, ErrorView {
     void setCardApplicationFields() throws ParseException;
 
     void showLostOrStolenFields();

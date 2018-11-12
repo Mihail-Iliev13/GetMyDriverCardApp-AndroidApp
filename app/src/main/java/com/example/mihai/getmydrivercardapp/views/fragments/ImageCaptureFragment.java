@@ -73,6 +73,9 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
         mPresenter.handleActivityResult(requestCode, resultCode, data, getActivity());
 
+
+        // checks if the user made a picture and shows NEXT button
+        // it also moves the CAPTURE IMAGE button to the left side of the screen
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
             if (mImageView.getDrawable() != null) {
                 RelativeLayout.LayoutParams layoutParams =
@@ -105,11 +108,6 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
         if (mImageModel.getImageAttribute() == ImageAttribute.SELFIE_IMAGE) {
             bitmap = flipImage(bitmap, -1.0f, 1.0f);
-        } else {
-//            Matrix matrix = new Matrix();
-//            matrix.postRotate(90);
-//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
-//            bitmap = Bitmap.createBitmap(scaledBitmap, 0,0,scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
         }
 
             mImageView.setImageBitmap(bitmap);
@@ -167,6 +165,7 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     public void setInstructionMessage(String message) {
         mTextMessage.setText(message);
     }
+
 
     private Bitmap flipImage(Bitmap bitmap, float sx, float sy) {
         Matrix matrix = new Matrix();
