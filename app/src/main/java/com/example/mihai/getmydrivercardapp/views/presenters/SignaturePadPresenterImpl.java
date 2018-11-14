@@ -1,6 +1,7 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import android.graphics.Bitmap;
+import android.view.View;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
@@ -13,12 +14,14 @@ import com.example.mihai.getmydrivercardapp.utils.datehandler.base.DateHandler;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SignaturePadView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
@@ -47,12 +50,8 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
     }
 
     @Override
-    public void subscribe(BaseView view) {
-        if (view instanceof SignaturePadView) {
-            mSignaturePadView = (SignaturePadView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(SignaturePadView view) {
+            mSignaturePadView = view;
     }
 
 
@@ -114,5 +113,15 @@ public class SignaturePadPresenterImpl implements SignaturePadPresenter {
     @Override
     public void setValidator(Validator validator) {
         this.mValidator = validator;
+    }
+
+    @Override
+    public void handleOnValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            Rule failedRule = error.getFailedRules().get(0);
+            mSignaturePadView.showValidationError(view, failedRule);
+
+        }
     }
 }

@@ -1,8 +1,9 @@
 package com.example.mihai.getmydrivercardapp.views.presenters.interfaces;
 
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
+import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
 
-public interface CardApplicationListPresenter extends BasePresenter {
+public interface CardApplicationListPresenter  {
     void loadCardApplications();
 
     void selectCardApplication(CardApplication selectedCardApplication);
@@ -11,4 +12,5 @@ public interface CardApplicationListPresenter extends BasePresenter {
 
     void handleChangeStatusOnClick();
 
+    void subscribe(CardApplicationListView view);
 }

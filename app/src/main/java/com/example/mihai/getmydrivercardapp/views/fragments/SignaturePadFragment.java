@@ -21,7 +21,6 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SignaturePadView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SignaturePadPresenter;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.mobsandgeeks.saripaar.Rule;
@@ -30,9 +29,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
-import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -114,11 +111,19 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
 
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof SignaturePadPresenter) {
-            this.mSignaturePadPresenter = (SignaturePadPresenter) presenter;
+    public void setPresenter(SignaturePadPresenter presenter) {
+            this.mSignaturePadPresenter =  presenter;
+    }
+
+    @Override
+    public void showValidationError(View view, Rule failedRule) {
+        String message = failedRule.getMessage(getContext());
+
+        // Display error messages ;)
+        if (view instanceof EditText) {
+            ((EditText) view).setError(message);
         } else {
-            throw new InvalidParameterException();
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -176,37 +181,11 @@ public class SignaturePadFragment extends Fragment implements SignaturePadView, 
         } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            Rule failedRule = error.getFailedRules().get(0);
-            String message = failedRule.getMessage(getContext());
-
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-        }
+        mSignaturePadPresenter.handleOnValidationFailed(errors);
     }
 
-    @Override
-    public void showLoading() {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            mLayout.setVisibility(View.GONE);
-            mLoadingView.setVisibility(View.VISIBLE);
-        });
-    }
-
-    @Override
-    public void hideLoading() {
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-            mLoadingView.setVisibility(View.GONE);
-        });
-    }
 }

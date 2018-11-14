@@ -10,7 +10,6 @@ import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPre
 import com.mobsandgeeks.saripaar.Validator;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -28,13 +27,8 @@ public class LogInPresenterImpl implements LogInPresenter {
     }
 
     @Override
-    public void subscribe(BaseView view) {
-
-        if (view instanceof LogInView) {
-            this.mLoginView = (LogInView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(LogInView view) {
+         this.mLoginView = (LogInView) view;
     }
 
     @Override

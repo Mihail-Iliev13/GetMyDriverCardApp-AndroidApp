@@ -18,7 +18,6 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ContactDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ContactDetailsPresenter;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -28,7 +27,6 @@ import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -90,23 +88,25 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
 
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof ContactDetailsPresenter) {
-            this.mContactDetailsPresenter = (ContactDetailsPresenter) presenter;
+    public void setPresenter(ContactDetailsPresenter presenter) {
+            this.mContactDetailsPresenter = presenter;
+    }
+
+    @Override
+    public void showValidationError(View view, Rule failedRule) {
+        String message = failedRule.getMessage(getContext());
+
+        // Display error messages ;)
+        if (view instanceof EditText) {
+            ((EditText) view).setError(message);
         } else {
-            throw new InvalidParameterException();
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void setCardApplicationFields() {
-        String email = String.valueOf(mEmail.getText());
-        String phoneNumber = String.valueOf(mPhoneNumber.getText());
-        String address = String.valueOf(mUserAddress.getText());
 
-        mCardApplication.getDetails().setAddress(address);
-        mCardApplication.getDetails().setPhoneNumber(phoneNumber);
-        mCardApplication.getDetails().setEmail(email);
     }
 
     @Override
@@ -140,22 +140,14 @@ public class ContactDetailsFragment extends Fragment implements ContactDetailsVi
 
     @Override
     public void onValidationSucceeded() {
-        mContactDetailsPresenter.handleOnButtonNextClick();
+        String email = String.valueOf(mEmail.getText());
+        String phoneNumber = String.valueOf(mPhoneNumber.getText());
+        String address = String.valueOf(mUserAddress.getText());
+        mContactDetailsPresenter.handleOnButtonNextClick(mCardApplication, address, phoneNumber, email);
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            Rule failedRule = error.getFailedRules().get(0);
-            String message = failedRule.getMessage(getContext());
-
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-        }
+        mContactDetailsPresenter.handleOnValidationFailed(errors);
     }
 }

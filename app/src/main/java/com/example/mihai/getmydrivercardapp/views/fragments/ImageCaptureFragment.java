@@ -24,10 +24,8 @@ import com.example.mihai.getmydrivercardapp.models.ImageModel;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ImageCaptureView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
-import java.security.InvalidParameterException;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -73,7 +71,6 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
         mPresenter.handleActivityResult(requestCode, resultCode, data, getActivity());
 
-
         // checks if the user made a picture and shows NEXT button
         // it also moves the CAPTURE IMAGE button to the left side of the screen
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
@@ -104,12 +101,11 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
     }
 
     @Override
-    public void setImageBitmap(Bitmap bitmap) {
+    public void showImage(Bitmap bitmap) {
 
         if (mImageModel.getImageAttribute() == ImageAttribute.SELFIE_IMAGE) {
             bitmap = flipImage(bitmap, -1.0f, 1.0f);
         }
-
             mImageView.setImageBitmap(bitmap);
             mTxtPreview.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
@@ -117,12 +113,8 @@ public class ImageCaptureFragment extends Fragment implements ImageCaptureView {
 
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof ImageCapturePresenter) {
-            this.mPresenter = (ImageCapturePresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(ImageCapturePresenter presenter) {
+            this.mPresenter =  presenter;
     }
 
     @Override

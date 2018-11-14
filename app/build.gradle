@@ -61,5 +61,8 @@ dependencies {
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
 
+    //Mockito
+    implementation group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }

@@ -18,11 +18,9 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
 import com.github.chrisbanes.photoview.PhotoView;
 
-import java.security.InvalidParameterException;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -81,13 +79,7 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
         //onclick listener for all the images in the view
         // when image is clicked it gets larger
         View.OnClickListener imageOnCLicListener = imageView -> {
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-            View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
-            PhotoView photoView = mView.findViewById(R.id.imageView);
-            photoView.setImageDrawable(((ImageView)imageView).getDrawable());
-            mBuilder.setView(mView);
-            AlertDialog mDialog = mBuilder.create();
-            mDialog.show();
+            mCardApplicationDetailsPresenter.handleOnPictureClicked(imageView);
         };
 
         mSelfieImage.setOnClickListener(imageOnCLicListener);
@@ -96,7 +88,8 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
         mSignatureImage.setOnClickListener(imageOnCLicListener);
         mOldCardImage.setOnClickListener(imageOnCLicListener);
 
-        mChangeStatusButton.setOnClickListener(v -> showStatusDialog());
+        mChangeStatusButton.setOnClickListener(v ->
+                mCardApplicationDetailsPresenter.handleOnChangeStatusButtonClicked());
 
         return view;
     }
@@ -111,12 +104,8 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     }
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof CardApplicationDetailsPresenter) {
-            this.mCardApplicationDetailsPresenter = (CardApplicationDetailsPresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(CardApplicationDetailsPresenter presenter) {
+            this.mCardApplicationDetailsPresenter = presenter;
     }
 
     @Override
@@ -276,6 +265,17 @@ public class CardApplicationDetailsFragment extends Fragment implements CardAppl
     @Override
     public void assignValueToReasonTextView(String reason) {
         mReason.setText(reason);
+    }
+
+    @Override
+    public void zoomPicture(View imageView) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        View mView = getLayoutInflater().inflate(R.layout.dialog_custom_layout, null);
+        PhotoView photoView = mView.findViewById(R.id.imageView);
+        photoView.setImageDrawable(((ImageView)imageView).getDrawable());
+        mBuilder.setView(mView);
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
     }
 
     @Override

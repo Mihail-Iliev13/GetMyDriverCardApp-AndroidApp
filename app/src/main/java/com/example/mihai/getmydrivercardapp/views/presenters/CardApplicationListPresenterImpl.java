@@ -3,12 +3,10 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
-import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -72,12 +70,8 @@ public class CardApplicationListPresenterImpl implements CardApplicationListPres
     }
 
     @Override
-    public void subscribe(BaseView view) {
-        if (view instanceof CardApplicationListView) {
-            this.mCardApplicationListView = (CardApplicationListView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(CardApplicationListView view) {
+            this.mCardApplicationListView = view;
     }
 
 }

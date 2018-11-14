@@ -2,6 +2,7 @@ package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
 import com.example.mihai.getmydrivercardapp.constants.Formats;
@@ -13,12 +14,10 @@ import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base
 import com.example.mihai.getmydrivercardapp.services.imageservice.base.ImageService;
 import com.example.mihai.getmydrivercardapp.utils.bitmapconverter.base.BitmapConverter;
 import com.example.mihai.getmydrivercardapp.utils.emailsender.EmailSender;
-import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationDetailsView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationDetailsPresenter;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -43,12 +42,8 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
     }
 
     @Override
-    public void subscribe(BaseView view) {
-        if (view instanceof  CardApplicationDetailsView) {
-            this.mCardApplicationDetailsView = (CardApplicationDetailsView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(CardApplicationDetailsView view) {
+            this.mCardApplicationDetailsView = view;
     }
 
     @Override
@@ -182,6 +177,16 @@ public class CardApplicationDetailsPresenterImpl implements CardApplicationDetai
         }
         EmailSender emailSender = new EmailSender(context, email, "Changed Status", message);
         emailSender.execute();
+    }
+
+    @Override
+    public void handleOnPictureClicked(View imageView) {
+        mCardApplicationDetailsView.zoomPicture(imageView);
+    }
+
+    @Override
+    public void handleOnChangeStatusButtonClicked() {
+        mCardApplicationDetailsView.showStatusDialog();
     }
 
 }

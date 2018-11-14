@@ -13,7 +13,6 @@ import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ImageCapt
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ImageCapturePresenter;
 
 import java.io.File;
-import java.security.InvalidParameterException;
 
 import javax.inject.Inject;
 
@@ -44,7 +43,7 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
             public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
                 String path = imageFile.getPath();
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
-                mImageCaptureView.setImageBitmap(bitmap);
+                mImageCaptureView.showImage(bitmap);
             }
         });
     }
@@ -64,11 +63,7 @@ public class ImageCapturePresenterImpl implements ImageCapturePresenter {
     }
 
     @Override
-    public void subscribe(BaseView view) {
-        if (view instanceof ImageCaptureView) {
-            this.mImageCaptureView = (ImageCaptureView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(ImageCaptureView view) {
+            this.mImageCaptureView = view;
     }
 }

@@ -29,12 +29,8 @@ public class ApplicationStatusPresenterImpl implements ApplicationStatusPresente
     }
 
     @Override
-    public void subscribe(BaseView view) {
-        if (view instanceof ApplicationStatusView){
-            this.mApplicationStatusView = (ApplicationStatusView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(ApplicationStatusView view) {
+            this.mApplicationStatusView = view;
     }
 
     @Override

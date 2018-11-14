@@ -4,8 +4,9 @@ import android.content.Intent;
 
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
+import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 
-public interface LogInView extends BaseView, ErrorView {
+public interface LogInView extends ErrorView {
     void showNoExistingUserError(String email);
     void showNoMatchingPasswordError();
     void showUserAlreadyExistsError(String email);
@@ -16,5 +17,6 @@ public interface LogInView extends BaseView, ErrorView {
     void showAllPendingApplications();
     void showApplicationForm();
     User getUser();
+    void setPresenter(LogInPresenter presenter);
 
 }

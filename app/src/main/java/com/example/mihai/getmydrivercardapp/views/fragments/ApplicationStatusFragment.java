@@ -17,9 +17,7 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationStatusView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationStatusPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 
-import java.security.InvalidParameterException;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -63,12 +61,8 @@ public class ApplicationStatusFragment extends Fragment implements ApplicationSt
     }
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof ApplicationStatusPresenter) {
-            this.mApplicationStatusPresenter = (ApplicationStatusPresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(ApplicationStatusPresenter presenter) {
+            this.mApplicationStatusPresenter = presenter;
     }
 
     @Override

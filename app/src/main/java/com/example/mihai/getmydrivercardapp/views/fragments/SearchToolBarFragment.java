@@ -19,11 +19,9 @@ import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.enums.CardApplicationStatus;
 import com.example.mihai.getmydrivercardapp.enums.FilterCriteria;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SearchToolBarView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Objects;
@@ -110,12 +108,8 @@ public class SearchToolBarFragment extends Fragment implements SearchToolBarView
     }
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof SearchToolBarPresenter) {
-            this.mSearchToolBarPresenter = (SearchToolBarPresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(SearchToolBarPresenter presenter) {
+            this.mSearchToolBarPresenter = presenter;
     }
 
     @Override

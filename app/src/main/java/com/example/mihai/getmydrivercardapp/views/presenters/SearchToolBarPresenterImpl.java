@@ -1,16 +1,14 @@
 package com.example.mihai.getmydrivercardapp.views.presenters;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
+import com.example.mihai.getmydrivercardapp.enums.FilterCriteria;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.services.cardapplicationservice.base.CardApplicationService;
-import com.example.mihai.getmydrivercardapp.enums.FilterCriteria;
-import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.BaseView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.SearchToolBarView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.SearchToolBarPresenter;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,12 +27,8 @@ public class SearchToolBarPresenterImpl implements SearchToolBarPresenter {
     }
 
     @Override
-    public void subscribe(BaseView view) {
-        if (view instanceof SearchToolBarView) {
-            this.mSearchToolBarView = (SearchToolBarView) view;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void subscribe(SearchToolBarView view) {
+            this.mSearchToolBarView = view;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.mihai.getmydrivercardapp.async;
 import android.os.AsyncTask;
 
 import com.example.mihai.getmydrivercardapp.async.base.AsyncRunner;
+
 public class AsyncRunnerImpl implements AsyncRunner {
 
         @Override
@@ -19,4 +20,5 @@ public class AsyncRunnerImpl implements AsyncRunner {
                     }
                 }.execute(true);
         }
-    }
+
+}

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.example.mihai.getmydrivercardapp.R;
 import com.example.mihai.getmydrivercardapp.views.activities.LoginActivity;
+import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.CardApplicationListFragment;
 import com.example.mihai.getmydrivercardapp.views.fragments.SearchToolBarFragment;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
@@ -18,7 +19,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class CardApplicationListActivity extends DaggerAppCompatActivity {
+public class CardApplicationListActivity extends DaggerAppCompatActivity implements Navigator {
 
     @Inject
     CardApplicationListPresenter mCardApplicationListPresenter;
@@ -59,7 +60,7 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         mCardApplicationListPresenter
                 .subscribe(mCardApplicationListFragment);
@@ -75,23 +76,28 @@ public class CardApplicationListActivity extends DaggerAppCompatActivity {
 
         //defines the outlook of the toolbar search view
         getMenuInflater().inflate(R.menu.menu_item, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
         mSearchToolbarFragment
                 .getSearchView()
-                .setMenuItem(menuItem);
+                .setMenuItem(searchItem);
 
-        MenuItem menuItem1 = menu.findItem(R.id.log_out);
+        MenuItem logOutButton = menu.findItem(R.id.log_out);
         mSearchToolbarFragment
                 .getSearchView()
-                .setMenuItem(menuItem1);
+                .setMenuItem(logOutButton);
 
-        menuItem1.setOnMenuItemClickListener(item -> {
+        logOutButton.setOnMenuItemClickListener(item -> {
             Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            ActivityCompat.finishAffinity(this);
+            navigateWith(intent);
            return true;
         });
 
         return true;
+    }
+
+    @Override
+    public void navigateWith(Intent intent) {
+        startActivity(intent);
+        ActivityCompat.finishAffinity(this);
     }
 }

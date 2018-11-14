@@ -22,20 +22,18 @@ import com.example.mihai.getmydrivercardapp.constants.Formats;
 import com.example.mihai.getmydrivercardapp.constants.IntentKeys;
 import com.example.mihai.getmydrivercardapp.customannotations.dateformat.DateFormat;
 import com.example.mihai.getmydrivercardapp.customannotations.latincharacters.LatinCharacters;
+import com.example.mihai.getmydrivercardapp.enums.CardApplicationReason;
 import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.PersonalDetailsView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.PersonalDetailsPresenter;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
-import java.security.InvalidParameterException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -168,33 +166,79 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     }
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof  PersonalDetailsPresenter) {
-            mPersonalDetailsPresenter= (PersonalDetailsPresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(PersonalDetailsPresenter presenter) {
+            mPersonalDetailsPresenter = presenter;
     }
 
     @Override
-    public void setCardApplicationFields() {
+    public String getID() {
+        return String.valueOf(mUserIdET.getText());
+    }
 
-        try {
-            SimpleDateFormat df = new SimpleDateFormat(Formats.STRING_DATE_FORMAT);
+    @Override
+    public String getFirstName() {
+        return String.valueOf(mFirstNameET.getText());
+    }
 
-            mCardApplication.getDetails()
-                    .setDriverID(String.valueOf(mUserIdET.getText()));
-            mCardApplication.getDetails()
-                    .setFirstNameLatin(String.valueOf(mFirstNameET.getText()));
-            mCardApplication.getDetails()
-                    .setSurNameLatin(String.valueOf(mLastNameET.getText()));
-            mCardApplication.getDetails()
-                    .setDriverBirthDate(df.parse(String.valueOf(mBirthDatePreview.getText())));
+    @Override
+    public String getLastName() {
+        return String.valueOf(mLastNameET.getText());
+    }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+    @Override
+    public String getBirthDate() {
+        return String.valueOf(mBirthDatePreview.getText());
+    }
+
+    @Override
+    public String getAuthorityIssuedCard() {
+        return String.valueOf(mAuthorityIssuedET.getText());
+    }
+
+    @Override
+    public String getCountryIssuedCard() {
+        return String.valueOf(mCountryIssuedCardET.getText());
+    }
+
+    @Override
+    public String getEuCardNumber() {
+        return String.valueOf(mEUcardNumberET.getText());
+    }
+
+    @Override
+    public String getDateOfExpiry(CardApplicationReason cardApplicationReason) {
+
+        if (cardApplicationReason.equals(CardApplicationReason.EXCHANGE)) {
+                return String.valueOf(mDateOfExpiryEUcardPreview.getText());
+            }
+
+        return String.valueOf(mExpiryDate_RenewalPreview.getText());
+    }
+
+    @Override
+    public String getPlaceOfLoss() {
+        return String.valueOf(mPlaceLostET.getText());
+    }
+
+    @Override
+    public String getDateOfLoss() {
+        return String.valueOf(mLostDatePreview.getText());
+    }
+
+    @Override
+    public void showValidationError(Rule failedRule, View view) {
+        String message = failedRule.getMessage(getContext());
+
+        // Display error messages ;)
+        if (view instanceof EditText) {
+            ((EditText) view).setError(message);
+        } else {
+            Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            });
         }
     }
+
 
     @Override
     public void showLostOrStolenFields() {
@@ -214,49 +258,7 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
         adjustMarginTop(90);
     }
 
-    @Override
-    public void setOptionalExchangeFields() {
-        SimpleDateFormat df = new SimpleDateFormat(Formats.STRING_DATE_FORMAT);
 
-        try {
-            mCardApplication.getDetails()
-                    .setAuthorityIssuedCard(String.valueOf(mAuthorityIssuedET.getText()));
-            mCardApplication.getDetails()
-                    .setCountryIssuedCard(String.valueOf(mCountryIssuedCardET.getText()));
-            mCardApplication.getDetails()
-                    .setCardNumber(String.valueOf(mEUcardNumberET.getText()));
-            mCardApplication.getDetails()
-                    .setDateOfExpiry(df.parse(String.valueOf(mDateOfExpiryEUcardPreview.getText())));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setOptionalLostFields() {
-        SimpleDateFormat df = new SimpleDateFormat(Formats.STRING_DATE_FORMAT);
-
-        try {
-            mCardApplication.getDetails()
-                    .setPlaceOfLoss(String.valueOf(mPlaceLostET.getText()));
-
-            mCardApplication.getDetails()
-                    .setDateOfLoss(df.parse(String.valueOf(mLostDatePreview.getText())));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void setOptionalExpireFields() {
-        SimpleDateFormat df = new SimpleDateFormat(Formats.STRING_DATE_FORMAT);
-        try {
-            mCardApplication.getDetails()
-                    .setDateOfExpiry(df.parse(String.valueOf(mExpiryDate_RenewalPreview.getText())));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     @SuppressLint({"SimpleDateFormat","DefaultLocale"})
@@ -324,7 +326,8 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
     @Override
     public void onValidationSucceeded() {
         try {
-            mPersonalDetailsPresenter.handleOnClickNext(mCardApplication.getCardApplicationReason());
+            mPersonalDetailsPresenter.handleOnClickNext(mCardApplication.getCardApplicationReason(),
+                    mCardApplication);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -332,18 +335,8 @@ public class PersonalDetailsFragment extends Fragment implements PersonalDetails
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            Rule failedRule = error.getFailedRules().get(0);
-            String message = failedRule.getMessage(getContext());
+        mPersonalDetailsPresenter.handleOnValidationFailed(errors);
 
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     @Override

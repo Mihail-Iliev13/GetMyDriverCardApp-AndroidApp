@@ -79,8 +79,8 @@ public class PresenterBindingModule {
     @Provides
     public ApplicationReasonPresenter applicationReasonPresenter(
             ApplicationReasonConverter applicationReasonConverter,
-            CardApplicationService service, UserService userService, AsyncRunner asyncRunner) {
-        return new ApplicationReasonPresenterImpl(applicationReasonConverter, service,
+            UserService userService, AsyncRunner asyncRunner) {
+        return new ApplicationReasonPresenterImpl(applicationReasonConverter,
                 userService, asyncRunner);
     }
 

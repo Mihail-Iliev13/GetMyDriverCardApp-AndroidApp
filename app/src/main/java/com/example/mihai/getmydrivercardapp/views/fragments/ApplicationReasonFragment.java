@@ -21,10 +21,8 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.ApplicationReasonView;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.ApplicationReasonPresenter;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 
-import java.security.InvalidParameterException;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -85,12 +83,8 @@ public class ApplicationReasonFragment extends Fragment implements ApplicationRe
 
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if (presenter instanceof ApplicationReasonPresenter) {
-            this.mApplicationReasonPresenter = (ApplicationReasonPresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(ApplicationReasonPresenter presenter) {
+            this.mApplicationReasonPresenter = presenter;
     }
 
     @Override

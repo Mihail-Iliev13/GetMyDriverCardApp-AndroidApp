@@ -17,7 +17,6 @@ import com.example.mihai.getmydrivercardapp.models.User;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.LogInNavigator;
 import com.example.mihai.getmydrivercardapp.views.activities.interfaces.Navigator;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.LogInView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.LogInPresenter;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -84,7 +83,7 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
     }
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
+    public void setPresenter(LogInPresenter presenter) {
 
         if (presenter instanceof LogInPresenter) {
             this.mLogInPresenter = (LogInPresenter) presenter;
@@ -103,7 +102,6 @@ public class LogInFragment extends Fragment implements LogInView, Validator.Vali
     public void signUpOnClick() {
         mClickedButton = mSignUpButton;
         mLogInPresenter.validate();
-
     }
 
     @Override

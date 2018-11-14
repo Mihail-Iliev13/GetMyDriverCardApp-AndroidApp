@@ -20,10 +20,8 @@ import com.example.mihai.getmydrivercardapp.models.CardApplication;
 import com.example.mihai.getmydrivercardapp.views.activities.adminactivities.CardApplicationDetailsActivity;
 import com.example.mihai.getmydrivercardapp.views.customadapters.CardApplicationArrayAdapter;
 import com.example.mihai.getmydrivercardapp.views.fragments.interfaces.CardApplicationListView;
-import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.BasePresenter;
 import com.example.mihai.getmydrivercardapp.views.presenters.interfaces.CardApplicationListPresenter;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Objects;
 
@@ -80,12 +78,8 @@ public class CardApplicationListFragment extends Fragment implements CardApplica
     }
 
     @Override
-    public void setPresenter(BasePresenter presenter) {
-        if ( presenter instanceof CardApplicationListPresenter) {
-            this.mCardApplicationListPresenter = (CardApplicationListPresenter) presenter;
-        } else {
-            throw new InvalidParameterException();
-        }
+    public void setPresenter(CardApplicationListPresenter presenter) {
+            this.mCardApplicationListPresenter =  presenter;
     }
 
     @Override
