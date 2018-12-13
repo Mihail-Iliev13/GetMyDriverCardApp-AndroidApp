@@ -72,7 +72,6 @@ Password:Admin12345
 #### Utility libraries
 
 ##### Android
-* ReactiveX: http://reactivex.io/
 * OkHttp: http://square.github.io/okhttp/
 * Gson: https://github.com/google/gson
 * Butter Knife: https://jakewharton.github.io/butterknife/
